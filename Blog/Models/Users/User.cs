@@ -1,4 +1,5 @@
-﻿using Blog.Models.Users;
+﻿using Blog.Models.Article;
+using Blog.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace Blog.Models
         public DateTime BirthDay { get; set; }
         public string Pe { get; set; }
         public Role Role { get; set; }
+        public List<Page> Pages { get; set; }
     }
 }
