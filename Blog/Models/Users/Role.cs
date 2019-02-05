@@ -10,5 +10,6 @@ namespace Blog.Models.Users
         public int Id { get; set; }
         public int UserId { get; set;}
         public int RoleIdentity { get; set; }
+        public int Flag { get; set; }
     }
 }

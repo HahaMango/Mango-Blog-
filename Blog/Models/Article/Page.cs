@@ -10,12 +10,13 @@ namespace Blog.Models.Article
         public int Id { get; set; }
         public int PageId { get; set; }
         public int UserId { get; set; }
-        public string Title { get; set; }
         public DateTime CreateTime { get; set; }
+        public DateTime UpdateTime { get; set; }
+        public string Title { get; set; }
         public string Author { get; set; }
-        public int flag { get; set; }
+        public int CategoryId { get; set; }
+
         public PageContent Content { get; set; }
         public List<Comment> Comment { get; set; }
-        public User User { get; set; }
     }
 }

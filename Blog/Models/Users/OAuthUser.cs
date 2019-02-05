@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.Users
 {
-    public class UserStatistics
+    public class OAuthUser
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string PassWord { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime LastUpdate { get; set; }
         public DateTime LastLogin { get; set; }
-        public int NumberOfLogin { get; set; }
+        public string OAuthClient { get; set; }
     }
 }

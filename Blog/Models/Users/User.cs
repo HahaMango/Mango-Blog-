@@ -12,11 +12,7 @@ namespace Blog.Models
         public int Id { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }
-        public bool Sex { get; set; }
-        public string PhotoPath { get; set; }
-        public DateTime BirthDay { get; set; }
-        public string Pe { get; set; }
+        public string PassWord { get; set; }
         public Role Role { get; set; }
-        public List<Page> Pages { get; set; }
     }
 }

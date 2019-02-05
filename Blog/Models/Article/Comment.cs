@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,10 @@ namespace Blog.Models.Article
         public string Content { get; set; }
         public int Like { get; set; }
 
+        public Page Page { get; set; }
+        [NotMapped]
         public User ComUser { get; set; }
+        [NotMapped]
         public User ReplyUser { get; set; }
     }
 }
