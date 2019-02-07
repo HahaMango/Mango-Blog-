@@ -14,5 +14,6 @@ namespace Blog.Models.Users
         public DateTime CreateTime { get; set; }
         public DateTime LastLogin { get; set; }
         public string OAuthClient { get; set; }
+        public int OAuthId { get; set; }
     }
 }

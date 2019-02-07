@@ -9,6 +9,7 @@ namespace Blog.Models.Article
     {
         public int Id { get; set; }
         public string Category { get; set; }
+        public int Identity { get; set; }
         public DateTime AddTime { get; set; }
     }
 }

@@ -14,9 +14,9 @@ namespace Blog.Models.Article
         public DateTime UpdateTime { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        public int CategoryId { get; set; }
+        public int CategoryIdentity { get; set; }
 
         public PageContent Content { get; set; }
-        public List<Comment> Comment { get; set; }
+        public IList<Comment> Comment { get; set; }
     }
 }
