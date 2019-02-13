@@ -9,6 +9,7 @@ namespace Blog.Models.Users
     {
         public int Id { get; set;}
         public int UserId { get; set; }
+        public string UserName { get; set; }
         public bool Sex { get; set; }
         public string PhotoPath { get; set; }
         public string Local { get; set; }

@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Blog.Models.Users;
+
 namespace Blog.Models.Article
 {
     public class Comment
