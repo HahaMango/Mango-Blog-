@@ -19,6 +19,11 @@ namespace Blog
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context,builder)=> 
+                {
+                    //builder.SetBasePath(Directory.GetCurrentDirectory());
+                    builder.AddJsonFile("AppConfig.json", true, true);
+                })
                 .UseStartup<Startup>();
     }
 }

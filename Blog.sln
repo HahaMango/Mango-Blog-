@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog", "Blog\Blog.csproj", "{BD36E3FC-E5A1-4E2A-A5D1-EF7BF443BE5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog", "Blog\Blog.csproj", "{BD36E3FC-E5A1-4E2A-A5D1-EF7BF443BE5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoUserService", "MangoUserService\MangoUserService.csproj", "{29944491-B710-44D8-A6B5-FCDCB883C8FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogClient", "BlogClient\BlogClient.csproj", "{658626C4-6950-43B3-A221-26C870D934C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{BD36E3FC-E5A1-4E2A-A5D1-EF7BF443BE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD36E3FC-E5A1-4E2A-A5D1-EF7BF443BE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD36E3FC-E5A1-4E2A-A5D1-EF7BF443BE5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29944491-B710-44D8-A6B5-FCDCB883C8FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29944491-B710-44D8-A6B5-FCDCB883C8FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29944491-B710-44D8-A6B5-FCDCB883C8FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29944491-B710-44D8-A6B5-FCDCB883C8FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658626C4-6950-43B3-A221-26C870D934C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658626C4-6950-43B3-A221-26C870D934C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658626C4-6950-43B3-A221-26C870D934C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658626C4-6950-43B3-A221-26C870D934C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,4 +17,11 @@
     <Folder Include="Service\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="AppConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

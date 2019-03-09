@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Blog.APIControllers
 {
@@ -13,11 +14,18 @@ namespace Blog.APIControllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        private IConfiguration configuration;
+
+        public TestController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         [HttpGet]
-        [Authorize]
         public ActionResult<List<string>> Hello()
         {
             List<string> list = new List<string>();
+            string n = configuration["IdentityService"];
             return list;
         }
     }

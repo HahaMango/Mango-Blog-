@@ -3,21 +3,22 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace Blog
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-        }
+            this._configuration = configuration;
+        }    
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // 配置需要添加进DI的服务
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             services.AddMvcCore()
                 .AddAuthorization()
                 .AddJsonFormatters()
@@ -28,14 +29,14 @@ namespace Blog
                 .AddJwtBearer("Bearer", options =>
                 {
                     //授权服务器地址
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = _configuration["IdentityService"];
                     options.RequireHttpsMetadata = false;
 
-                    options.Audience = "mango.blog";
+                    options.Audience = _configuration["mango.blog"];
                 });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // 配置HTTP管道中间件
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
