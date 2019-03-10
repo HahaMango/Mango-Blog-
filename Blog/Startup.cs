@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
+
+using Blog.Helper;
 
 namespace Blog
 {
@@ -34,6 +35,8 @@ namespace Blog
 
                     options.Audience = _configuration["mango.blog"];
                 });
+
+            services.AddSingleton<DefaultCategory>();
         }
 
         // 配置HTTP管道中间件

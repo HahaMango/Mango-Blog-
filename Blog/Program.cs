@@ -23,6 +23,7 @@ namespace Blog
                 {
                     //builder.SetBasePath(Directory.GetCurrentDirectory());
                     builder.AddJsonFile("AppConfig.json", true, true);
+                    builder.AddJsonFile("BlogConfig.json", true, true);
                 })
                 .UseStartup<Startup>();
     }

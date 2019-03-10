@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Blog.APIControllers
+namespace Blog.BlogControllers
 {
     [Route("mango/blog/[controller]")]
     //[Produces("application/json")]

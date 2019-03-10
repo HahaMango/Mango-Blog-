@@ -15,3 +15,4 @@ D:\Work\C#Work\Blog\Blog\obj\Debug\netcoreapp2.2\Blog.dll
 D:\Work\C#Work\Blog\Blog\obj\Debug\netcoreapp2.2\Blog.pdb
 D:\Work\C#Work\Blog\Blog\obj\Debug\netcoreapp2.2\Blog.csproj.CopyComplete
 D:\Work\C#Work\Blog\Blog\bin\Debug\netcoreapp2.2\AppConfig.json
+D:\Work\C#Work\Blog\Blog\bin\Debug\netcoreapp2.2\BlogConfig.json

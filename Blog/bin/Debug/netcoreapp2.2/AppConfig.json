@@ -1,3 +1,5 @@
 {
+  "appid": "mango.blog",
+  "resourceid": "mango.blog",
   "IdentityService": "http://localhost:5000"
 }
