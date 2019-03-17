@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Blog.BlogControllers.ArticleControllers
+namespace Blog.BlogControllers.Article
 {
-    [Route("mango/blog/article/[controller]")]
+    [Route("mango/blog")]
     [ApiController]
     public class PageController : ControllerBase
     {
@@ -17,22 +17,15 @@ namespace Blog.BlogControllers.ArticleControllers
 
         }
 
-        [HttpGet]
-        public ActionResult GetPageByTitle(string userid,string title)
-        {
-            //...
-            return null;
-        }
-
-        [HttpGet]
+        [HttpGet("user/{userid}/article/{pageid}")]
         public ActionResult GetPageByPageid(string userid,string pageid)
         {
             return null;
         }
 
-        //返回列表，具体类型再定义
-        [HttpGet]
-        public ActionResult GetPage(string userid)
+        //根据请求过滤筛选
+        [HttpGet("user/{userid}/articles")]
+        public ActionResult GetPage(string userid,string title,string createtime,int commentcount,int like)
         {
             //...
             return null;

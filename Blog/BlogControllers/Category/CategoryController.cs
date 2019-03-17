@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Blog.Helper;
 
-namespace Blog.BlogControllers
+namespace Blog.BlogControllers.Category
 {
     [Route("mango/blog/[controller]")]
     [ApiController]
@@ -25,5 +25,7 @@ namespace Blog.BlogControllers
         {
             return _defaultCategory.Categorys();
         }
+
+
     }
 }

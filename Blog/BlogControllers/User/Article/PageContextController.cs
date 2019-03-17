@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.BlogControllers.ArticleControllers
+namespace Blog.BlogControllers.Article
 {
     [Route("mango/blog/article/[controller]")]
     [ApiController]
