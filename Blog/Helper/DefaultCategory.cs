@@ -4,26 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
+using Blog.JSONEntity;
+
 namespace Blog.Helper
 {
     public class DefaultCategory
     {
         private readonly IConfiguration Configuration;
-        private readonly List<string> categorys;
+        private readonly List<Category> categorys;
 
         public DefaultCategory(IConfiguration configuration)
         {
             this.Configuration = configuration;
 
             int i = 0;
-            List<string> temp = new List<string>();
+            List<Category> temp = new List<Category>();
 
             while (true)
             {
                 string categoryName = Configuration[$"Category:{i}"];
                 if (categoryName != null)
-                {
-                    temp.Add(categoryName);
+                {                    
+                    temp.Add(new Category(i,categoryName));
                     i++;
                 }
                 else
@@ -34,10 +36,10 @@ namespace Blog.Helper
             this.categorys = temp;
         }
 
-        public List<string> Categorys()
+        public List<Category> Categorys()
         {
             if (categorys == null)
-                return new List<string>();  
+                return null;
             return categorys;
         }
     }

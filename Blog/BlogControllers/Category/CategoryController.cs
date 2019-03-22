@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using Blog.Helper;
+using Microsoft.AspNetCore.Http;
 
 namespace Blog.BlogControllers.Category
 {
-    [Route("mango/blog/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -21,9 +18,16 @@ namespace Blog.BlogControllers.Category
         }
 
         [HttpGet]
-        public ActionResult<List<string>> GetCategory()
+        [ProducesResponseType(typeof(List<Blog.JSONEntity.Category>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Blog.JSONEntity.Category>> GetCategory()
         {
-            return _defaultCategory.Categorys();
+            List<Blog.JSONEntity.Category> categories = _defaultCategory.Categorys();
+            if(categories == null)
+            {
+                return NotFound();
+            }
+            return categories;
         }
 
 
