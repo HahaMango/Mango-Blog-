@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Blog.Helper;
+using Blog.Service;
 
 namespace Blog
 {
@@ -36,7 +37,9 @@ namespace Blog
                     options.Audience = _configuration["mango.blog"];
                 });
 
+            //添加服务到DI容器
             services.AddSingleton<DefaultCategory>();
+            services.AddSingleton<ICategoryService<string>>();
         }
 
         // 配置HTTP管道中间件

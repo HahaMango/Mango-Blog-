@@ -10,9 +10,9 @@ namespace Blog.BlogControllers.Article
 {
     [Route("mango/blog")]
     [ApiController]
-    public class PageController : ControllerBase
+    public class ArticleController : ControllerBase
     {
-        public PageController()
+        public ArticleController()
         {
 
         }
