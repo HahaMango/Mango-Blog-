@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using Blog.Service;
+using Blog.Helper;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Blog.BlogControllers.User.Category
 {
@@ -14,48 +16,55 @@ namespace Blog.BlogControllers.User.Category
      *  当前用户的文章分类接口
      *
      */
-    //[Route("/blog")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        private const string UrlPrefix = "/user";
+
         private readonly ICategoryService<string> _categoryService;
 
-        public CategoryController(ICategoryService<string> categoryService)
-        {
-            this._categoryService = categoryService;
-        }
+        //public CategoryController(ICategoryService<string> categoryService)
+        //{
+            //this._categoryService = categoryService;
+        //}
 
         /**
          * 
          * 获取当前用户的文章分类列表
          * 
          */
-        [HttpGet("user/{userid}/categories")]
-        [ProducesResponseType(typeof(List<Blog.JSONEntity.Category>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route(UrlPrefix + "/{userid}/categories")]
+        [HttpGet]
         public ActionResult<List<Blog.JSONEntity.Category>> GetCategories(string userid)
         {
+            if (userid == null)
+            {
+                return BadRequest();
+            }              
             List<Blog.JSONEntity.Category> categories = null;
             categories = _categoryService.GetCategories(userid);
             if(categories == null)
             {
                 return NotFound();
             }
-            return categories;
+            return categories;            
         }
 
         /**
          * 
          * 获取当前用户的某个分类
          * 
-         */
-        [HttpGet("/user/{userid}/category/{id}")]
-        [ProducesResponseType(typeof(JSONEntity.Category),StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Blog.JSONEntity.Category> GetCategory(string userid, int id)
+         */        
+        [Route(UrlPrefix + "/{userid}/category/{id}")]
+        [HttpGet]
+        public ActionResult<Blog.JSONEntity.Category> GetCategory(string userid, int? id)
         {
+            if(userid == null || id == null)
+            {
+                return BadRequest();
+            }
             Blog.JSONEntity.Category category = null;
-            category = _categoryService.GetCategory(userid, id);
+            category = _categoryService.GetCategory(userid, (int)id);
             if(category == null)
             {
                 return NotFound();
@@ -68,15 +77,22 @@ namespace Blog.BlogControllers.User.Category
          * 更新当前用户的某个列表
          * 
          */
-        [HttpPut("/user/{userid}/category/{id}")]
+        [Route(UrlPrefix + "/{userid}/category/{id}")]
+        [HttpPut]
         [Authorize]
-        [ProducesResponseType(typeof(List<JSONEntity.Category>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult<List<JSONEntity.Category>> UpdateCategory(string userid,JSONEntity.Category category)
-        {
-            if (_categoryService.Replace(userid,category))
+        public ActionResult UpdateCategory(string userid,int? id,string newdisplayname)
+        {            
+            if(userid==null||id==null||newdisplayname ==null)
             {
-                return _categoryService.GetCategories(userid);
+                return BadRequest();
+            }
+
+            JSONEntity.Category category = new JSONEntity.Category((int)id, newdisplayname);
+
+            Resultion resultion = _categoryService.Replace(userid, category);
+            if (resultion.IsSuccess)
+            {
+                return CreatedAtAction(nameof(UpdateCategory), resultion.Value);
             }
             else
             {
@@ -89,20 +105,24 @@ namespace Blog.BlogControllers.User.Category
          * 删除当前用户添加一个分类项
          * 
          */
-        [HttpDelete("/user/{userid}/category/{id}")]
+        [Route(UrlPrefix + "/{userid}/category/{id}")]
+        [HttpDelete]
         [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult DeleteCategory(string userid, JSONEntity.Category category)       
+        public ActionResult DeleteCategory(string userid, int? id, string newdisplayname)
         {
-            if (_categoryService.Delete(userid, category))
+            if (userid == null || id == null || newdisplayname == null)
+            {
+                return BadRequest();
+            }
+
+            JSONEntity.Category category = new JSONEntity.Category((int)id, newdisplayname);
+
+            Resultion resultion = _categoryService.Delete(userid, category);
+            if (resultion.IsSuccess)
             {
                 return NoContent();
             }
-            else
-            {
-                return NotFound();
-            }
+            return NotFound();       
         }
 
         /**
@@ -110,17 +130,24 @@ namespace Blog.BlogControllers.User.Category
          * 更新当前用户的一个分类项
          * 
          */
-        [HttpPost("/user/{userid}/categories")]
+        [Route(UrlPrefix+"/{userid}/categories")]
+        [HttpPost]
         [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<JSONEntity.Category> AddCategory(string userid,JSONEntity.Category category)
-        {
-            if (_categoryService.Add(userid, category))
+        public ActionResult<JSONEntity.Category> AddCategory(JSONEntity.Category category,string userid)
+        {          
+            if (category == null || !ModelState.IsValid)
             {
-                return _categoryService.GetCategory(userid, category.Id);
+                return BadRequest();
             }
+            
+            Resultion resultion = _categoryService.Add(userid, category);
+
+            if (resultion.IsSuccess)
+            {
+                return CreatedAtAction(nameof(AddCategory), resultion.Value);
+            }   
             return NotFound();
+            
         }
     }
 }

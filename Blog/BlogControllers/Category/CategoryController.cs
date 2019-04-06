@@ -18,9 +18,9 @@ namespace Blog.BlogControllers.Category
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<Blog.JSONEntity.Category>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Blog.JSONEntity.Category>> GetCategory()
+        //[ProducesResponseType(typeof(List<Blog.JSONEntity.Category>), StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<JSONEntity.Category>> GetCategory(int? a,string d)
         {
             List<Blog.JSONEntity.Category> categories = _defaultCategory.Categorys();
             if(categories == null)
@@ -28,8 +28,7 @@ namespace Blog.BlogControllers.Category
                 return NotFound();
             }
             return categories;
+            
         }
-
-
     }
 }

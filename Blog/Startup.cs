@@ -20,11 +20,12 @@ namespace Blog
 
         // 配置需要添加进DI的服务
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {           
             services.AddMvcCore()
                 .AddAuthorization()
                 .AddJsonFormatters()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .AddDataAnnotations()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);                   
 
             //配置API资源
             services.AddAuthentication("Bearer")                

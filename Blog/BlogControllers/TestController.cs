@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
+using Blog.JSONEntity;
+
 namespace Blog.BlogControllers
 {
     [Route("mango/blog/[controller]")]
@@ -21,12 +23,14 @@ namespace Blog.BlogControllers
             this.configuration = configuration;
         }
 
-        [HttpGet]
-        public ActionResult<List<string>> Hello()
+        [HttpPost]
+        public ActionResult Hello()
         {
-            List<string> list = new List<string>();
-            string n = configuration["IdentityService"];
-            return list;
+            if (ModelState.IsValid)
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }
