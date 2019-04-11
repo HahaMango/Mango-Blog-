@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Blog.Helper;
+
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-using Blog.Helper;
-using Microsoft.AspNetCore.Http;
-
-namespace Blog.BlogControllers.Category
+namespace Blog.BlogControllers.CategoryController
 {
     [Route("/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class GlobalCategoryController : ControllerBase
     {
         private DefaultCategory _defaultCategory;
 
-        public CategoryController(DefaultCategory defaultCategory)
+        public GlobalCategoryController(DefaultCategory defaultCategory)
         {
             this._defaultCategory = defaultCategory;
         }
@@ -20,9 +19,9 @@ namespace Blog.BlogControllers.Category
         [HttpGet]
         //[ProducesResponseType(typeof(List<Blog.JSONEntity.Category>), StatusCodes.Status201Created)]
         //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<JSONEntity.Category>> GetCategory(int? a,string d)
+        public ActionResult<List<JSONEntity.Category_JSON>> GetCategory(int? a,string d)
         {
-            List<Blog.JSONEntity.Category> categories = _defaultCategory.Categorys();
+            List<Blog.JSONEntity.Category_JSON> categories = _defaultCategory.Categorys();
             if(categories == null)
             {
                 return NotFound();

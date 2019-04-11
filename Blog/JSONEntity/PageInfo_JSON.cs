@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.JSONEntity
 {
-    public class PageInfo
+    public class PageInfo_JSON
     {
         public string Page_id { get; set; }
         public string User_id { get; set; }
@@ -18,6 +18,6 @@ namespace Blog.JSONEntity
         public int Comment_Count { get; set; }
         public string Description { get; set; }
         public int Word_Count { get; set; }
-        public List<Category> categories { get; set; }
+        public List<Category_JSON> categories { get; set; }
     }
 }

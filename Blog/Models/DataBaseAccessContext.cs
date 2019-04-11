@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Blog.Models.Article;
+using Blog.Models.ArticleModels;
 using Blog.Models.Users;
 
 namespace Blog.Models

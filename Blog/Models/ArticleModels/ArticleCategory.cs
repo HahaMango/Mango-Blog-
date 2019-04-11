@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models.Article
+namespace Blog.Models.ArticleModels
 {
     public class ArticleCategory
     {

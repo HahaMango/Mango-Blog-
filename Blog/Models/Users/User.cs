@@ -1,4 +1,4 @@
-﻿using Blog.Models.Article;
+﻿using Blog.Models.ArticleModels;
 using Blog.Models.Users;
 using System;
 using System.Collections.Generic;

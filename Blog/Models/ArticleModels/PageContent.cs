@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models.Article
+namespace Blog.Models.ArticleModels
 {
-    public class ArticleStatistics
+    public class PageContent
     {
         public int Id { get; set; }
         public int PageId { get; set; }
-        public int Like { get; set; }
-        public int Reads { get; set; }
-        public int Comments { get; set; }
+        public string Content { get; set; }
+        public Page Page { get; set; }
     }
 }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Blog.JSONEntity
 {
-    public class PageContent
+    public class Article_JSON
     {
-        public string Page_id { get; set; }
-        public string Content { get; set; }
+        public PageInfo_JSON PageInfo { get; set; }
+        public PageContent_JSON PageContent { get; set; }
     }
 }

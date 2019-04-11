@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Blog.Models.Users;
 
-namespace Blog.Models.Article
+namespace Blog.Models.ArticleModels
 {
     public class Comment
     {

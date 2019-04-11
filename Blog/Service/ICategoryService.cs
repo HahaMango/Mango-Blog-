@@ -10,11 +10,11 @@ namespace Blog.Service
 {
     public interface ICategoryService<UserIdType>
     {
-        Resultion Add(UserIdType userid,Category category);
-        Resultion Replace(UserIdType userid,Category category);
-        Resultion Delete(UserIdType userid,Category category);
-        List<Category> GetCategories(UserIdType id);
-        List<Category> GetCategories(UserIdType id, int count);
-        Category GetCategory(UserIdType userid, int id);
+        Resultion Add(UserIdType userid,Category_JSON category);
+        Resultion Replace(UserIdType userid,Category_JSON category);
+        Resultion Delete(UserIdType userid,Category_JSON category);
+        List<Category_JSON> GetCategories(UserIdType id);
+        List<Category_JSON> GetCategories(UserIdType id, int count);
+        Category_JSON GetCategory(UserIdType userid, int id);
     }
 }
