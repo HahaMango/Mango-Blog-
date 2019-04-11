@@ -7,7 +7,18 @@ namespace Blog.JSONEntity
 {
     public class Article_JSON
     {
-        public PageInfo_JSON PageInfo { get; set; }
+        public string Page_id { get; set; }
+        public string User_id { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public DateTime Create_Time { get; set; }
+        public DateTime Update_Time { get; set; }
+        public int Like_Count { get; set; }
+        public int View_Count { get; set; }
+        public int Comment_Count { get; set; }
+        public string Description { get; set; }
+        public int Word_Count { get; set; }
+        public List<Category_JSON> categories { get; set; }
         public PageContent_JSON PageContent { get; set; }
     }
 }

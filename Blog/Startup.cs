@@ -41,6 +41,7 @@ namespace Blog
             //添加服务到DI容器
             services.AddSingleton<DefaultCategory>();
             services.AddSingleton<ICategoryService<string>>();
+            services.AddSingleton<IArticleBaseService<string, string>>();
         }
 
         // 配置HTTP管道中间件
