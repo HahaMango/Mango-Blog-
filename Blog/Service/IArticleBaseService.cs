@@ -11,8 +11,11 @@ namespace Blog.Service
     public interface IArticleBaseService<UserIdType,ArticleIdType>
     {
         Resultion AddArticle(UserIdType userid,Article_JSON article);
+
         Resultion DeleteArticle(UserIdType userid, ArticleIdType articleId);
+
         Resultion UpdateArticle(UserIdType userId, Article_JSON article);
+
         PageContent_JSON GetContent(UserIdType userId, ArticleIdType articleId);
         Article_JSON GetArticleInfo(UserIdType userId, ArticleIdType articleId);
         Article_JSON GetArticleWithContent(UserIdType userId, ArticleIdType articleId);

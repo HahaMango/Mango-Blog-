@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Blog.Helper;
 using Blog.Service;
+using Blog.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog
 {
@@ -38,10 +40,13 @@ namespace Blog
                     options.Audience = _configuration["mango.blog"];
                 });
 
+            services.AddDbContext<ArticleContext>(op => { op.UseMySql(_configuration.GetConnectionString("BlogContextConnection")); });
+
             //添加服务到DI容器
-            services.AddSingleton<DefaultCategory>();
-            services.AddSingleton<ICategoryService<string>>();
-            services.AddSingleton<IArticleBaseService<string, string>>();
+            //services.AddSingleton<DefaultCategory>();
+            //services.AddSingleton<ICategoryService<string>>();
+            //services.AddSingleton<IArticleBaseService<string, string>>();
+            //services.AddSingleton<ICommentService<string, string, string>>();
         }
 
         // 配置HTTP管道中间件

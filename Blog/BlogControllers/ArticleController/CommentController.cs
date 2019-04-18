@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using Blog.JSONEntity;
+using Blog.Service;
+using Blog.Helper;
 
 namespace Blog.BlogControllers.ArticleController
 {
@@ -16,9 +18,11 @@ namespace Blog.BlogControllers.ArticleController
     {
         private const string UrlPrefix = "/user";
 
-        public CommentController()
+        private readonly ICommentService<string, string, string> _commentService;
+
+        public CommentController(ICommentService<string, string, string> commentService)
         {
-            
+            this._commentService = commentService;
         }
 
         [Route(UrlPrefix+"/{userid}/comment/{id}")]
@@ -26,7 +30,14 @@ namespace Blog.BlogControllers.ArticleController
         [Authorize]
         public ActionResult<Comment_JSON> GetComment(string userid,string id)
         {
-            return null;
+            if (userid == null || id == null)
+                return BadRequest();
+
+            Comment_JSON comment = null;
+            comment = _commentService.GetCommentById(userid, id);
+            if (comment == null)
+                return NotFound();
+            return comment;
         }
 
         [Route(UrlPrefix+"/{userid}/comments")]
@@ -34,7 +45,14 @@ namespace Blog.BlogControllers.ArticleController
         [Authorize]
         public ActionResult<List<Comment_JSON>> GetComments(string userid)
         {
-            return null;
+            if (userid == null)
+                return BadRequest();
+
+            List<Comment_JSON> comments = null;
+            comments = _commentService.GetComments(userid);
+            if (comments == null)
+                return NotFound();
+            return comments;
         }
 
         [Route(UrlPrefix+"/{userid}/comment/{id}")]
@@ -42,15 +60,27 @@ namespace Blog.BlogControllers.ArticleController
         [Authorize]
         public ActionResult DeleteComment(string userid,string id)
         {
-            return null;
+            if (userid == null || id == null)
+                return BadRequest();
+
+            Resultion resultion = _commentService.DeleteComment(userid,id);
+            if (resultion.IsSuccess)
+                return NoContent();
+            return NotFound();
         }
 
         [Route(UrlPrefix+"/{userid}/comment/{id}")]
         [HttpPut]
         [Authorize]
-        public ActionResult UpdateComment(string userid,string id)
+        public ActionResult UpdateComment(string userid,string id,Comment_JSON comment)
         {
-            return null;
+            if (userid == null || id == null || comment == null)
+                return BadRequest();
+
+            Resultion resultion = _commentService.UpdateComment(userid, id, comment);
+            if (resultion.IsSuccess)
+                return CreatedAtAction(nameof(UpdateComment), resultion.Value);
+            return NotFound();        
         }
 
         [Route(UrlPrefix+"/{userid}/article/{articleid}/comments")]
@@ -58,7 +88,13 @@ namespace Blog.BlogControllers.ArticleController
         [Authorize]
         public ActionResult PostComment(string userid,string articleid,Comment_JSON comment)
         {
-            return null;
+            if (userid == null || articleid == null || comment == null)
+                return BadRequest();
+
+            Resultion resultion = _commentService.AddCommentToArticle(userid, articleid, comment);
+            if (resultion.IsSuccess)
+                return CreatedAtAction(nameof(PostComment), resultion.Value);
+            return NotFound();
         }
     }
 }

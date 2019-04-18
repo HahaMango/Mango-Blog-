@@ -20,7 +20,7 @@ namespace Blog.BlogControllers.ArticleController
             this._articleBaseService = articleBaseService;
         }
 
-        [Route(UrlPrefix+"/{userid}/article/{id}")]
+        [Route(UrlPrefix+"/{userid}/article/{id}/content")]
         [HttpGet]
         public ActionResult<PageContent_JSON> GetContent(string userid,string id)
         {

@@ -13,7 +13,7 @@ namespace Blog.JSONEntity
         public DateTime CreateTime { get; set; }
         public string Content { get; set; }
         public bool HasReply { get; set; }
-        public List<Comment_JSON> Reply { get; set; }    
+        public List<Comment_JSON> Reply { get; set; } 
         public int LikeCount { get; set; }
 
         public bool IsReply { get; set; }

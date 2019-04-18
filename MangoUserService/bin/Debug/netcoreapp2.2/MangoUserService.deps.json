@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "b36818a78e1460eed609d6d51b385bb3652a4f45"
+    "signature": "51952fd9555c59d37e825f9b829afb2272e81b43"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.2": {
       "MangoUserService/1.0.0": {
         "dependencies": {
+          "IdentityServer4.AspNetIdentity": "2.3.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0"
@@ -33,6 +34,75 @@
         },
         "compile": {
           "MangoUserService.dll": {}
+        }
+      },
+      "IdentityModel/3.10.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "System.Text.Encodings.Web": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.dll": {
+            "assemblyVersion": "3.10.0.0",
+            "fileVersion": "3.10.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityModel.dll": {}
+        }
+      },
+      "IdentityServer4/2.3.0": {
+        "dependencies": {
+          "IdentityModel": "3.10.0",
+          "IdentityServer4.Storage": "2.3.0",
+          "Microsoft.AspNetCore.Authentication": "2.2.0",
+          "Microsoft.AspNetCore.Authentication.Cookies": "2.2.0",
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "2.2.0",
+          "Microsoft.AspNetCore.Cors": "2.2.0",
+          "Microsoft.Extensions.Caching.Memory": "2.2.0",
+          "Microsoft.Extensions.Logging": "2.2.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "2.2.0",
+          "System.IdentityModel.Tokens.Jwt": "5.3.0",
+          "System.Security.Cryptography.Cng": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityServer4.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityServer4.dll": {}
+        }
+      },
+      "IdentityServer4.AspNetIdentity/2.3.0": {
+        "dependencies": {
+          "IdentityServer4": "2.3.0",
+          "Microsoft.AspNetCore.Identity": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityServer4.AspNetIdentity.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityServer4.AspNetIdentity.dll": {}
+        }
+      },
+      "IdentityServer4.Storage/2.3.0": {
+        "dependencies": {
+          "IdentityModel": "3.10.0",
+          "Microsoft.AspNetCore.Authentication.Abstractions": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityServer4.Storage.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.2.0": {
@@ -3226,6 +3296,34 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "IdentityModel/3.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PJ8F5HOauI52OhiJZ7E46/AyNmqKMOWGmruHx6Ajv2evNFB/9P+MknY72zr8V5cjnwbVPDHNUS3IUUSG/l3/kA==",
+      "path": "identitymodel/3.10.0",
+      "hashPath": "identitymodel.3.10.0.nupkg.sha512"
+    },
+    "IdentityServer4/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fONH2IqqZon2SnfeRN0bZbkiq684nnLUvjzYlfj+XoRvOjQ7+dcHKMnreTxmALAtUSIkTdT/ksCqlBZXphLFoQ==",
+      "path": "identityserver4/2.3.0",
+      "hashPath": "identityserver4.2.3.0.nupkg.sha512"
+    },
+    "IdentityServer4.AspNetIdentity/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bhxBqb07oeoP08ZOysd3c9rmZGGaB7DkIctP7iKJhJ/4NQxliCesQOvekSi4WC3sJavRPPHAnnn7KPf6XRkppg==",
+      "path": "identityserver4.aspnetidentity/2.3.0",
+      "hashPath": "identityserver4.aspnetidentity.2.3.0.nupkg.sha512"
+    },
+    "IdentityServer4.Storage/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tRYsde+9dgGpy5TYYemCO3nY0OGBzFJov+yxZ/CK20IFvWpMzem3Jz4jyRutuLRWDuXKzIWe8xma8YeXgPi4aw==",
+      "path": "identityserver4.storage/2.3.0",
+      "hashPath": "identityserver4.storage.2.3.0.nupkg.sha512"
     },
     "Microsoft.NETCore.App/2.2.0": {
       "type": "package",
