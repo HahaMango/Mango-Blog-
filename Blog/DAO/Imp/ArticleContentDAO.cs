@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Blog.Models.ArticleModels;
 
 using Blog.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.DAO.Imp
 {
@@ -20,22 +21,136 @@ namespace Blog.DAO.Imp
 
         public int AddContent(ArticleContent articleContent)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _articleContext.ArticleContents.Add(articleContent);
+
+                return _articleContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<int> AddContentAsync(ArticleContent articleContent)
+        {
+            try
+            {
+                _articleContext.ArticleContents.Add(articleContent);
+
+                return await _articleContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public int DeleteContent(ArticleContent articleContent)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ArticleContent temp = _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Single();
+
+                _articleContext.ArticleContents.Remove(temp);
+
+                return _articleContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<int> DeleteContentAsync(ArticleContent articleContent)
+        {
+            try
+            {
+                ArticleContent temp = _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Single();
+
+                _articleContext.ArticleContents.Remove(temp);
+
+                return await _articleContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public ArticleContent GetArticleContent(string articleid)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleid)
+                    .Single();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ArticleContent> GetArticleContentAsync(string articleid)
+        {
+            try
+            {
+                return await _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleid)
+                    .SingleAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public int UpdateContent(ArticleContent articleContent)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ArticleContent temp = _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Single();
+
+                temp.Content = articleContent.Content;
+
+                _articleContext.ArticleContents.Update(temp);
+
+                return _articleContext.SaveChanges();
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<int> UpdateContentAsync(ArticleContent articleContent)
+        {
+            try
+            {
+                ArticleContent temp = _articleContext.ArticleContents
+                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Single();
+
+                temp.Content = articleContent.Content;
+
+                _articleContext.ArticleContents.Update(temp);
+
+                return await _articleContext.SaveChangesAsync();
+
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
