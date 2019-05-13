@@ -12,12 +12,16 @@ namespace Blog.Models.ArticleModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Column(TypeName = "varchar(12)")]
-        public string Userid { get; set; }
-        [Column(TypeName = "varchar(10)")]
-        public string Name { get; set; }
+
+        [Required]
+        public int Userid { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
         [Column(TypeName = "varchar(10)")]
         public string DisplayName { get; set; }
+
         public DateTime AddTime { get; set; }
     }
 }

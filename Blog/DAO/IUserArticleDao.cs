@@ -8,7 +8,7 @@ using Blog.Helper;
 
 namespace Blog.DAO
 {
-    interface IUserArticleDao<UserType,ArticleType>
+    public interface IUserArticleDAO<UserType,ArticleType>
     {
         #region 同步查询接口
 

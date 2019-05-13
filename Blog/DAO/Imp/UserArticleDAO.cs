@@ -7,10 +7,11 @@ using Blog.Models.ArticleModels;
 using Blog.Models;
 using Blog.Helper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Blog.DAO.Imp
 {
-    public class UserArticleDAO : IUserArticleDao<string, string>
+    public class UserArticleDAO : IUserArticleDAO<int, int>
     {
 
         private readonly ArticleContext _articleContext = null;
@@ -46,6 +47,7 @@ namespace Blog.DAO.Imp
                 article1.Id = temp.Id;
                 article1.PageId = article.PageId;
                 article1.UserId = article.UserId;
+                article1.UserName = article.UserName;
                 article1.CreateTime = article.CreateTime;
                 article1.UpdateTime = article.UpdateTime;
                 article1.Title = article.Title;
@@ -68,7 +70,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public int CountComments(string userid)
+        public int CountComments(int userid)
         {
             try
             {
@@ -80,7 +82,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public int CountLike(string userid)
+        public int CountLike(int userid)
         {
             try
             {
@@ -92,7 +94,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public int CountRead(string userid)
+        public int CountRead(int userid)
         {
             try
             {
@@ -110,7 +112,7 @@ namespace Blog.DAO.Imp
             {
                 Article temp = _articleContext.Articles
                     .Where<Article>(a => a.PageId == article.PageId)
-                    .First<Article>();
+                    .SingleOrDefault<Article>();
                 _articleContext.Remove(temp);
 
                 return _articleContext.SaveChanges();
@@ -121,12 +123,12 @@ namespace Blog.DAO.Imp
             }        
         }
 
-        public Article GetArticleById(string userid, string articleid)
+        public Article GetArticleById(int userid, int articleid)
         {
             try
             {
                 return _articleContext.Articles
-                    .Single(a => (a.UserId == userid) && (a.PageId == articleid));
+                    .SingleOrDefault(a => (a.UserId == userid) && (a.PageId == articleid));
             }
             catch
             {
@@ -136,7 +138,7 @@ namespace Blog.DAO.Imp
 
         #region 根据用户id进行查询和分页
 
-        public List<Article> GetArticlesById(string userid)
+        public List<Article> GetArticlesById(int userid)
         {
             try
             {
@@ -151,7 +153,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesById(string userid, int page, int count)
+        public List<Article> GetArticlesById(int userid, int page, int count)
         {
             try
             {
@@ -171,7 +173,7 @@ namespace Blog.DAO.Imp
 
         #region 根据用户id查询原创文章
 
-        public List<Article> GetOriginal(string userid)
+        public List<Article> GetOriginal(int userid)
         {
             try
             {
@@ -185,7 +187,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesByOriginal(string userid, int page, int count)
+        public List<Article> GetArticlesByOriginal(int userid, int page, int count)
         {
             try
             {
@@ -205,7 +207,7 @@ namespace Blog.DAO.Imp
 
         #region 排序查询和分页
 
-        public List<Article> GetArticlesSortByComments(string userid, int page, int count)
+        public List<Article> GetArticlesSortByComments(int userid, int page, int count)
         {
             try
             {
@@ -222,7 +224,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesSortByDate(string userid, int page, int count)
+        public List<Article> GetArticlesSortByDate(int userid, int page, int count)
         {
             try
             {
@@ -239,7 +241,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesSortByLike(string userid, int page, int count)
+        public List<Article> GetArticlesSortByLike(int userid, int page, int count)
         {
             try
             {
@@ -256,7 +258,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesSortByRead(string userid, int page, int count)
+        public List<Article> GetArticlesSortByRead(int userid, int page, int count)
         {
             try
             {
@@ -273,7 +275,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesSortByWord(string userid, int page, int count)
+        public List<Article> GetArticlesSortByWord(int userid, int page, int count)
         {
             try
             {
@@ -294,7 +296,7 @@ namespace Blog.DAO.Imp
 
         #region 获取相关参数最大值
 
-        public Article GetMostComments(string userid)
+        public Article GetMostComments(int userid)
         {
             try
             {
@@ -309,7 +311,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public Article GetMostLike(string userid)
+        public Article GetMostLike(int userid)
         {
             try
             {
@@ -324,7 +326,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public Article GetMostRead(string userid)
+        public Article GetMostRead(int userid)
         {
             try
             {
@@ -339,7 +341,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public Article GetMostWord(string userid)
+        public Article GetMostWord(int userid)
         {
             try
             {
@@ -356,7 +358,7 @@ namespace Blog.DAO.Imp
 
         #endregion
 
-        public async Task<Article> GetArticleByIdAsync(string userid, string articleid)
+        public async Task<Article> GetArticleByIdAsync(int userid, int articleid)
         {
             try
             {
@@ -369,7 +371,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesByIdAsync(string userid)
+        public async Task<List<Article>> GetArticlesByIdAsync(int userid)
         {
             try
             {
@@ -390,7 +392,7 @@ namespace Blog.DAO.Imp
             {
                 Article temp = _articleContext.Articles
                     .Where<Article>(a => a.PageId == article.PageId)
-                    .First<Article>();
+                    .SingleOrDefault();
                 _articleContext.Remove(temp);
 
                 return await _articleContext.SaveChangesAsync();
@@ -449,7 +451,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<Article> GetMostLikeAsync(string userid)
+        public async Task<Article> GetMostLikeAsync(int userid)
         {
             try
             {
@@ -464,7 +466,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<Article> GetMostReadAsync(string userid)
+        public async Task<Article> GetMostReadAsync(int userid)
         {
             try
             {
@@ -479,7 +481,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<Article> GetMostWordAsync(string userid)
+        public async Task<Article> GetMostWordAsync(int userid)
         {
             try
             {
@@ -494,7 +496,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<Article> GetMostCommentsAsync(string userid)
+        public async Task<Article> GetMostCommentsAsync(int userid)
         {
             try
             {
@@ -509,7 +511,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<int> CountLikeAsync(string userid)
+        public async Task<int> CountLikeAsync(int userid)
         {
             try
             {
@@ -521,7 +523,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<int> CountReadAsync(string userid)
+        public async Task<int> CountReadAsync(int userid)
         { 
             try
             {
@@ -533,7 +535,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<int> CountCommentsAsync(string userid)
+        public async Task<int> CountCommentsAsync(int userid)
         {
             try
             {
@@ -545,7 +547,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetOriginalAsync(string userid)
+        public async Task<List<Article>> GetOriginalAsync(int userid)
         {
             try
             {
@@ -559,7 +561,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesSortByDateAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesSortByDateAsync(int userid, int page, int count)
         {
             try
             {
@@ -576,7 +578,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesSortByReadAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesSortByReadAsync(int userid, int page, int count)
         {
             try
             {
@@ -593,7 +595,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesSortByLikeAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesSortByLikeAsync(int userid, int page, int count)
         {
             try
             {
@@ -610,7 +612,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesSortByWordAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesSortByWordAsync(int userid, int page, int count)
         {
             try
             {
@@ -627,7 +629,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesSortByCommentsAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesSortByCommentsAsync(int userid, int page, int count)
         {
             try
             {
@@ -644,7 +646,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Article>> GetArticlesByOriginalAsync(string userid, int page, int count)
+        public async Task<List<Article>> GetArticlesByOriginalAsync(int userid, int page, int count)
         {
             try
             {
@@ -660,7 +662,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Article> GetArticlesBySearch(string userid, SearchArgument searchArgument)
+        public List<Article> GetArticlesBySearch(int userid, SearchArgument searchArgument)
         {
             if (searchArgument.IsNull())
                 return null;
@@ -685,16 +687,13 @@ namespace Blog.DAO.Imp
             }
             if(searchArgument.Categories != null)
             {
-                foreach(string s in searchArgument.Categories)
-                {
-                    q = q.Where(a => a.Categories.Contains(s));
-                }
+                q = q.Where(a => MatchCategories(a.Categories, searchArgument.Categories));
             }
 
             return q.ToList();
         }
 
-        public List<Article> GetArticlesBySearch(string userid, SearchArgument searchArgument, int page, int count)
+        public List<Article> GetArticlesBySearch(int userid, SearchArgument searchArgument, int page, int count)
         {
             if (searchArgument.IsNull())
                 return null;
@@ -719,10 +718,7 @@ namespace Blog.DAO.Imp
             }
             if (searchArgument.Categories != null)
             {
-                foreach (string s in searchArgument.Categories)
-                {
-                    q = q.Where(a => a.Categories.Contains(s));
-                }
+                q = q.Where(a => MatchCategories(a.Categories, searchArgument.Categories));
             }
 
             return q.ToList()
@@ -731,7 +727,7 @@ namespace Blog.DAO.Imp
                 .ToList();
         }
 
-        public async Task<List<Article>> GetArticlesBySearchAsync(string userid, SearchArgument searchArgument)
+        public async Task<List<Article>> GetArticlesBySearchAsync(int userid, SearchArgument searchArgument)
         {
             if (searchArgument.IsNull())
                 return null;
@@ -756,16 +752,13 @@ namespace Blog.DAO.Imp
             }
             if (searchArgument.Categories != null)
             {
-                foreach (string s in searchArgument.Categories)
-                {
-                    q = q.Where(a => a.Categories.Contains(s));
-                }
+                q = q.Where(a => MatchCategories(a.Categories, searchArgument.Categories));
             }
 
             return await q.ToListAsync();
         }
 
-        public async Task<List<Article>> GetArticlesBySearchAsync(string userid, SearchArgument searchArgument, int page, int count)
+        public async Task<List<Article>> GetArticlesBySearchAsync(int userid, SearchArgument searchArgument, int page, int count)
         {
             if (searchArgument.IsNull())
                 return null;
@@ -790,15 +783,24 @@ namespace Blog.DAO.Imp
             }
             if (searchArgument.Categories != null)
             {
-                foreach (string s in searchArgument.Categories)
-                {
-                    q = q.Where(a => a.Categories.Contains(s));
-                }
+                q = q.Where(a => MatchCategories(a.Categories, searchArgument.Categories));
             }
 
             return await q.Skip(page)
                 .Take(count)
                 .ToListAsync();
+        }
+
+
+        //私有方法，筛选分类字段。
+        private bool MatchCategories(string source,string[] categories)
+        {
+            bool flag = false;
+            foreach(string s in categories)
+            {
+                flag = flag || source.Contains(s);
+            }
+            return flag;
         }
     }
 }

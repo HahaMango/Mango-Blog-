@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.DAO.Imp
 {
-    public class UserCommentDAO : IUserCommentDAO<string, string>
+    public class UserCommentDAO : IUserCommentDAO<int, int>
     {
         private readonly ArticleContext _articleContext = null;
 
@@ -80,7 +80,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Comment> GetCommentsByArticleId(string articleid)
+        public List<Comment> GetCommentsByArticleId(int articleid)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Comment>> GetCommentsByArticleIdAsync(string articleid)
+        public async Task<List<Comment>> GetCommentsByArticleIdAsync(int articleid)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Comment> GetCommentsSortByLike(string userid)
+        public List<Comment> GetCommentsSortByLike(int userid)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Comment>> GetCommentsSortByLikeAsync(string userid)
+        public async Task<List<Comment>> GetCommentsSortByLikeAsync(int userid)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<Comment> GetCommentsSortByTime(string articleid)
+        public List<Comment> GetCommentsSortByTime(int articleid)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<Comment>> GetCommentsSortByTimeAsync(string articleid)
+        public async Task<List<Comment>> GetCommentsSortByTimeAsync(int articleid)
         {
             try
             {

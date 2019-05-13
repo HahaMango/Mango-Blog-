@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.JSONEntity
 {
-    public class PageContent_JSON
+    public class ArticleContentJSON
     {
         public string Page_id { get; set; }
         public string Content { get; set; }

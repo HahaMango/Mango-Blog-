@@ -7,7 +7,7 @@ using Blog.Models.ArticleModels;
 
 namespace Blog.DAO
 {
-    interface IArticleContentDAO<ArticleType>
+    public interface IArticleContentDAO<ArticleType>
     {
         #region 同步接口
         ArticleContent GetArticleContent(ArticleType articleid);

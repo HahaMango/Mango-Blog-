@@ -13,17 +13,27 @@ namespace Blog.Models.ArticleModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Column(TypeName = "varchar(12)")]
-        public string CommentId { get; set; }
-        [Column(TypeName = "varchar(12)")]
-        public string PageId { get; set; }
-        [Column(TypeName = "varchar(12)")]
-        public string UserId { get; set; }
+
+        [Required]
+        public int CommentId { get; set; }
+
+        [Required]
+        public int PageId { get; set; }
+
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
         
         public DateTime CreateTime { get; set; }
+
         public int ReplyComId { get; set; }
+
         public string Content { get; set; }
+
         public int Like { get; set; }
+
         public bool IsReply { get; set; }
     }
 }

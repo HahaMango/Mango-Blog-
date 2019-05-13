@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.DAO.Imp
 {
-    public class ArticleCategoryDAO : IArticleCategoryDAO<string>
+    public class ArticleCategoryDAO : IArticleCategoryDAO<int>
     {
 
         private readonly ArticleContext _articleContext = null;
@@ -79,7 +79,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public List<ArticleCategory> GetArticleCategory(string userid)
+        public List<ArticleCategory> GetArticleCategory(int userid)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<List<ArticleCategory>> GetArticleCategoryAsync(string userid)
+        public async Task<List<ArticleCategory>> GetArticleCategoryAsync(int userid)
         {
             try
             {
@@ -115,8 +115,7 @@ namespace Blog.DAO.Imp
                     .Where(ac => ac.Id == articleCategory.Id)
                     .Single();
 
-                temp.Name = articleCategory.Name;
-                temp.DisplayName = articleCategory.DisplayName;
+                temp.DisplayName = articleCategory.DisplayName;                
 
                 _articleContext.ArticleCategories.Update(temp);
 
@@ -136,7 +135,6 @@ namespace Blog.DAO.Imp
                     .Where(ac => ac.Id == articleCategory.Id)
                     .Single();
 
-                temp.Name = articleCategory.Name;
                 temp.DisplayName = articleCategory.DisplayName;
 
                 _articleContext.ArticleCategories.Update(temp);

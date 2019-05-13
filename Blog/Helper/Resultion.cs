@@ -11,6 +11,11 @@ namespace Blog.Helper
         private string message;
         private object value;
 
+        public Resultion()
+        {
+
+        }
+
         public Resultion(bool isSuccess,string message,object value)
         {
             this.isSuccess = isSuccess;
@@ -24,6 +29,10 @@ namespace Blog.Helper
             {
                 return this.isSuccess;
             }
+            set
+            {
+                this.isSuccess = value;
+            }
         }
 
         public string Message
@@ -32,6 +41,10 @@ namespace Blog.Helper
             {
                 return this.message;
             }
+            set
+            {
+                this.message = value;
+            }
         }
 
         public object Value
@@ -39,6 +52,10 @@ namespace Blog.Helper
             get
             {
                 return this.value;
+            }
+            set
+            {
+                this.value = value;
             }
         }
     }

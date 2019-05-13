@@ -8,18 +8,66 @@ using Blog.JSONEntity;
 
 namespace Blog.Service
 {
-    public interface IArticleBaseService<UserIdType,ArticleIdType>
+    /// <summary>
+    /// 
+    /// 文章服务接口
+    /// 
+    /// </summary>
+    /// <typeparam name="UserNameType"></typeparam>
+    /// <typeparam name="ArticleIdType"></typeparam>
+    public interface IArticleBaseService<UserNameType,ArticleIdType>
     {
-        Resultion AddArticle(UserIdType userid,Article_JSON article);
+        #region 同步方法
 
-        Resultion DeleteArticle(UserIdType userid, ArticleIdType articleId);
+        //添加文章
+        Resultion AddArticle(UserNameType username,ArticleJSON article);
 
-        Resultion UpdateArticle(UserIdType userId, Article_JSON article);
+        //删除文章
+        Resultion DeleteArticle(UserNameType username, ArticleJSON article);
 
-        PageContent_JSON GetContent(UserIdType userId, ArticleIdType articleId);
-        Article_JSON GetArticleInfo(UserIdType userId, ArticleIdType articleId);
-        Article_JSON GetArticleWithContent(UserIdType userId, ArticleIdType articleId);
-        List<Article_JSON> GetArticles(UserIdType userId);
-        List<Article_JSON> GetArticlesWithPara(UserIdType userid, SearchPara searchPara);
+        //更新文章
+        Resultion UpdateArticle(UserNameType username, ArticleJSON article);
+
+        //获取文章具体内容
+        ArticleContentJSON GetContent(UserNameType username, ArticleIdType articleId);
+
+        //获取文章的简要信息
+        ArticleJSON GetArticleInfo(UserNameType username, ArticleIdType articleId);
+
+        //获取文章的所有信息
+        ArticleJSON GetArticleDetail(UserNameType username, ArticleIdType articleId);
+
+        //获取对应用户的文章列表,提供分页
+        List<ArticleJSON> GetArticles(UserNameType username,int page,int count);
+
+        //根据具体的请求参数获取用户的文章列表，提供分页
+        List<ArticleJSON> GetArticlesWithPara(UserNameType username, SearchArgument searchPara,int page,int count);
+
+        //对用户文章按阅读量排名，提供分页
+        List<ArticleJSON> GetArticleSortByRead(UserNameType username,int page,int count);
+
+        #endregion
+
+        #region 异步方法
+
+        Task<Resultion> AddArticleAsync(UserNameType username, ArticleJSON article);
+
+        Task<Resultion> DeleteArticleAsync(UserNameType username, ArticleJSON article);
+
+        Task<Resultion> UpdateArticleAsync(UserNameType username, ArticleJSON article);
+
+        Task<ArticleContentJSON> GetContentAsync(UserNameType username, ArticleIdType articleId);
+
+        Task<ArticleJSON> GetArticleInfoAsync(UserNameType username, ArticleIdType articleId);
+
+        Task<ArticleJSON> GetArticleDetailAsync(UserNameType username, ArticleIdType articleId);
+
+        Task<List<ArticleJSON>> GetArticlesAsync(UserNameType username,int page,int count);
+
+        Task<List<ArticleJSON>> GetArticlesWithParaAsync(UserNameType username, SearchArgument searchPara,int page,int count);
+
+        Task<List<ArticleJSON>> GetArticleSortByReadAsync(UserNameType username,int page,int count);
+
+        #endregion
     }
 }

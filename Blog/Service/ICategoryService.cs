@@ -8,16 +8,37 @@ using Blog.Helper;
 
 namespace Blog.Service
 {
-    public interface ICategoryService<UserIdType>
+    public interface ICategoryService<UserNameType>
     {
-        Resultion Add(UserIdType userid,Category_JSON category);
+        #region 同步方法
+        Resultion Add(UserNameType userid,CategoryJSON category);
 
-        Resultion Replace(UserIdType userid,Category_JSON category);
+        Resultion Replace(UserNameType userid,CategoryJSON category);
 
-        Resultion Delete(UserIdType userid,Category_JSON category);
+        Resultion Delete(UserNameType userid,CategoryJSON category);
 
-        List<Category_JSON> GetCategories(UserIdType id);
-        List<Category_JSON> GetCategories(UserIdType id, int count);
-        Category_JSON GetCategory(UserIdType userid, int id);
+        List<CategoryJSON> GetCategories(UserNameType id);
+
+        List<CategoryJSON> GetCategories(UserNameType id, int count);
+
+        CategoryJSON GetCategory(UserNameType userid, int id);
+
+        #endregion
+
+        #region 异步方法
+
+        Task<Resultion> AddAsync(UserNameType userid, CategoryJSON category);
+
+        Task<Resultion> ReplaceAsync(UserNameType userid, CategoryJSON category);
+
+        Task<Resultion> DeleteAsync(UserNameType userid, CategoryJSON category);
+
+        Task<List<CategoryJSON>> GetCategoriesAsync(UserNameType id);
+
+        Task<List<CategoryJSON>> GetCategoriesAsync(UserNameType id, int count);
+
+        Task<CategoryJSON> GetCategoryAsync(UserNameType userid, int id);
+
+        #endregion
     }
 }

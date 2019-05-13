@@ -31,13 +31,13 @@ namespace Blog.BlogControllers.User.CategoryController
          */
         [Route(UrlPrefix + "/{userid}/categories")]
         [HttpGet]
-        public ActionResult<List<Category_JSON>> GetCategories(string userid)
+        public ActionResult<List<CategoryJSON>> GetCategories(string userid)
         {
             if (userid == null)
             {
                 return BadRequest();
             }              
-            List<Category_JSON> categories = null;
+            List<CategoryJSON> categories = null;
             categories = _categoryService.GetCategories(userid);
             if(categories == null)
             {
@@ -53,13 +53,13 @@ namespace Blog.BlogControllers.User.CategoryController
          */        
         [Route(UrlPrefix + "/{userid}/category/{id}")]
         [HttpGet]
-        public ActionResult<Category_JSON> GetCategory(string userid, int? id)
+        public ActionResult<CategoryJSON> GetCategory(string userid, int? id)
         {
             if(userid == null || id == null)
             {
                 return BadRequest();
             }
-            Category_JSON category = null;
+            CategoryJSON category = null;
             category = _categoryService.GetCategory(userid, (int)id);
             if(category == null)
             {
@@ -83,7 +83,7 @@ namespace Blog.BlogControllers.User.CategoryController
                 return BadRequest();
             }
 
-            Category_JSON category = new Category_JSON((int)id, newdisplayname);
+            CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
 
             Resultion resultion = _categoryService.Replace(userid, category);
             if (resultion.IsSuccess)
@@ -111,7 +111,7 @@ namespace Blog.BlogControllers.User.CategoryController
                 return BadRequest();
             }
 
-            Category_JSON category = new Category_JSON((int)id, newdisplayname);
+            CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
 
             Resultion resultion = _categoryService.Delete(userid, category);
             if (resultion.IsSuccess)
@@ -129,7 +129,7 @@ namespace Blog.BlogControllers.User.CategoryController
         [Route(UrlPrefix+"/{userid}/categories")]
         [HttpPost]
         [Authorize]
-        public ActionResult<JSONEntity.Category_JSON> AddCategory(JSONEntity.Category_JSON category,string userid)
+        public ActionResult<JSONEntity.CategoryJSON> AddCategory(JSONEntity.CategoryJSON category,string userid)
         {          
             if (category == null || !ModelState.IsValid)
             {

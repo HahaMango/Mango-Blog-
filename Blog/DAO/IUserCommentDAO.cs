@@ -7,12 +7,14 @@ using Blog.Models.ArticleModels;
 
 namespace Blog.DAO
 {
-    interface IUserCommentDAO<ArticleType,UserType>
+    public interface IUserCommentDAO<ArticleType,UserType>
     {
         #region 同步接口
 
         List<Comment> GetCommentsByArticleId(ArticleType articleid);
+        
         int AddComment(Comment comment);
+
         int DeleteComment(Comment comment);
 
         int UpdateComment(Comment comment);
@@ -26,7 +28,9 @@ namespace Blog.DAO
         #region 异步接口
 
         Task<List<Comment>> GetCommentsByArticleIdAsync(ArticleType articleid);
+
         Task<int> AddCommentAsync(Comment comment);
+
         Task<int> DeleteCommentAsync(Comment comment);
 
         Task<int> UpdateCommentAsync(Comment comment);

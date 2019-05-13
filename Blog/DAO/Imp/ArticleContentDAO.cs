@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.DAO.Imp
 {
-    public class ArticleContentDAO : IArticleContentDAO<string>
+    public class ArticleContentDAO : IArticleContentDAO<int>
     {
 
         private readonly ArticleContext _articleContext = null;
@@ -83,13 +83,13 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public ArticleContent GetArticleContent(string articleid)
+        public ArticleContent GetArticleContent(int articleid)
         {
             try
             {
                 return _articleContext.ArticleContents
                     .Where(ac => ac.PageId == articleid)
-                    .Single();
+                    .SingleOrDefault();
             }
             catch
             {
@@ -97,7 +97,7 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<ArticleContent> GetArticleContentAsync(string articleid)
+        public async Task<ArticleContent> GetArticleContentAsync(int articleid)
         {
             try
             {

@@ -22,12 +22,12 @@ namespace Blog.BlogControllers.ArticleController
 
         [Route(UrlPrefix+"/{userid}/article/{id}/content")]
         [HttpGet]
-        public ActionResult<PageContent_JSON> GetContent(string userid,string id)
+        public ActionResult<ArticleContentJSON> GetContent(string userid,string id)
         {
             if (userid == null || id == null)
                 return BadRequest();
 
-            PageContent_JSON content = null;
+            ArticleContentJSON content = null;
             content = _articleBaseService.GetContent(userid, id);
             if (content == null)
                 return NotFound();
@@ -36,12 +36,12 @@ namespace Blog.BlogControllers.ArticleController
 
         [Route(UrlPrefix+"/{userid}/article/{id}")]
         [HttpGet]
-        public ActionResult<Article_JSON> GetInfo(string userid,string id)
+        public ActionResult<ArticleJSON> GetInfo(string userid,string id)
         {
             if (userid == null || id == null)
                 return BadRequest();
 
-            Article_JSON article = null;
+            ArticleJSON article = null;
             article = _articleBaseService.GetArticleInfo(userid, id);
             if (article == null)
                 return NotFound();
@@ -50,12 +50,12 @@ namespace Blog.BlogControllers.ArticleController
 
         [Route(UrlPrefix+ "/{userid}/article/{id}/detail")]
         [HttpGet]
-        public ActionResult<Article_JSON> GetArticle(string userid,string id)
+        public ActionResult<ArticleJSON> GetArticle(string userid,string id)
         {
             if (userid == null || id == null)
                 return BadRequest();
 
-            Article_JSON article = null;
+            ArticleJSON article = null;
             article = _articleBaseService.GetArticleWithContent(userid, id);
             if (article == null)
                 return NotFound();
@@ -64,12 +64,12 @@ namespace Blog.BlogControllers.ArticleController
 
         [Route(UrlPrefix+"/{userid}/articles")]
         [HttpGet]
-        public ActionResult<List<Article_JSON>> GetArticles(string userid)
+        public ActionResult<List<ArticleJSON>> GetArticles(string userid)
         {
             if (userid == null)
                 return BadRequest();
 
-            List<Article_JSON> articles = null;
+            List<ArticleJSON> articles = null;
             articles = _articleBaseService.GetArticles(userid);
             if (articles == null)
                 return NotFound();
@@ -79,7 +79,7 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix +"/{userid}/articles")]
         [HttpPost]
         [Authorize]
-        public ActionResult AddArticle(string userid,Article_JSON article)
+        public ActionResult AddArticle(string userid,ArticleJSON article)
         {
             if (userid == null || article == null)
                 return BadRequest();
@@ -113,7 +113,7 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix+"/{userid}/article/{id}")]
         [HttpPut]
         [Authorize]
-        public ActionResult UpdateArticle(string userid,string id,Article_JSON article)
+        public ActionResult UpdateArticle(string userid,string id,ArticleJSON article)
         {
             if (userid == null || id == null)
                 return BadRequest();

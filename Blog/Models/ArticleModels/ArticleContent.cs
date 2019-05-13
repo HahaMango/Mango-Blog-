@@ -12,12 +12,11 @@ namespace Blog.Models.ArticleModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         //唯一
-        [Column(TypeName = "varchar(12)")]
-        public string PageContentId { get; set; }
-        //唯一
-        [Column(TypeName = "varchar(12)")]
-        public string PageId { get; set; }
+        [Required]
+        public int PageId { get; set; }
+
         [Column(TypeName = "longtext")]
         public string Content { get; set; }
     }

@@ -7,7 +7,7 @@ using Blog.Models.ArticleModels;
 
 namespace Blog.DAO
 {
-    interface IArticleCategoryDAO<UserType>
+    public interface IArticleCategoryDAO<UserType>
     {
         #region 同步方法
         List<ArticleCategory> GetArticleCategory(UserType userid);

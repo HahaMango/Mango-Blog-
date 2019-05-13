@@ -28,12 +28,12 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix+"/{userid}/comment/{id}")]
         [HttpGet]
         [Authorize]
-        public ActionResult<Comment_JSON> GetComment(string userid,string id)
+        public ActionResult<CommentJSON> GetComment(string userid,string id)
         {
             if (userid == null || id == null)
                 return BadRequest();
 
-            Comment_JSON comment = null;
+            CommentJSON comment = null;
             comment = _commentService.GetCommentById(userid, id);
             if (comment == null)
                 return NotFound();
@@ -43,12 +43,12 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix+"/{userid}/comments")]
         [HttpGet]
         [Authorize]
-        public ActionResult<List<Comment_JSON>> GetComments(string userid)
+        public ActionResult<List<CommentJSON>> GetComments(string userid)
         {
             if (userid == null)
                 return BadRequest();
 
-            List<Comment_JSON> comments = null;
+            List<CommentJSON> comments = null;
             comments = _commentService.GetComments(userid);
             if (comments == null)
                 return NotFound();
@@ -72,7 +72,7 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix+"/{userid}/comment/{id}")]
         [HttpPut]
         [Authorize]
-        public ActionResult UpdateComment(string userid,string id,Comment_JSON comment)
+        public ActionResult UpdateComment(string userid,string id,CommentJSON comment)
         {
             if (userid == null || id == null || comment == null)
                 return BadRequest();
@@ -86,7 +86,7 @@ namespace Blog.BlogControllers.ArticleController
         [Route(UrlPrefix+"/{userid}/article/{articleid}/comments")]
         [HttpPost]
         [Authorize]
-        public ActionResult PostComment(string userid,string articleid,Comment_JSON comment)
+        public ActionResult PostComment(string userid,string articleid,CommentJSON comment)
         {
             if (userid == null || articleid == null || comment == null)
                 return BadRequest();

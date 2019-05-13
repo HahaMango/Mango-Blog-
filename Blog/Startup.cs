@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Blog.Helper;
 using Blog.Service;
 using Blog.Models;
+using Blog.Service.lmp;
+using Blog.DAO;
+using Blog.DAO.Imp;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog
@@ -43,10 +46,18 @@ namespace Blog
             services.AddDbContext<ArticleContext>(op => { op.UseMySql(_configuration.GetConnectionString("BlogContextConnection")); });
 
             //添加服务到DI容器
-            //services.AddSingleton<DefaultCategory>();
-            //services.AddSingleton<ICategoryService<string>>();
-            //services.AddSingleton<IArticleBaseService<string, string>>();
-            //services.AddSingleton<ICommentService<string, string, string>>();
+            services.AddSingleton<ICategoryService<string>,CategoryService>();
+            services.AddSingleton<IArticleBaseService<string, string>,ArticleBaseService>();
+            services.AddSingleton<ICommentService<string, string, string>,CommentService>();
+
+            //添加DAO层到DI容器
+            services.AddSingleton<IArticleCategoryDAO<int>,ArticleCategoryDAO>();
+            services.AddSingleton<IArticleContentDAO<int>, ArticleContentDAO>();
+            services.AddSingleton<IUserArticleAnalysisDAO<int>,UserArticleAnalysisDAO>();
+            services.AddSingleton<IUserArticleDAO<int,int>,UserArticleDAO>();
+            services.AddSingleton<IUserCommentDAO<int,int>,UserCommentDAO>();
+            services.AddSingleton<DAOTransaction>();
+            
         }
 
         // 配置HTTP管道中间件
