@@ -14,6 +14,7 @@ namespace Blog.Helper
     {
         /// <summary>
         /// Article对象JOSN转换到Model
+        /// (手动设置userid)
         /// </summary>
         /// <param name="articleJSON"></param>
         /// <returns></returns>
@@ -21,8 +22,7 @@ namespace Blog.Helper
         {
             Article article = new Article
             {
-                PageId = int.Parse(articleJSON.Page_id),
-                UserId = articleJSON.UserName.GetHashCode(),
+                PageId =(articleJSON.Page_id !=null)? int.Parse(articleJSON.Page_id):0,
                 UserName = articleJSON.UserName,
                 CreateTime = articleJSON.Create_Time,
                 UpdateTime = articleJSON.Update_Time,
@@ -30,10 +30,6 @@ namespace Blog.Helper
                 Author = articleJSON.Author,
                 Description = articleJSON.Description,
                 Categories = string.Join(",", articleJSON.categories),
-                Like = articleJSON.Like_Count,
-                Reads = articleJSON.Read_Count,
-                Comments = articleJSON.Comment_Count,
-                WordCount = articleJSON.Word_Count,
                 IsOriginal = articleJSON.IsOriginal
             };
             return article;
@@ -44,7 +40,7 @@ namespace Blog.Helper
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        public static ArticleJSON ArticleM2J(Article article)
+        public static ArticleJSON ArticleM2J(Article article,ArticleStatistic articleStatistic)
         {
             ArticleJSON articleJSON = new ArticleJSON
             {
@@ -54,11 +50,11 @@ namespace Blog.Helper
                 Author = article.Author,
                 Create_Time = article.CreateTime,
                 Update_Time = article.UpdateTime,
-                Like_Count = article.Like,
-                Read_Count = article.Reads,
-                Comment_Count = article.Comments,
+                Like_Count = articleStatistic.Like,
+                Read_Count = articleStatistic.Reads,
+                Comment_Count = articleStatistic.Comments,
                 Description = article.Description,
-                Word_Count = article.WordCount,
+                Word_Count = articleStatistic.WordCount,
                 IsOriginal = article.IsOriginal,
                 categories = article.Categories.Split(',').ToList()
             };
@@ -97,19 +93,19 @@ namespace Blog.Helper
 
         /// <summary>
         /// Comment对象JSON转换到Model
+        /// （手动设置userid）
         /// </summary>
         /// <param name="commentJSON"></param>
         /// <returns></returns>
         public static Comment CommentJ2M(CommentJSON commentJSON)
         {
             Comment comment = new Comment
-            {
-                UserId = commentJSON.UserName.GetHashCode(),
+            {                
                 UserName = commentJSON.UserName,
                 CommentId = int.Parse(commentJSON.Commend_id),
                 PageId = int.Parse(commentJSON.Page_id),
                 CreateTime = commentJSON.CreateTime,
-                ReplyComId = int.Parse(commentJSON.Reply2id),
+                ReplyComId = int.Parse(commentJSON.Reply.Commend_id),
                 IsReply = commentJSON.IsReply,
                 Content = commentJSON.Content,
                 Like = commentJSON.LikeCount
@@ -118,7 +114,29 @@ namespace Blog.Helper
         }
 
         /// <summary>
+        /// Comment对象Model转换到JSON
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public static CommentJSON CommentM2J(Comment comment)
+        {
+            CommentJSON commentJSON = new CommentJSON
+            {
+                Commend_id = comment.CommentId.ToString(),
+                Page_id = comment.PageId.ToString(),
+                UserName = comment.UserName,
+                CreateTime = comment.CreateTime,
+                Content = comment.Content,
+                Reply = null,
+                LikeCount = comment.Like,
+                IsReply = comment.IsReply
+            };
+            return commentJSON;
+        }
+
+        /// <summary>
         /// Category对象JSON转换到Model
+        /// (手动设置userid)
         /// </summary>
         /// <param name="categoryJSON"></param>
         /// <returns></returns>
@@ -126,19 +144,25 @@ namespace Blog.Helper
         {
             ArticleCategory articleCategory = new ArticleCategory
             {
-                Userid = categoryJSON.UserName.GetHashCode(),
                 UserName = categoryJSON.UserName,
-                DisplayName = categoryJSON.DisplayName                
+                DisplayName = categoryJSON.DisplayName,
+                ArticleCount = categoryJSON.ArticleCount
             };
             return articleCategory;
         }
 
+        /// <summary>
+        /// Category对象Model转换为JSON
+        /// </summary>
+        /// <param name="articleCategory"></param>
+        /// <returns></returns>
         public static CategoryJSON CategoryM2J(ArticleCategory articleCategory)
         {
             CategoryJSON categoryJSON = new CategoryJSON
             {
                 UserName = articleCategory.UserName,
-                DisplayName = articleCategory.DisplayName
+                DisplayName = articleCategory.DisplayName,
+                ArticleCount = articleCategory.ArticleCount
             };
             return categoryJSON;
         }

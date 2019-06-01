@@ -39,14 +39,6 @@ namespace Blog.Models.ArticleModels
         [Column(TypeName = "varchar(120)")]
         public string Categories { get; set; }
 
-        public int Like { get; set; }
-
-        public int Reads { get; set; }
-
-        public int Comments { get; set; }
-
-        public int WordCount { get; set; }
-
         public bool IsOriginal { get; set; }
 
         [NotMapped]

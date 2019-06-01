@@ -57,7 +57,9 @@ namespace Blog
             services.AddSingleton<IUserArticleDAO<int,int>,UserArticleDAO>();
             services.AddSingleton<IUserCommentDAO<int,int>,UserCommentDAO>();
             services.AddSingleton<DAOTransaction>();
-            
+
+            //添加用户哈希服务
+            services.AddSingleton<IHash,HashByRedis>();
         }
 
         // 配置HTTP管道中间件

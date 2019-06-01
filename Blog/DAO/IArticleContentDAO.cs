@@ -16,7 +16,7 @@ namespace Blog.DAO
 
         int UpdateContent(ArticleContent articleContent);
 
-        int DeleteContent(ArticleContent articleContent);
+        int DeleteContent(ArticleType articleid);
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace Blog.DAO
 
         Task<int> UpdateContentAsync(ArticleContent articleContent);
 
-        Task<int> DeleteContentAsync(ArticleContent articleContent);
+        Task<int> DeleteContentAsync(ArticleType articleid);
 
         #endregion
 

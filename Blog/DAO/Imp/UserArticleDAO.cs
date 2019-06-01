@@ -41,26 +41,20 @@ namespace Blog.DAO.Imp
             {
                 Article temp = _articleContext.Articles
                     .Where(a => a.PageId == article.PageId)
-                    .Single();
+                    .SingleOrDefault();
 
-                Article article1 = new Article();
-                article1.Id = temp.Id;
-                article1.PageId = article.PageId;
-                article1.UserId = article.UserId;
-                article1.UserName = article.UserName;
-                article1.CreateTime = article.CreateTime;
-                article1.UpdateTime = article.UpdateTime;
-                article1.Title = article.Title;
-                article1.Author = article.Author;
-                article1.Description = article.Description;
-                article1.Categories = article.Categories;
-                article1.Like = article.Like;
-                article1.Reads = article.Reads;
-                article1.Comments = article.Comments;
-                article1.WordCount = article.WordCount;
-                article1.IsOriginal = article.IsOriginal;
+                temp.UpdateTime = article.UpdateTime;
+                temp.Title = article.Title;
+                temp.Author = article.Author;
+                temp.Description = article.Description;
+                temp.Categories = article.Categories;
+                temp.Like = article.Like;
+                temp.Reads = article.Reads;
+                temp.Comments = article.Comments;
+                temp.WordCount = article.WordCount;
+                temp.IsOriginal = article.IsOriginal;
 
-                _articleContext.Articles.Update(article1);
+                _articleContext.Articles.Update(temp);
 
                 return _articleContext.SaveChanges();
             }
@@ -409,25 +403,20 @@ namespace Blog.DAO.Imp
             {
                 Article temp = _articleContext.Articles
                     .Where(a => a.PageId == article.PageId)
-                    .Single();
+                    .SingleOrDefault();
 
-                Article article1 = new Article();
-                article1.Id = temp.Id;
-                article1.PageId = article.PageId;
-                article1.UserId = article.UserId;
-                article1.CreateTime = article.CreateTime;
-                article1.UpdateTime = article.UpdateTime;
-                article1.Title = article.Title;
-                article1.Author = article.Author;
-                article1.Description = article.Description;
-                article1.Categories = article.Categories;
-                article1.Like = article.Like;
-                article1.Reads = article.Reads;
-                article1.Comments = article.Comments;
-                article1.WordCount = article.WordCount;
-                article1.IsOriginal = article.IsOriginal;
+                temp.UpdateTime = article.UpdateTime;
+                temp.Title = article.Title;
+                temp.Author = article.Author;
+                temp.Description = article.Description;
+                temp.Categories = article.Categories;
+                temp.Like = article.Like;
+                temp.Reads = article.Reads;
+                temp.Comments = article.Comments;
+                temp.WordCount = article.WordCount;
+                temp.IsOriginal = article.IsOriginal;
 
-                _articleContext.Articles.Update(article1);
+                _articleContext.Articles.Update(temp);
 
                 return await _articleContext.SaveChangesAsync();
             }
@@ -801,6 +790,22 @@ namespace Blog.DAO.Imp
                 flag = flag || source.Contains(s);
             }
             return flag;
+        }
+
+        public async Task<List<Article>> GetArticlesByIdAsync(int userid, int page, int count)
+        {
+            try
+            {
+                return await _articleContext.Articles
+                    .Where(a => a.UserId == userid)
+                    .Skip(page)
+                    .Take(count)
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

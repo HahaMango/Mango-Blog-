@@ -1,5 +1,10 @@
 {
-  "appid": "mango.blog",
-  "resourceid": "mango.blog",
-  "IdentityService": "http://localhost:5000"
+  "identityServer": {
+    "appid": "mango.blog",
+    "resourceid": "mango.blog",
+    "IdentityService": "http://localhost:5000"
+  },
+  "redis": {
+    "connection": "localhost"
+  }
 }

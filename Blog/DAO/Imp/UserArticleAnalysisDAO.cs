@@ -104,7 +104,7 @@ namespace Blog.DAO.Imp
             {
                 return await _articleContext.UserArticleAnalyses
                     .Where(uaa => uaa.UserId == userid)
-                    .SingleAsync();
+                    .SingleOrDefaultAsync();
             }
             catch
             {

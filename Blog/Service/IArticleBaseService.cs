@@ -23,7 +23,7 @@ namespace Blog.Service
         Resultion AddArticle(UserNameType username,ArticleJSON article);
 
         //删除文章
-        Resultion DeleteArticle(UserNameType username, ArticleJSON article);
+        Resultion DeleteArticle(UserNameType username, ArticleIdType articleId);
 
         //更新文章
         Resultion UpdateArticle(UserNameType username, ArticleJSON article);
@@ -46,13 +46,15 @@ namespace Blog.Service
         //对用户文章按阅读量排名，提供分页
         List<ArticleJSON> GetArticleSortByRead(UserNameType username,int page,int count);
 
+        //对文章点赞
+        Resultion AddLike(UserNameType username, ArticleIdType articleId);
         #endregion
 
-        #region 异步方法
+        #region 异步方法 功能与同步方法一致
 
         Task<Resultion> AddArticleAsync(UserNameType username, ArticleJSON article);
 
-        Task<Resultion> DeleteArticleAsync(UserNameType username, ArticleJSON article);
+        Task<Resultion> DeleteArticleAsync(UserNameType username, ArticleIdType articleId);
 
         Task<Resultion> UpdateArticleAsync(UserNameType username, ArticleJSON article);
 
@@ -68,6 +70,7 @@ namespace Blog.Service
 
         Task<List<ArticleJSON>> GetArticleSortByReadAsync(UserNameType username,int page,int count);
 
+        Task<Resultion> AddLikeAsync(UserNameType username, ArticleIdType articleId);
         #endregion
     }
 }

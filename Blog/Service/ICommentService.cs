@@ -12,29 +12,37 @@ namespace Blog.Service
     {
         #region 同步方法
 
-        CommentJSON GetCommentById(UserType userid,CommentType commentid);
+        CommentJSON GetCommentById(UserType username, CommentType commentid);
 
-        List<CommentJSON> GetComments(UserType userid);
+        List<CommentJSON> GetComments(UserType username, int page,int count);
 
-        Resultion DeleteComment(UserType userid, CommentType commentid);
+        List<CommentJSON> GetCommentsByArticle(ArticleType articleid,int page,int count);
 
-        Resultion UpdateComment(UserType userid, CommentType commentid,CommentJSON comment);
+        Resultion DeleteComment(UserType username, CommentType commentid);
 
-        Resultion AddCommentToArticle(UserType userid, ArticleType articleid,CommentJSON comment);
+        Resultion UpdateComment(UserType username, CommentType commentid,CommentJSON comment);
+
+        Resultion AddCommentToArticle(UserType ususername, ArticleType articleid,CommentJSON comment);
+
+        Resultion LikeComment(CommentType commentid);
 
         #endregion
 
         #region 异步方法
 
-        Task<CommentJSON> GetCommentByIdAsync(UserType userid, CommentType commentid);
+        Task<CommentJSON> GetCommentByIdAsync(UserType username, CommentType commentid);
 
-        Task<List<CommentJSON>> GetCommentsAsync(UserType userid);
+        Task<List<CommentJSON>> GetCommentsAsync(UserType username, int page,int count);
 
-        Task<Resultion> DeleteCommentAsync(UserType userid, CommentType commentid);
+        Task<List<CommentJSON>> GetCommentsByArticleAsync(ArticleType articleid,int page,int count);
 
-        Task<Resultion> UpdateCommentAsync(UserType userid, CommentType commentid, CommentJSON comment);
+        Task<Resultion> DeleteCommentAsync(UserType username, CommentType commentid);
 
-        Task<Resultion> AddCommentToArticleAsync(UserType userid, ArticleType articleid, CommentJSON comment);
+        Task<Resultion> UpdateCommentAsync(UserType username, CommentType commentid, CommentJSON comment);
+
+        Task<Resultion> AddCommentToArticleAsync(UserType username, ArticleType articleid, CommentJSON comment);
+
+        Task<Resultion> LikeCommentAsync(CommentType commentid);
 
         #endregion
     }

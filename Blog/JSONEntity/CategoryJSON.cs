@@ -15,5 +15,6 @@ namespace Blog.JSONEntity
         [Required]
         public string DisplayName { get; set; }
 
+        public int ArticleCount { get; set; }
     }
 }

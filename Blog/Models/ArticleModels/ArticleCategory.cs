@@ -23,5 +23,7 @@ namespace Blog.Models.ArticleModels
         public string DisplayName { get; set; }
 
         public DateTime AddTime { get; set; }
+
+        public int ArticleCount { get; set; }
     }
 }

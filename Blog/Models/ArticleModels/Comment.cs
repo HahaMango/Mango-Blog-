@@ -35,5 +35,6 @@ namespace Blog.Models.ArticleModels
         public int Like { get; set; }
 
         public bool IsReply { get; set; }
+     
     }
 }
