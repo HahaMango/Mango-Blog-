@@ -8,8 +8,10 @@ using Blog.JSONEntity;
 namespace Blog.Helper
 {
     /// <summary>
-    /// 在前端JSON和数据库模型之间的转换类。
+    /// 在前端JSON和数据库模型之间的转换类。（数据库已修改，重新检查）
     /// </summary>
+    /// 
+    [Obsolete]
     public static class JMConvert
     {
         /// <summary>
@@ -23,7 +25,6 @@ namespace Blog.Helper
             Article article = new Article
             {
                 PageId =(articleJSON.Page_id !=null)? int.Parse(articleJSON.Page_id):0,
-                UserName = articleJSON.UserName,
                 CreateTime = articleJSON.Create_Time,
                 UpdateTime = articleJSON.Update_Time,
                 Title = articleJSON.Title,
@@ -45,7 +46,6 @@ namespace Blog.Helper
             ArticleJSON articleJSON = new ArticleJSON
             {
                 Page_id = article.PageId.ToString(),
-                UserName = article.UserName,
                 Title = article.Title,
                 Author = article.Author,
                 Create_Time = article.CreateTime,
@@ -101,9 +101,8 @@ namespace Blog.Helper
         {
             Comment comment = new Comment
             {                
-                UserName = commentJSON.UserName,
                 CommentId = int.Parse(commentJSON.Commend_id),
-                PageId = int.Parse(commentJSON.Page_id),
+                //PageId = int.Parse(commentJSON.Page_id),
                 CreateTime = commentJSON.CreateTime,
                 ReplyComId = int.Parse(commentJSON.Reply.Commend_id),
                 IsReply = commentJSON.IsReply,
@@ -123,8 +122,7 @@ namespace Blog.Helper
             CommentJSON commentJSON = new CommentJSON
             {
                 Commend_id = comment.CommentId.ToString(),
-                Page_id = comment.PageId.ToString(),
-                UserName = comment.UserName,
+                //Page_id = comment.PageId.ToString(),
                 CreateTime = comment.CreateTime,
                 Content = comment.Content,
                 Reply = null,
@@ -144,7 +142,6 @@ namespace Blog.Helper
         {
             ArticleCategory articleCategory = new ArticleCategory
             {
-                UserName = categoryJSON.UserName,
                 DisplayName = categoryJSON.DisplayName,
                 ArticleCount = categoryJSON.ArticleCount
             };
@@ -160,7 +157,6 @@ namespace Blog.Helper
         {
             CategoryJSON categoryJSON = new CategoryJSON
             {
-                UserName = articleCategory.UserName,
                 DisplayName = articleCategory.DisplayName,
                 ArticleCount = articleCategory.ArticleCount
             };

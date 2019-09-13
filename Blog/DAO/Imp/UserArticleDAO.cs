@@ -48,10 +48,6 @@ namespace Blog.DAO.Imp
                 temp.Author = article.Author;
                 temp.Description = article.Description;
                 temp.Categories = article.Categories;
-                temp.Like = article.Like;
-                temp.Reads = article.Reads;
-                temp.Comments = article.Comments;
-                temp.WordCount = article.WordCount;
                 temp.IsOriginal = article.IsOriginal;
 
                 _articleContext.Articles.Update(temp);
@@ -62,59 +58,6 @@ namespace Blog.DAO.Imp
             {
                 throw;
             }
-        }
-
-        public int CountComments(int userid)
-        {
-            try
-            {
-                return GetMostComments(userid).Comments;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public int CountLike(int userid)
-        {
-            try
-            {
-                return GetMostLike(userid).Like;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public int CountRead(int userid)
-        {
-            try
-            {
-                return GetMostRead(userid).Reads;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public int DeleteArticle(Article article)
-        {
-            try
-            {
-                Article temp = _articleContext.Articles
-                    .Where<Article>(a => a.PageId == article.PageId)
-                    .SingleOrDefault<Article>();
-                _articleContext.Remove(temp);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }        
         }
 
         public Article GetArticleById(int userid, int articleid)
@@ -205,9 +148,11 @@ namespace Blog.DAO.Imp
         {
             try
             {
+                var sec = _articleContext.ArticleStatistics.ToList();
+
                 return _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Comments)
+                    .OrderByDescending(a=>a.ArticleStatistic.Comments)                    
                     .Skip(page)
                     .Take(count)
                     .ToList();
@@ -241,7 +186,7 @@ namespace Blog.DAO.Imp
             {
                 return _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Like)
+                    .OrderByDescending(a => a.ArticleStatistic.Like)
                     .Skip(page)
                     .Take(count)
                     .ToList();
@@ -258,7 +203,7 @@ namespace Blog.DAO.Imp
             {
                 return _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Reads)
+                    .OrderByDescending(a => a.ArticleStatistic.Reads)
                     .Skip(page)
                     .Take(count)
                     .ToList();
@@ -275,74 +220,10 @@ namespace Blog.DAO.Imp
             {
                 return _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.WordCount)
+                    .OrderByDescending(a => a.ArticleStatistic.WordCount)
                     .Skip(page)
                     .Take(count)
                     .ToList();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region 获取相关参数最大值
-
-        public Article GetMostComments(int userid)
-        {
-            try
-            {
-                return _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Comments)
-                    .First();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public Article GetMostLike(int userid)
-        {
-            try
-            {
-                return _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Like)
-                    .First();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public Article GetMostRead(int userid)
-        {
-            try
-            {
-                return _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Reads)
-                    .First();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public Article GetMostWord(int userid)
-        {
-            try
-            {
-                return _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.WordCount)
-                    .First();
             }
             catch
             {
@@ -380,23 +261,6 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<int> DeleteArticleAsync(Article article)
-        {
-            try
-            {
-                Article temp = _articleContext.Articles
-                    .Where<Article>(a => a.PageId == article.PageId)
-                    .SingleOrDefault();
-                _articleContext.Remove(temp);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
         public async Task<int> UpdateArticleAsync(Article article)
         {
             try
@@ -410,10 +274,6 @@ namespace Blog.DAO.Imp
                 temp.Author = article.Author;
                 temp.Description = article.Description;
                 temp.Categories = article.Categories;
-                temp.Like = article.Like;
-                temp.Reads = article.Reads;
-                temp.Comments = article.Comments;
-                temp.WordCount = article.WordCount;
                 temp.IsOriginal = article.IsOriginal;
 
                 _articleContext.Articles.Update(temp);
@@ -433,102 +293,6 @@ namespace Blog.DAO.Imp
                 _articleContext.Articles.Add(article);
 
                 return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<Article> GetMostLikeAsync(int userid)
-        {
-            try
-            {
-                return await _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Like)
-                    .FirstAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<Article> GetMostReadAsync(int userid)
-        {
-            try
-            {
-                return await _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Reads)
-                    .FirstAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<Article> GetMostWordAsync(int userid)
-        {
-            try
-            {
-                return await _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.WordCount)
-                    .FirstAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<Article> GetMostCommentsAsync(int userid)
-        {
-            try
-            {
-                return await _articleContext.Articles
-                    .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Comments)
-                    .FirstAsync();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<int> CountLikeAsync(int userid)
-        {
-            try
-            {
-                return (await GetMostLikeAsync(userid)).Like;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<int> CountReadAsync(int userid)
-        { 
-            try
-            {
-                return (await GetMostReadAsync(userid)).Reads;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<int> CountCommentsAsync(int userid)
-        {
-            try
-            {
-                return (await GetMostCommentsAsync(userid)).Comments;
             }
             catch
             {
@@ -573,7 +337,7 @@ namespace Blog.DAO.Imp
             {
                 return await _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Reads)
+                    .OrderByDescending(a => a.ArticleStatistic.Reads)
                     .Skip(page)
                     .Take(count)
                     .ToListAsync();
@@ -590,7 +354,7 @@ namespace Blog.DAO.Imp
             {
                 return await _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Like)
+                    .OrderByDescending(a => a.ArticleStatistic.Like)
                     .Skip(page)
                     .Take(count)
                     .ToListAsync();
@@ -607,7 +371,7 @@ namespace Blog.DAO.Imp
             {
                 return await _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.WordCount)
+                    .OrderByDescending(a => a.ArticleStatistic.WordCount)
                     .Skip(page)
                     .Take(count)
                     .ToListAsync();
@@ -624,7 +388,7 @@ namespace Blog.DAO.Imp
             {
                 return await _articleContext.Articles
                     .Where(a => a.UserId == userid)
-                    .OrderByDescending(a => a.Comments)
+                    .OrderByDescending(a => a.ArticleStatistic.Comments)
                     .Skip(page)
                     .Take(count)
                     .ToListAsync();
@@ -801,6 +565,40 @@ namespace Blog.DAO.Imp
                     .Skip(page)
                     .Take(count)
                     .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public int DeleteArticle(int article)
+        {
+            try
+            {
+                Article temp = _articleContext.Articles
+                    .Where<Article>(a => a.PageId == article)
+                    .SingleOrDefault();
+                _articleContext.Remove(temp);
+
+                return _articleContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<int> DeleteArticleAsync(int article)
+        {
+            try
+            {
+                Article temp = _articleContext.Articles
+                    .Where<Article>(a => a.PageId == article)
+                    .SingleOrDefault();
+                _articleContext.Remove(temp);
+
+                return await _articleContext.SaveChangesAsync();
             }
             catch
             {

@@ -2,13 +2,13 @@ D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubsc
 D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubscribeService.runtimeconfig.json
 D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubscribeService.runtimeconfig.dev.json
 D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubscribeService.dll
+D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubscribeService.pdb
+D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.csprojAssemblyReference.cache
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.csproj.CoreCompileInputs.cache
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.RazorAssemblyInfo.cache
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.RazorAssemblyInfo.cs
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.AssemblyInfoInputs.cache
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.AssemblyInfo.cs
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.RazorTargetAssemblyInfo.cache
-D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.csprojAssemblyReference.cache
-D:\Work\C#Work\Blog\PublishSubscribeService\bin\Debug\netcoreapp2.2\PublishSubscribeService.pdb
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.dll
 D:\Work\C#Work\Blog\PublishSubscribeService\obj\Debug\netcoreapp2.2\PublishSubscribeService.pdb

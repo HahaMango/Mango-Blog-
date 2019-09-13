@@ -24,7 +24,7 @@ namespace Blog.Proxy
         public LoggingInterceptor(ILogger<T> logger)
         {
             this._logger = logger;
-            methodInfo = typeof(LoggingInterceptor<>).GetMethod("HandleAsync", BindingFlags.Instance | BindingFlags.Public);
+            methodInfo = typeof(LoggingInterceptor<>).GetMethod("HandleAsync", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
         /// <summary>

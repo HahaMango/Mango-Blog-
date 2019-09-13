@@ -47,12 +47,12 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public int DeleteContent(ArticleContent articleContent)
+        public int DeleteContent(int articleid)
         {
             try
             {
                 ArticleContent temp = _articleContext.ArticleContents
-                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Where(ac => ac.PageId == articleid)
                     .Single();
 
                 _articleContext.ArticleContents.Remove(temp);
@@ -65,12 +65,12 @@ namespace Blog.DAO.Imp
             }
         }
 
-        public async Task<int> DeleteContentAsync(ArticleContent articleContent)
+        public async Task<int> DeleteContentAsync(int articleid)
         {
             try
             {
                 ArticleContent temp = _articleContext.ArticleContents
-                    .Where(ac => ac.PageId == articleContent.PageId)
+                    .Where(ac => ac.PageId == articleid)
                     .Single();
 
                 _articleContext.ArticleContents.Remove(temp);

@@ -18,7 +18,7 @@ namespace Blog.Proxy
     /// </summary>
     public abstract class BaseAsyncHandleInterceptor : IInterceptor
     {
-        protected MethodInfo methodInfo = typeof(BaseAsyncHandleInterceptor).GetMethod("HandleAsync", BindingFlags.Instance | BindingFlags.Public);
+        protected MethodInfo methodInfo = typeof(BaseAsyncHandleInterceptor).GetMethod("HandleAsync", BindingFlags.Instance | BindingFlags.NonPublic);
 
         /// <summary>
         /// 拦截器构造函数

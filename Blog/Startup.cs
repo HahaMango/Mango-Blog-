@@ -43,7 +43,11 @@ namespace Blog
                     options.Audience = _configuration["mango.blog"];
                 });
 
-            services.AddDbContext<ArticleContext>(op => { op.UseMySql(_configuration.GetConnectionString("BlogContextConnection")); });
+            services.AddDbContext<ArticleContext>(op => 
+            {
+                op.UseLazyLoadingProxies();
+                op.UseMySql(_configuration.GetConnectionString("BlogContextConnection"));
+            });
 
             //添加服务到DI容器
             services.AddSingleton<ICategoryService<string>,CategoryService>();
@@ -55,7 +59,7 @@ namespace Blog
             services.AddSingleton<IArticleContentDAO<int>, ArticleContentDAO>();
             services.AddSingleton<IUserArticleAnalysisDAO<int>,UserArticleAnalysisDAO>();
             services.AddSingleton<IUserArticleDAO<int,int>,UserArticleDAO>();
-            services.AddSingleton<IUserCommentDAO<int,int>,UserCommentDAO>();
+            services.AddSingleton<IUserCommentDAO<int,int,int>,UserCommentDAO>();
             services.AddSingleton<DAOTransaction>();
 
             //添加用户哈希服务

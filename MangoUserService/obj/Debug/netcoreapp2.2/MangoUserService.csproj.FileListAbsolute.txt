@@ -2,6 +2,9 @@ D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.de
 D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.runtimeconfig.json
 D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.runtimeconfig.dev.json
 D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.dll
+D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.pdb
+D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.Views.dll
+D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.Views.pdb
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.csprojAssemblyReference.cache
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.csproj.CoreCompileInputs.cache
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.RazorAssemblyInfo.cache
@@ -21,9 +24,6 @@ D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\Razor\Views\_ViewIm
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.RazorTargetAssemblyInfo.cache
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.RazorTargetAssemblyInfo.cs
-D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.pdb
-D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.Views.dll
-D:\Work\C#Work\Blog\MangoUserService\bin\Debug\netcoreapp2.2\MangoUserService.Views.pdb
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.Views.pdb
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.dll
 D:\Work\C#Work\Blog\MangoUserService\obj\Debug\netcoreapp2.2\MangoUserService.pdb

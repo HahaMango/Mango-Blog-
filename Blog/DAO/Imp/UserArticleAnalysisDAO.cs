@@ -12,144 +12,94 @@ namespace Blog.DAO.Imp
 {
     public class UserArticleAnalysisDAO : IUserArticleAnalysisDAO<int>
     {
-
-        private readonly ArticleContext _articleContext = null;
-
-        public UserArticleAnalysisDAO(ArticleContext articleContext)
-        {
-            this._articleContext = articleContext;
-        }
-
         public int AddArticleAnalysis(UserArticleAnalysis userArticleAnalysis)
         {
-            try
-            {
-                _articleContext.UserArticleAnalyses.Add(userArticleAnalysis);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> AddArticleAnalysisAsync(UserArticleAnalysis userArticleAnalysis)
+        public Task<int> AddArticleAnalysisAsync(UserArticleAnalysis userArticleAnalysis)
         {
-            try
-            {
-                _articleContext.UserArticleAnalyses.Add(userArticleAnalysis);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public int DeleteArticleAnalysis(UserArticleAnalysis userArticleAnalysis)
+        public int DeleteArticleAnalysis(int userid)
         {
-            try
-            {
-                UserArticleAnalysis temp = _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userArticleAnalysis.UserId)
-                    .Single();
-
-                _articleContext.UserArticleAnalyses.Remove(temp);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> DeleteArticleAnalysisAsync(UserArticleAnalysis userArticleAnalysis)
+        public Task<int> DeleteArticleAnalysisAsync(int userid)
         {
-            try
-            {
-                UserArticleAnalysis temp = _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userArticleAnalysis.UserId)
-                    .Single();
-
-                _articleContext.UserArticleAnalyses.Remove(temp);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         public UserArticleAnalysis GetArticleAnalysis(int userid)
         {
-            try
-            {
-                return _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userid)
-                    .SingleOrDefault();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<UserArticleAnalysis> GetArticleAnalysisAsync(int userid)
+        public Task<UserArticleAnalysis> GetArticleAnalysisAsync(int userid)
         {
-            try
-            {
-                return await _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userid)
-                    .SingleOrDefaultAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
+        }
+
+        public int IncTotalArticle(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncTotalArticleAsync(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IncTotalComment(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncTotalCommentAsync(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IncTotalLike(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncTotalLikeAsync(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IncTotalOriginal(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncTotalOriginalAsync(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IncTotalRead(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncTotalReadAsync(int userid)
+        {
+            throw new NotImplementedException();
         }
 
         public int UpdateArticleAnalysis(UserArticleAnalysis userArticleAnalysis)
         {
-            try
-            {
-                UserArticleAnalysis temp = _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userArticleAnalysis.UserId)
-                    .Single();
-
-                userArticleAnalysis.Id = temp.Id;
-
-                _articleContext.UserArticleAnalyses.Update(userArticleAnalysis);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateArticleAnalysisAsync(UserArticleAnalysis userArticleAnalysis)
+        public Task<int> UpdateArticleAnalysisAsync(UserArticleAnalysis userArticleAnalysis)
         {
-            try
-            {
-                UserArticleAnalysis temp = _articleContext.UserArticleAnalyses
-                    .Where(uaa => uaa.UserId == userArticleAnalysis.UserId)
-                    .Single();
-
-                userArticleAnalysis.Id = temp.Id;
-
-                _articleContext.UserArticleAnalyses.Update(userArticleAnalysis);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }

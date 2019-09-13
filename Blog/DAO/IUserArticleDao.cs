@@ -21,13 +21,6 @@ namespace Blog.DAO
 
         //模糊查询和参数查询
         List<Article> GetArticlesBySearch(UserType userid, SearchArgument searchArgument);
-        Article GetMostLike(UserType userid);
-        Article GetMostRead(UserType userid);
-        Article GetMostWord(UserType userid);
-        Article GetMostComments(UserType userid);
-        int CountLike(UserType userid);
-        int CountRead(UserType userid);
-        int CountComments(UserType userid);
         List<Article> GetOriginal(UserType userid);
 
         //排序加分页
@@ -53,13 +46,6 @@ namespace Blog.DAO
 
         //模糊查询和参数查询
         Task<List<Article>> GetArticlesBySearchAsync(UserType userid, SearchArgument searchArgument);
-        Task<Article> GetMostLikeAsync(UserType userid);
-        Task<Article> GetMostReadAsync(UserType userid);
-        Task<Article> GetMostWordAsync(UserType userid);
-        Task<Article> GetMostCommentsAsync(UserType userid);
-        Task<int> CountLikeAsync(UserType userid);
-        Task<int> CountReadAsync(UserType userid);
-        Task<int> CountCommentsAsync(UserType userid);
         Task<List<Article>> GetOriginalAsync(UserType userid);
 
         //排序加分页

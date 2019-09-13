@@ -9,205 +9,86 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.DAO.Imp
 {
-    public class UserCommentDAO : IUserCommentDAO<int, int>
+    public class UserCommentDAO : IUserCommentDAO<int, int, int>
     {
-        private readonly ArticleContext _articleContext = null;
-
-        public UserCommentDAO(ArticleContext articleContext)
-        {
-            this._articleContext = articleContext;
-        }
-
         public int AddComment(Comment comment)
         {
-            try
-            {
-                _articleContext.Comments.Add(comment);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> AddCommentAsync(Comment comment)
+        public Task<int> AddCommentAsync(Comment comment)
         {
-            try
-            {
-                _articleContext.Comments.Add(comment);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public int DeleteComment(Comment comment)
+        public int DeleteComment(int commentid)
         {
-            try
-            {
-                Comment temp = _articleContext.Comments.Where(c => c.CommentId == comment.CommentId)
-                    .Single();
-
-                _articleContext.Comments.Remove(temp);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> DeleteCommentAsync(Comment comment)
+        public Task<int> DeleteCommentAsync(int commentid)
         {
-            try
-            {
-                Comment temp = _articleContext.Comments.Where(c => c.CommentId == comment.CommentId)
-                    .Single();
-
-                _articleContext.Comments.Remove(temp);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public List<Comment> GetCommentsByArticleId(int articleid)
+        public Comment GetCommentById(int commentId)
         {
-            try
-            {
-                return _articleContext.Comments
-                    .Where(c => c.PageId == articleid)
-                    .ToList();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Comment>> GetCommentsByArticleIdAsync(int articleid)
+        public Task<Comment> GetCommentByIdAsync(int commentId)
         {
-            try
-            {
-                return await _articleContext.Comments
-                    .Where(c => c.PageId == articleid)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public List<Comment> GetCommentsSortByLike(int userid)
+        public List<Comment> GetCommentsByArticleId(int articleid, int page, int count)
         {
-            try
-            {
-                return _articleContext.Comments
-                    .Where(c => c.UserId == userid)
-                    .OrderByDescending(c => c.Like)
-                    .ToList();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Comment>> GetCommentsSortByLikeAsync(int userid)
+        public Task<List<Comment>> GetCommentsByArticleIdAsync(int articleid, int page, int count)
         {
-            try
-            {
-                return await _articleContext.Comments
-                    .Where(c => c.UserId == userid)
-                    .OrderByDescending(c => c.Like)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public List<Comment> GetCommentsSortByTime(int articleid)
+        public List<Comment> GetCommentsByUserid(int userid, int page, int count)
         {
-            try
-            {
-                return _articleContext.Comments
-                    .Where(c => c.PageId == articleid)
-                    .OrderByDescending(c => c.CreateTime)
-                    .ToList();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Comment>> GetCommentsSortByTimeAsync(int articleid)
+        public Task<List<Comment>> GetCommentsByUseridAsync(int userid, int page, int count)
         {
-            try
-            {
-                return await _articleContext.Comments
-                    .Where(c => c.PageId == articleid)
-                    .OrderByDescending(c => c.CreateTime)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetCommentsSortByLike(int userid, int page, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Comment>> GetCommentsSortByLikeAsync(int userid, int page, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IncLike(int commentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> IncLikeAsync(int commentId)
+        {
+            throw new NotImplementedException();
         }
 
         public int UpdateComment(Comment comment)
         {
-            try
-            {
-                Comment temp = _articleContext.Comments
-                    .Where(c => c.CommentId == comment.CommentId)
-                    .Single();
-
-                temp.Content = comment.Content;
-                temp.Like = comment.Like;
-
-                _articleContext.Comments.Update(temp);
-
-                return _articleContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateCommentAsync(Comment comment)
+        public Task<int> UpdateCommentAsync(Comment comment)
         {
-            try
-            {
-                Comment temp = _articleContext.Comments
-                    .Where(c => c.CommentId == comment.CommentId)
-                    .Single();
-
-                temp.Content = comment.Content;
-                temp.Like = comment.Like;
-
-                _articleContext.Comments.Update(temp);
-
-                return await _articleContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }

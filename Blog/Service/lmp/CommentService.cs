@@ -13,7 +13,11 @@ namespace Blog.Service.lmp
     /// <summary>
     /// 评论服务，对评论进行增删查改
     /// (同时需要更新用户博客信息记录)
+    /// 
+    /// （数据库已经修改，重新检查）
     /// </summary>
+    /// 
+    [Obsolete]
     public class CommentService : ICommentService<string, string, string>
     {
         private readonly IUserCommentDAO<int, int,int> _userCommentDAO = null;
@@ -54,7 +58,7 @@ namespace Blog.Service.lmp
             Resultion resultion = new Resultion(false, "", null);
             comment.Commend_id = _hash.GenerateCommentId(username, pageid).ToString();
             Comment commentModel = JMConvert.CommentJ2M(comment);
-            commentModel.UserId = userid;
+            //commentModel.UserId = userid;
             
             using(var transaction = _transcation.BeginTransaction())
             {
@@ -114,7 +118,7 @@ namespace Blog.Service.lmp
             Resultion resultion = new Resultion(false, "", null);
             comment.Commend_id = _hash.GenerateCommentId(username, pageid).ToString();
             Comment commentModel = JMConvert.CommentJ2M(comment);
-            commentModel.UserId = userid;            
+            //commentModel.UserId = userid;            
 
             using (var transaction = _transcation.BeginTransaction())
             {
@@ -500,7 +504,7 @@ namespace Blog.Service.lmp
             int cid = int.Parse(commentid);
             int userid = _hash.GetUserNameHash(username);
             Comment commentmodle = JMConvert.CommentJ2M(comment);
-            commentmodle.UserId = userid;
+            //commentmodle.UserId = userid;
 
             Resultion resultion = new Resultion(false, null, null);
 
@@ -537,7 +541,7 @@ namespace Blog.Service.lmp
             int cid = int.Parse(commentid);
             int userid = _hash.GetUserNameHash(username);
             Comment commentmodle = JMConvert.CommentJ2M(comment);
-            commentmodle.UserId = userid;
+            //commentmodle.UserId = userid;
 
             Resultion resultion = new Resultion(false, null, null);
 

@@ -15,135 +15,135 @@ namespace Blog.BlogControllers.User.CategoryController
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private const string UrlPrefix = "/user";
+        //private const string UrlPrefix = "/user";
 
-        private readonly ICategoryService<string> _categoryService;
+        //private readonly ICategoryService<string> _categoryService;
 
-        public CategoryController(ICategoryService<string> categoryService)
-        {
-            this._categoryService = categoryService;
-        }
+        //public CategoryController(ICategoryService<string> categoryService)
+        //{
+        //    this._categoryService = categoryService;
+        //}
 
-        /**
-         * 
-         * 获取当前用户的文章分类列表
-         * 
-         */
-        [Route(UrlPrefix + "/{userid}/categories")]
-        [HttpGet]
-        public ActionResult<List<CategoryJSON>> GetCategories(string userid)
-        {
-            if (userid == null)
-            {
-                return BadRequest();
-            }              
-            List<CategoryJSON> categories = null;
-            categories = _categoryService.GetCategories(userid);
-            if(categories == null)
-            {
-                return NotFound();
-            }
-            return categories;            
-        }
+        ///**
+        // * 
+        // * 获取当前用户的文章分类列表
+        // * 
+        // */
+        //[Route(UrlPrefix + "/{userid}/categories")]
+        //[HttpGet]
+        //public ActionResult<List<CategoryJSON>> GetCategories(string userid)
+        //{
+        //    if (userid == null)
+        //    {
+        //        return BadRequest();
+        //    }              
+        //    List<CategoryJSON> categories = null;
+        //    categories = _categoryService.GetCategories(userid);
+        //    if(categories == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return categories;            
+        //}
 
-        /**
-         * 
-         * 获取当前用户的某个分类
-         * 
-         */        
-        [Route(UrlPrefix + "/{userid}/category/{id}")]
-        [HttpGet]
-        public ActionResult<CategoryJSON> GetCategory(string userid, int? id)
-        {
-            if(userid == null || id == null)
-            {
-                return BadRequest();
-            }
-            CategoryJSON category = null;
-            category = _categoryService.GetCategory(userid, (int)id);
-            if(category == null)
-            {
-                return NotFound();
-            }
-            return category;
-        }
+        ///**
+        // * 
+        // * 获取当前用户的某个分类
+        // * 
+        // */        
+        //[Route(UrlPrefix + "/{userid}/category/{id}")]
+        //[HttpGet]
+        //public ActionResult<CategoryJSON> GetCategory(string userid, int? id)
+        //{
+        //    if(userid == null || id == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    CategoryJSON category = null;
+        //    category = _categoryService.GetCategory(userid, (int)id);
+        //    if(category == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return category;
+        //}
 
-        /**
-         * 
-         * 更新当前用户的某个列表
-         * 
-         */
-        [Route(UrlPrefix + "/{userid}/category/{id}")]
-        [HttpPut]
-        [Authorize]
-        public ActionResult UpdateCategory(string userid,int? id,string newdisplayname)
-        {            
-            if(userid==null||id==null||newdisplayname ==null)
-            {
-                return BadRequest();
-            }
+        ///**
+        // * 
+        // * 更新当前用户的某个列表
+        // * 
+        // */
+        //[Route(UrlPrefix + "/{userid}/category/{id}")]
+        //[HttpPut]
+        //[Authorize]
+        //public ActionResult UpdateCategory(string userid,int? id,string newdisplayname)
+        //{            
+        //    if(userid==null||id==null||newdisplayname ==null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
+        //    CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
 
-            Resultion resultion = _categoryService.Replace(userid, category);
-            if (resultion.IsSuccess)
-            {
-                return CreatedAtAction(nameof(UpdateCategory), resultion.Value);
-            }
-            else
-            {
-                return Forbid();
-            }
-        }
+        //    Resultion resultion = _categoryService.Replace(userid, category);
+        //    if (resultion.IsSuccess)
+        //    {
+        //        return CreatedAtAction(nameof(UpdateCategory), resultion.Value);
+        //    }
+        //    else
+        //    {
+        //        return Forbid();
+        //    }
+        //}
 
-        /**
-         * 
-         * 删除当前用户添加一个分类项
-         * 
-         */
-        [Route(UrlPrefix + "/{userid}/category/{id}")]
-        [HttpDelete]
-        [Authorize]
-        public ActionResult DeleteCategory(string userid, int? id, string newdisplayname)
-        {
-            if (userid == null || id == null || newdisplayname == null)
-            {
-                return BadRequest();
-            }
+        ///**
+        // * 
+        // * 删除当前用户添加一个分类项
+        // * 
+        // */
+        //[Route(UrlPrefix + "/{userid}/category/{id}")]
+        //[HttpDelete]
+        //[Authorize]
+        //public ActionResult DeleteCategory(string userid, int? id, string newdisplayname)
+        //{
+        //    if (userid == null || id == null || newdisplayname == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
+        //    CategoryJSON category = new CategoryJSON((int)id, newdisplayname);
 
-            Resultion resultion = _categoryService.Delete(userid, category);
-            if (resultion.IsSuccess)
-            {
-                return NoContent();
-            }
-            return NotFound();       
-        }
+        //    Resultion resultion = _categoryService.Delete(userid, category);
+        //    if (resultion.IsSuccess)
+        //    {
+        //        return NoContent();
+        //    }
+        //    return NotFound();       
+        //}
 
-        /**
-         * 
-         * 更新当前用户的一个分类项
-         * 
-         */
-        [Route(UrlPrefix+"/{userid}/categories")]
-        [HttpPost]
-        [Authorize]
-        public ActionResult<JSONEntity.CategoryJSON> AddCategory(JSONEntity.CategoryJSON category,string userid)
-        {          
-            if (category == null || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+        ///**
+        // * 
+        // * 更新当前用户的一个分类项
+        // * 
+        // */
+        //[Route(UrlPrefix+"/{userid}/categories")]
+        //[HttpPost]
+        //[Authorize]
+        //public ActionResult<JSONEntity.CategoryJSON> AddCategory(JSONEntity.CategoryJSON category,string userid)
+        //{          
+        //    if (category == null || !ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
             
-            Resultion resultion = _categoryService.Add(userid, category);
+        //    Resultion resultion = _categoryService.Add(userid, category);
 
-            if (resultion.IsSuccess)
-            {
-                return CreatedAtAction(nameof(AddCategory), resultion.Value);
-            }   
-            return NotFound();
+        //    if (resultion.IsSuccess)
+        //    {
+        //        return CreatedAtAction(nameof(AddCategory), resultion.Value);
+        //    }   
+        //    return NotFound();
             
-        }
+        //}
     }
 }

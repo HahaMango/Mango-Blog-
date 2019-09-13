@@ -16,9 +16,6 @@ namespace Blog.Models.ArticleModels
         [Required]
         public int Userid { get; set; }
 
-        [Required]
-        public string UserName { get; set; }
-
         [Column(TypeName = "varchar(10)")]
         public string DisplayName { get; set; }
 

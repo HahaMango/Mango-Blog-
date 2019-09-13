@@ -20,9 +20,6 @@ namespace Blog.Models.ArticleModels
         [Required]
         public int UserId { get; set; }
 
-        [Required]
-        public string UserName { get; set; }
-
         public DateTime CreateTime { get; set; }
 
         public DateTime UpdateTime { get; set; }
@@ -41,9 +38,6 @@ namespace Blog.Models.ArticleModels
 
         public bool IsOriginal { get; set; }
 
-        [NotMapped]
-        public List<Comment> comments { get; set; }
-        [NotMapped]
-        public ArticleContent PageContent { get; set; }
+        public virtual ArticleStatistic ArticleStatistic { get; set; }
     }
 }

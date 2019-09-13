@@ -16,15 +16,6 @@ namespace Blog.Models.ArticleModels
 
         [Required]
         public int CommentId { get; set; }
-
-        [Required]
-        public int PageId { get; set; }
-
-        [Required]
-        public int UserId { get; set; }
-
-        [Required]
-        public string UserName { get; set; }
         
         public DateTime CreateTime { get; set; }
 

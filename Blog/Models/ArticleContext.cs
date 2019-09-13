@@ -22,20 +22,36 @@ namespace Blog.Models
                 .IsUnique();
 
             modelBuilder.Entity<Article>()
-                .HasIndex(a => new { a.Like, a.Comments, a.Reads, a.CreateTime });
+                .HasIndex(a =>  a.CreateTime );
+
+            modelBuilder.Entity<Article>()
+                .HasOne(a => a.ArticleStatistic)
+                .WithOne(a => a.Article)
+                .HasForeignKey<ArticleStatistic>(f => f.PageId)
+                .HasPrincipalKey<Article>(u => u.PageId);
 
             modelBuilder.Entity<ArticleContent>()
-                .HasIndex(a => new {a.PageId})
+                .HasIndex(a => a.PageId)
                 .IsUnique();
-                
 
             modelBuilder.Entity<Comment>()
                 .HasIndex(c => c.CommentId)
                 .IsUnique();
 
+            modelBuilder.Entity<CommandUser>()
+                .HasIndex(c => c.CommandId)
+                .IsUnique();
+
+            modelBuilder.Entity<CommandPage>()
+                .HasIndex(c => c.CommandId)
+                .IsUnique();
+
             modelBuilder.Entity<UserArticleAnalysis>()
                 .HasIndex(c => c.UserId)
                 .IsUnique();
+
+            modelBuilder.Entity<ArticleStatistic>()
+                .HasIndex(a => a.Like);
         }
 
         public DbSet<Article> Articles { get; set; }
@@ -44,8 +60,14 @@ namespace Blog.Models
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<CommandUser> CommandUsers { get; set; }
+
+        public DbSet<CommandPage> CommandPages { get; set; }
+
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
 
         public DbSet<UserArticleAnalysis> UserArticleAnalyses { get; set; }
+
+        public DbSet<ArticleStatistic> ArticleStatistics { get; set; }
     }
 }
