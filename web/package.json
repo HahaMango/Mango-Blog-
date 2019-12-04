@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^3.2.1",
     "mini-css-extract-plugin": "^0.8.0",
     "vue-loader": "^15.7.2",
     "vue-template-compiler": "^2.6.10",

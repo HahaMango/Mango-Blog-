@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import blogapp from './components/MangoBlog.vue';
+//import './mangoblog.css'
+
 
 var v = new Vue({
     el: '#mangoblog',

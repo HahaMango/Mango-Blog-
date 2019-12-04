@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <homepage v-if="hash=='/'" />
-    <articlePage v-if="hash =='/art'"/>
+  <div class="blog-context">
+    <div class="context">
+      <homePage v-if="hash=='#a'" />
+      <articlePage v-if="hash=='s'"/>
+    </div>
   </div>
 </template>
 
@@ -19,4 +21,14 @@ export default {
 </script>
 
 <style>
+
+.blog-context{
+  width: 100%;
+}
+
+.context{
+  width: 700px;
+  margin: 0px auto 0px auto;
+}
+
 </style>

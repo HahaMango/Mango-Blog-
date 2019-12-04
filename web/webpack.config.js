@@ -4,9 +4,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/mangoblog.js',
+  entry: {
+    mangoblog : './src/mangoblog.js'
+  },
   output: {
-    filename: 'mangoblog.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   externals:{
