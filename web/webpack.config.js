@@ -12,7 +12,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   externals:{
-    'vue':'Vue'
+    'vue':'Vue',
+    jquery:'jQuery'
   },
   devServer:{
     contentBase: './dist'

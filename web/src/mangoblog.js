@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import blogapp from './components/MangoBlog.vue';
-//import './mangoblog.css'
-
 
 var v = new Vue({
     el: '#mangoblog',
@@ -16,3 +14,10 @@ var v = new Vue({
         });
     }
 })
+
+var editor = editormd("editor", {
+    // width: "100%",
+    // height: "100%",
+    // markdown: "xxxx",     // dynamic set Markdown text
+    path : "editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+});
