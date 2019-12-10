@@ -34,17 +34,13 @@ export default {
 }
 
 .article-item a {
-text-decoration:none;
-color: rgb(182, 182, 182);
+  text-decoration:none;
+  color: rgb(182, 182, 182);
 }
 
-.item-border-hold a{
+.item-border-hold a:hover{
     color: black;
-}
-
-.item-border-hold{
-    color: black;
-    
+    text-decoration:none;
 }
 
 </style>

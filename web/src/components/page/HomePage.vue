@@ -5,6 +5,11 @@
         </div>
         <div id="home-context">
             <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
         </div>
     </div>
 </template>
@@ -17,7 +22,7 @@ export default {
         return{
             title:"你好啊",
             de:"这里是描述信息",
-            href:"#nihao"            
+            href:"#nihao"
         }
     },
     components:{
@@ -35,6 +40,7 @@ export default {
 
 #home-title{
     margin-bottom: 50px;
+    margin-left: 10px;
 }
 
 #home-title span{
