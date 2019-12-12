@@ -5,7 +5,7 @@
         <div>
           <h2>{{pagetitle}}</h2>
           <span>{{describe}}</span>
-          <articleInfo class="article-item-info" :read="read" :like="like" :command="command"/>
+          <articleInfo class="article-item-info" :read="read" :like="like" :comment="comment"/>
         </div>
       </a>
     </div>
@@ -16,7 +16,7 @@
 import articleInfo from './ArticleInfo.vue';
 
 export default {
-    props:["pagetitle","describe","href","read","like","command"],
+    props:["pagetitle","describe","href","read","like","comment"],
     components:{
         articleInfo
     }
@@ -42,5 +42,4 @@ export default {
     color: black;
     text-decoration:none;
 }
-
 </style>

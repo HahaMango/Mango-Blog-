@@ -2,7 +2,7 @@
   <div class="blog-context">
     <div :class="[(hash!='#admin')?'context':'']">
       <homePage v-if="hash=='#a'" />
-      <articlePage v-if="hash=='s'"/>
+      <articlePage v-if="hash=='#s'"/>
       <adminPage v-if="hash=='#admin'"/>
     </div>
     <div>
@@ -15,6 +15,12 @@
 </template>
 
 <script>
+//API：获取文章信息（分页）
+//API：获取文章信息
+//API：获取文章内容
+//API：点赞文章
+//API：获取该文章中的评论（分页）
+//API：发布评论
 import homePage from "./page/HomePage.vue";
 import articlePage from "./page/ArticlePage.vue";
 import adminPage from './page/AdminPage.vue';
@@ -36,7 +42,7 @@ export default {
 }
 
 .context{
-  width: 700px;
+  width: 900px;
   margin: 0px auto 0px auto;
 }
 

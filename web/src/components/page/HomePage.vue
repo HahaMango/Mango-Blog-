@@ -4,25 +4,34 @@
             <span>Chiva</span>
         </div>
         <div id="home-context">
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
-            <articleItem :pagetitle="title" :describe="de" :href="href" :read="1" :like="2" :command="65"/>
+            <articleItem 
+                v-for="article in articles" 
+                :key="article.Href"
+                :pagetitle="article.Title"
+                :describe="article.Describe"
+                :href="article.Href"
+                :read="article.Read"
+                :like="article.Like"
+                :comment="article.Comment"
+                />
         </div>
     </div>
 </template>
 
 <script>
+//API：获取文章信息（分页）
 import articleItem from '../ArticleItem.vue'
+import ArticleItem from '../../ArticleItem.js'
 
 export default {
     data(){
         return{
-            title:"你好啊",
-            de:"这里是描述信息",
-            href:"#nihao"
+            articles:[
+                new ArticleItem('文章','描述信息','#abd',1,10,34),
+                new ArticleItem('somearticle','somedec','#54',10,14,20),
+                new ArticleItem('somearticle','somedec','#54',10,14,20),
+                new ArticleItem('somearticle','somedec','#54',10,14,20)
+            ]
         }
     },
     components:{

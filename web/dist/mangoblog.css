@@ -1,0 +1,44 @@
+
+.article-item{
+    padding: 15px 0px 15px 0px
+}
+.article-item-info {
+    float:right;
+}
+.article-item a {
+text-decoration:none;
+color: rgb(182, 182, 182);
+}
+.item-border-hold a{
+    color: black;
+}
+.item-border-hold{
+    color: black;
+}
+
+
+
+#home-background{
+    margin-top: 50px;
+    width: 100%;
+}
+#home-title{
+    margin-bottom: 50px;
+}
+#home-title span{
+    font-size: 60px;
+}
+
+
+
+.blog-context{
+  width: 100%;
+}
+.context{
+  width: 700px;
+  margin: 0px auto 0px auto;
+}
+
+
+
+/*# sourceMappingURL=mangoblog.css.map*/
