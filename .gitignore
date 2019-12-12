@@ -1,2 +1,5 @@
 /web/node_modules/
 /web/.vscode/
+/MangoBlog/bin/
+/MangoBlog/obj/
+/.vs
