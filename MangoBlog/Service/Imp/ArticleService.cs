@@ -16,14 +16,61 @@ namespace MangoBlog.Service.Imp
             _articleDao = articleDao;
         }
 
+        public async Task<bool> AddArticleAsync(ArticleInfoModel article, ArticleContentModel articleContent)
+        {
+            if(article == null || articleContent == null || article.Id == null || articleContent.Id == null)
+            {
+                throw new NullReferenceException();
+            }
+            if(article.Id != articleContent.Id)
+            {
+                throw new ApplicationException();
+            }
+            bool flag = false;
+            flag = await _articleDao.AddArticleAsync(article);
+            flag &= await _articleDao.AddArticleContentAsync(articleContent);
+            return flag;
+        }
+
         public async Task<int> ArticleCountAsync()
         {
             return await _articleDao.ArticleCountAsync();
         }
 
-        public Task<ArticleContentModel> GetArticleContentAsync(string id)
+        public async Task<bool> DecIncLikeActionAsync(string id, bool inc)
         {
-            throw new NotImplementedException();
+            if(id == null)
+            {
+                throw new NullReferenceException();
+            }
+            return await _articleDao.DecIncLikeAsync(id, inc);
+        }
+
+        public async Task<bool> DeleteArticleAsync(string id)
+        {
+            if (id == null)
+            {
+                throw new NullReferenceException();
+            }
+            return await _articleDao.DeleteArticleById(id);
+        }
+
+        public async Task<ArticleInfoModel> GetArticleByIdAsync(string id)
+        {
+            if(id == null)
+            {
+                throw new NullReferenceException("文章id为空");
+            }
+            return await _articleDao.GetArticleInfoAsync(id);
+        }
+
+        public async Task<ArticleContentModel> GetArticleContentByIdAsync(string id)
+        {
+            if(id == null)
+            {
+                throw new NullReferenceException();            
+            }
+            return await _articleDao.GetArticleContentAsync(id);
         }
 
         public async Task<IList<ArticleInfoModel>> GetArticleInfosAsync(int startCount, int count)
@@ -36,9 +83,22 @@ namespace MangoBlog.Service.Imp
             return await _articleDao.GetArticleInfosAsync();
         }
 
-        public Task<bool> LikeActionAsync(string id)
+        public async Task<bool> IncViewActionAsync(string id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                throw new NullReferenceException();
+            }
+            return await _articleDao.IncViewAsync(id);
+        }
+
+        public async Task<bool> UpdateArticleAsync(ArticleInfoModel article)
+        {
+            if(article == null || article.Id == null)
+            {
+                throw new NullReferenceException();
+            }
+            return await _articleDao.UpdateArticleAsync(article);
         }
     }
 }

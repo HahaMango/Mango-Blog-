@@ -10,7 +10,6 @@ namespace MangoBlog.Entity
     {
         Task<bool> AddArticleAsync(ArticleInfoModel article);
         Task<bool> AddArticleContentAsync(ArticleContentModel articleContent);
-        Task<bool> DeleteArticleAsync(ArticleInfoModel article);
         Task<bool> DeleteArticleById(string id);
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync(int start, int count);
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync();
@@ -19,5 +18,7 @@ namespace MangoBlog.Entity
         Task<bool> UpdateArticleAsync(ArticleInfoModel article);
         Task<bool> UpdateArticleContentAsync(ArticleContentModel articleContent);
         Task<int> ArticleCountAsync();
+        Task<bool> IncViewAsync(string id);
+        Task<bool> DecIncLikeAsync(string id, bool inc);
     }
 }
