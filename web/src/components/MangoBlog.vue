@@ -19,6 +19,7 @@
 //API：获取文章信息
 //API：获取文章内容
 //API：点赞文章
+//API：获取文章总数
 //API：获取该文章中的评论（分页）
 //API：发布评论
 import homePage from "./page/HomePage.vue";

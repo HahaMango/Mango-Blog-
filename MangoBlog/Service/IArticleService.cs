@@ -11,7 +11,7 @@ namespace MangoBlog.Service
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync(int startCount,int count);
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync();
         Task<ArticleContentModel> GetArticleContentAsync(string id);
-        Task<bool> LikeAction(string id);
-        Task<int> ArticleCount();
+        Task<bool> LikeActionAsync(string id);
+        Task<int> ArticleCountAsync();
     }
 }
