@@ -14,6 +14,6 @@ namespace MangoBlog.Entity
         public int Like { get; set; }
         public int Comment { get; set; }
         public DateTime Date { get; set; }
-        public Category Category { get; set; }
+        public CategoryEntity Category { get; set; }
     }
 }

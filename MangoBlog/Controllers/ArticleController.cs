@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using MangoBlog.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangoBlog.Controllers
@@ -11,5 +7,11 @@ namespace MangoBlog.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
+        private readonly IArticleService _articleService = null;
+
+        public ArticleController(IArticleService articleService)
+        {
+            _articleService = articleService;
+        }
     }
 }

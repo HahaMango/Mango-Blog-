@@ -1,13 +1,11 @@
+using MangoBlog.Entity;
+using MangoBlog.Model;
+using MangoBlog.Service.Imp;
 using Moq;
 using System;
-using Xunit;
-using MangoBlog.Service;
-using MangoBlog.Entity;
-using MangoBlog.Service.Imp;
-using MangoBlog.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
+using Xunit;
 
 namespace MangoBlogTest.UnitTest
 {

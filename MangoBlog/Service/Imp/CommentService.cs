@@ -15,7 +15,12 @@ namespace MangoBlog.Service.Imp
             _commentService = commentService;
         }
 
-        public Task<IList<CommentModel>> GetCommentsAsync(string id, int startCount, int count)
+        public Task<bool> DeleteCommentAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<CommentModel>> GetCommentsAsync(string articleId, int startCount, int count)
         {
             throw new NotImplementedException();
         }
