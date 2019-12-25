@@ -26,9 +26,8 @@ namespace MangoBlog.Service.Imp
             {
                 throw new ApplicationException();
             }
-            bool flag = false;
-            flag = await _articleDao.AddArticleAsync(article);
-            flag &= await _articleDao.AddArticleContentAsync(articleContent);
+            bool flag = false;            
+            flag = await _articleDao.AddArticleAsync(article,articleContent);
             return flag;
         }
 
@@ -92,13 +91,13 @@ namespace MangoBlog.Service.Imp
             return await _articleDao.IncViewAsync(id);
         }
 
-        public async Task<bool> UpdateArticleAsync(ArticleInfoModel article)
+        public async Task<bool> UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContent)
         {
             if(article == null || article.Id == null)
             {
                 throw new NullReferenceException();
             }
-            return await _articleDao.UpdateArticleAsync(article);
+            return await _articleDao.UpdateArticleAsync(article,articleContent);
         }
     }
 }

@@ -171,42 +171,6 @@ namespace MangoBlogTest.UnitTest
         }
 
         [Fact]
-        public async void UpdateArticleTest()
-        {
-            ArticleInfoModel articleInfoModel = new ArticleInfoModel();
-            _mock.Setup(a => a.UpdateArticleAsync(It.Is<ArticleInfoModel>((aim)=> aim.Id != null))).Returns(Task.FromResult(true));
-            ArticleService articleService = new ArticleService(_mock.Object);
-
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.UpdateArticleAsync(articleInfoModel); });
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.UpdateArticleAsync(null); });
-
-            articleInfoModel.Id = "888";
-            bool flag = await articleService.UpdateArticleAsync(articleInfoModel);
-            Assert.True(flag);
-        }
-
-        [Fact]
-        public async void AddArticleTest()
-        {
-            ArticleInfoModel articleInfoModel = new ArticleInfoModel();
-            ArticleContentModel articleContentModel = new ArticleContentModel();
-
-            _mock.Setup(a => a.AddArticleAsync(It.Is<ArticleInfoModel>(aim => aim.Id != null))).ReturnsAsync(true);
-            _mock.Setup(a => a.AddArticleContentAsync(It.Is<ArticleContentModel>(aim => aim.Id != null))).ReturnsAsync(true);
-
-            ArticleService articleService = new ArticleService(_mock.Object);
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.AddArticleAsync(null, null); });
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.AddArticleAsync(articleInfoModel,articleContentModel); });
-            articleInfoModel.Id = "111";
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.AddArticleAsync(articleInfoModel, articleContentModel); });
-            articleContentModel.Id = "122";
-            await Assert.ThrowsAsync<ApplicationException>(async () => { await articleService.AddArticleAsync(articleInfoModel, articleContentModel); });
-            articleContentModel.Id = "111";
-            bool flag = await articleService.AddArticleAsync(articleInfoModel, articleContentModel);
-            Assert.True(flag);
-        }
-
-        [Fact]
         public async void DeleteArticleTest()
         {
             _mock.Setup(a => a.DeleteArticleById(It.IsNotNull<string>())).ReturnsAsync(true);

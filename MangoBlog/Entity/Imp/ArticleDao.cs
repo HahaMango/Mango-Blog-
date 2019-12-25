@@ -5,6 +5,7 @@ using MangoBlog.Model;
 using MangoBlog.Helper;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MangoBlog.Exception;
 
 namespace MangoBlog.Entity.Imp
 {
@@ -20,44 +21,18 @@ namespace MangoBlog.Entity.Imp
             _dBContext = dBContext;
         }
 
-        public async Task<bool> AddArticleAsync(ArticleInfoModel article)
+        public async Task AddArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel)
         {
-            if(article == null)
+            if(article == null || articleContentModel == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             var entity = ModelEntityHelper.ArticleM2E(article);
-            int changRow = 0;
-            try
-            {
-                await _dBContext.Articles.AddAsync(entity);
-                changRow = await _dBContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
-            return (changRow > 0) ? true : false;
-        }
+            var content = ModelEntityHelper.ContentM2E(articleContentModel);
+            entity.ArticleContent = content;
 
-        public async Task<bool> AddArticleContentAsync(ArticleContentModel articleContent)
-        {
-            if(articleContent == null)
-            {
-                throw new NullReferenceException();
-            }
-            var content = ModelEntityHelper.ContentM2E(articleContent);
-            int changRow = 0;
-            try
-            {
-                await _dBContext.ArticleContents.AddAsync(content);
-                changRow = await _dBContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
-            return (changRow > 0) ? true : false;
+            await _dBContext.Articles.AddAsync(entity);
+            await _dBContext.SaveChangesAsync();
         }
 
         public async Task<int> ArticleCountAsync()
@@ -67,53 +42,33 @@ namespace MangoBlog.Entity.Imp
             return count;
         }
 
-        public async Task<bool> DecIncLikeAsync(string id, bool inc)
+        public async Task DecIncLikeAsync(string id, bool inc)
         {
             if(id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
+            var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
+            if (article == null)
             {
-                var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
-                if (inc)
-                    article.Like++;
-                else
-                    article.Like--;
-                await _dBContext.SaveChangesAsync();
-                return true;
+                throw new NotFoundException($"没找到id为：{id} 的文章");
             }
-            catch(ArgumentNullException e)
-            {
-                return false;
-            }
-            catch (InvalidOperationException e)
-            {
-                return false;
-            }
+            if (inc)
+                article.Like++;
+            else
+                article.Like--;
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteArticleById(string id)
+        public async Task DeleteArticleById(string id)
         {
             if (id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
-            {
-                var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
-                _dBContext.Articles.Remove(article);
-                await _dBContext.SaveChangesAsync();
-                return true;
-            }
-            catch (ArgumentNullException e)
-            {
-                return false;
-            }
-            catch (InvalidOperationException e)
-            {
-                return false;
-            }
+            var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
+            _dBContext.Articles.Remove(article);
+            await _dBContext.SaveChangesAsync();
         }
 
         public async Task<ArticleContentModel> GetArticleContentAsync(string id)
@@ -124,7 +79,7 @@ namespace MangoBlog.Entity.Imp
             }
             try
             {
-                var content = await _dBContext.ArticleContents.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
+                var content = await _dBContext.ArticleContents.Where(c => c.ArticleId == int.Parse(id)).SingleOrDefaultAsync();
                 return ModelEntityHelper.ContentE2M(content);
             }
             catch
@@ -153,6 +108,7 @@ namespace MangoBlog.Entity.Imp
         public async Task<IList<ArticleInfoModel>> GetArticleInfosAsync(int start, int count)
         {
             var articles = await _dBContext.Articles
+                .Include(a=>a.Category)
                 .OrderByDescending(a => a.Id)
                 .Skip(start)
                 .Take(count)
@@ -169,6 +125,7 @@ namespace MangoBlog.Entity.Imp
         public async Task<IList<ArticleInfoModel>> GetArticleInfosAsync()
         {
             var articles = await _dBContext.Articles
+                .Include(a=>a.Category)
                 .OrderByDescending(a => a.Id)
                 .ToListAsync();
             IList<ArticleInfoModel> result = new List<ArticleInfoModel>();
@@ -180,67 +137,30 @@ namespace MangoBlog.Entity.Imp
             return result;
         }
 
-        public async Task<bool> IncViewAsync(string id)
+        public async Task IncViewAsync(string id)
         {
             if (id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
+            var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
+            if(article == null)
             {
-                var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
-                article.Read++;
-                await _dBContext.SaveChangesAsync();
-                return true;
+                throw new NotFoundException($"没找到id为：{id} 的文章");
             }
-            catch (ArgumentNullException e)
-            {
-                return false;
-            }
-            catch (InvalidOperationException e)
-            {
-                return false;
-            }
+            article.Read++;
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateArticleAsync(ArticleInfoModel article)
+        public async Task UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel)
         {
             if(article == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            int changRow = 0;
-            try
-            {
-                var ae = ModelEntityHelper.ArticleM2E(article);
-                _dBContext.Articles.Update(ae);
-                changRow = await _dBContext.SaveChangesAsync();
-                return (changRow > 0) ? true : false;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<bool> UpdateArticleContentAsync(ArticleContentModel articleContent)
-        {
-            if (articleContent == null)
-            {
-                throw new NullReferenceException();
-            }
-            int changRow = 0;
-            try
-            {
-                var c = ModelEntityHelper.ContentM2E(articleContent);
-                _dBContext.ArticleContents.Update(c);
-                changRow = await _dBContext.SaveChangesAsync();
-                return (changRow > 0) ? true : false;
-            }
-            catch
-            {
-                throw;
-            }
+            var ae = ModelEntityHelper.ArticleM2E(article);
+            _dBContext.Articles.Update(ae);
+            await _dBContext.SaveChangesAsync();
         }
     }
 }

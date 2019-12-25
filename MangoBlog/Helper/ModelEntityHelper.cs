@@ -40,8 +40,9 @@ namespace MangoBlog.Helper
                 Describe = articleEntity.Describe,
                 Read = articleEntity.Read,
                 Like = articleEntity.Like,
-                Comment =articleEntity.Comment,
-                Date = articleEntity.Date
+                Comment = articleEntity.Comment,
+                Date = articleEntity.Date,
+                Category = (articleEntity.Category != null) ? articleEntity.Category.CategoryName : ""
             };
         }
 
@@ -55,7 +56,8 @@ namespace MangoBlog.Helper
             {
                 Id = (articleContentModel.Id != null)? int.Parse(articleContentModel.Id):0,
                 Content = articleContentModel.Content,
-                ContentType = articleContentModel.ContentType
+                ContentType = articleContentModel.ContentType,
+                ArticleId = (articleContentModel.ArticleId != null) ? int.Parse(articleContentModel.ArticleId) : 0,
             };
         }
 

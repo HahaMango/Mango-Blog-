@@ -8,6 +8,6 @@ namespace MangoBlog.Entity
         Task<bool> DeleteCategoryAsync(string categoryName);
         Task<bool> DeleteCategoryAsync(int id);
         Task<string> GetCategoryByIdAsync(int id);
-        Task<string> GetCategoryAsync(string categoryName);
+        Task<bool> IsExist(string categoryName);
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MangoBlog.Entity
 {
@@ -9,8 +7,11 @@ namespace MangoBlog.Entity
     {
         public int Id { get; set; }
         public int ArticleId { get; set; }
+        [Column(TypeName = "varchar(10)")]
         public string UserName { get; set; }
+        [Column(TypeName = "varchar(200)")]
         public string Comment { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime Date { get; set; }
     }
 }

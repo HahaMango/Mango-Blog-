@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿/*
+ * 对布尔类型的返回值更改为空返回类型，函数出错则直接抛出异常。
+ **/
+
 using MangoBlog.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangoBlog.Entity
 {
     public interface IArticleDao
     {
-        Task<bool> AddArticleAsync(ArticleInfoModel article);
-        Task<bool> AddArticleContentAsync(ArticleContentModel articleContent);
-        Task<bool> DeleteArticleById(string id);
+        Task AddArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel);
+        Task DeleteArticleById(string id);
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync(int start, int count);
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync();
         Task<ArticleInfoModel> GetArticleInfoAsync(string id);
         Task<ArticleContentModel> GetArticleContentAsync(string id);
-        Task<bool> UpdateArticleAsync(ArticleInfoModel article);
-        Task<bool> UpdateArticleContentAsync(ArticleContentModel articleContent);
+        Task UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel);
         Task<int> ArticleCountAsync();
-        Task<bool> IncViewAsync(string id);
-        Task<bool> DecIncLikeAsync(string id, bool inc);
+        Task IncViewAsync(string id);
+        Task DecIncLikeAsync(string id, bool inc);
     }
 }

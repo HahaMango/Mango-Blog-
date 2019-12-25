@@ -13,6 +13,7 @@ namespace MangoBlog.Model
         public int Read { get; set; }
         public int Like { get; set;}
         public int Comment { get; set; }
+        public string Category { get; set; }
         public DateTime Date { get; set; }
     }
 }

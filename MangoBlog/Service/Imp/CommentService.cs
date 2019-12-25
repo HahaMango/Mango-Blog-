@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MangoBlog.Entity;
 using MangoBlog.Model;
 
 namespace MangoBlog.Service.Imp
 {
     public class CommentService : ICommentService
     {
-        private readonly ICommentService _commentService = null;
+        private readonly ICommentDao _commentDao = null;
 
-        public CommentService(ICommentService commentService)
+        public CommentService(ICommentDao commentDao)
         {
-            _commentService = commentService;
+            _commentDao = commentDao;
         }
 
         public Task<bool> DeleteCommentAsync(string id)
