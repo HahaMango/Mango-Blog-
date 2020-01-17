@@ -16,7 +16,7 @@ namespace MangoBlog.Service.Imp
             _articleDao = articleDao;
         }
 
-        public async Task<bool> AddArticleAsync(ArticleInfoModel article, ArticleContentModel articleContent)
+        public async Task AddArticleAsync(ArticleInfoModel article, ArticleContentModel articleContent)
         {
             if(article == null || articleContent == null || article.Id == null || articleContent.Id == null)
             {
@@ -26,9 +26,8 @@ namespace MangoBlog.Service.Imp
             {
                 throw new ApplicationException();
             }
-            bool flag = false;            
-            flag = await _articleDao.AddArticleAsync(article,articleContent);
-            return flag;
+            await _articleDao.AddArticleAsync(article,articleContent);
+
         }
 
         public async Task<int> ArticleCountAsync()
@@ -36,22 +35,22 @@ namespace MangoBlog.Service.Imp
             return await _articleDao.ArticleCountAsync();
         }
 
-        public async Task<bool> DecIncLikeActionAsync(string id, bool inc)
+        public async Task DecIncLikeActionAsync(string id, bool inc)
         {
             if(id == null)
             {
                 throw new NullReferenceException();
             }
-            return await _articleDao.DecIncLikeAsync(id, inc);
+            await _articleDao.DecIncLikeAsync(id, inc);
         }
 
-        public async Task<bool> DeleteArticleAsync(string id)
+        public async Task DeleteArticleAsync(string id)
         {
             if (id == null)
             {
                 throw new NullReferenceException();
             }
-            return await _articleDao.DeleteArticleById(id);
+            await _articleDao.DeleteArticleById(id);
         }
 
         public async Task<ArticleInfoModel> GetArticleByIdAsync(string id)
@@ -82,22 +81,22 @@ namespace MangoBlog.Service.Imp
             return await _articleDao.GetArticleInfosAsync();
         }
 
-        public async Task<bool> IncViewActionAsync(string id)
+        public async Task IncViewActionAsync(string id)
         {
             if (id == null)
             {
                 throw new NullReferenceException();
             }
-            return await _articleDao.IncViewAsync(id);
+            await _articleDao.IncViewAsync(id);
         }
 
-        public async Task<bool> UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContent)
+        public async Task UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContent)
         {
             if(article == null || article.Id == null)
             {
                 throw new NullReferenceException();
             }
-            return await _articleDao.UpdateArticleAsync(article,articleContent);
+            await _articleDao.UpdateArticleAsync(article,articleContent);
         }
     }
 }

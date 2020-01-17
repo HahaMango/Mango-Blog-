@@ -12,11 +12,11 @@ namespace MangoBlog.Service
         Task<IList<ArticleInfoModel>> GetArticleInfosAsync();
         Task<ArticleInfoModel> GetArticleByIdAsync(string id);
         Task<ArticleContentModel> GetArticleContentByIdAsync(string id);
-        Task<bool> IncViewActionAsync(string id);
-        Task<bool> DecIncLikeActionAsync(string id, bool inc);
+        Task IncViewActionAsync(string id);
+        Task DecIncLikeActionAsync(string id, bool inc);
         Task<int> ArticleCountAsync();
-        Task<bool> UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel);
-        Task<bool> AddArticleAsync(ArticleInfoModel article,ArticleContentModel articleContent);
-        Task<bool> DeleteArticleAsync(string id);
+        Task UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel);
+        Task AddArticleAsync(ArticleInfoModel article,ArticleContentModel articleContent);
+        Task DeleteArticleAsync(string id);
     }
 }

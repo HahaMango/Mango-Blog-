@@ -5,9 +5,10 @@ import './mangoblog.css';
 var v = new Vue({
     el: '#mangoblog',
     data: {
-        herfhash: '#a'
+        herfhash: '#home'
     },
     render(h) {
+        window.location.hash = this.herfhash;
         return h(blogapp, {
             props: {
                 hash: this.herfhash
@@ -15,3 +16,7 @@ var v = new Vue({
         });
     }
 })
+
+window.onhashchange = function(){
+    v.herfhash = window.location.hash;
+};

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MangoBlog.Model;
 using MangoBlog.Helper;
 using Microsoft.EntityFrameworkCore;
+using MangoBlog.Exception;
 
 namespace MangoBlog.Entity.Imp
 {
@@ -18,74 +19,59 @@ namespace MangoBlog.Entity.Imp
             _dBContext = dBContext;
         }
 
-        public async Task<bool> AddCommentAsync(CommentModel comment)
+        public async Task AddCommentAsync(string articleId, CommentModel comment)
         {
-            if(comment == null)
+            if(comment == null || articleId == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             var commentEntity = ModelEntityHelper.CommentM2E(comment);
-            int changRow = 0;
-            try
-            {
-                _dBContext.Comments.Add(commentEntity);
-                changRow = await _dBContext.SaveChangesAsync();
-                return (changRow > 0) ? true : false;
-            }
-            catch
-            {
-                throw;
-            }
+            commentEntity.ArticleId = (articleId != null) ? int.Parse(articleId) : 0;
+            _dBContext.Comments.Add(commentEntity);
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteCommentAsync(string id)
+        public async Task DeleteCommentAsync(string id)
         {
             if(id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
+            var coment = await _dBContext.Comments.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
+            if(coment == null)
             {
-                var coment = await _dBContext.Comments.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
-                _dBContext.Comments.Remove(coment);
-                await _dBContext.SaveChangesAsync();
-                return true;
+                throw new NotFoundException($"没找到id为：{id}的评论");
             }
-            catch (ArgumentNullException e)
-            {
-                return false;
-            }
-            catch (InvalidOperationException e)
-            {
-                return false;
-            }
+            _dBContext.Comments.Remove(coment);
+            await _dBContext.SaveChangesAsync();
         }
 
         public async Task<CommentModel> GetCommentAsync(string id)
         {
             if (id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
+            var comment = await _dBContext.Comments.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
+            if(comment == null)
             {
-                var comment = await _dBContext.Comments.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
-                return ModelEntityHelper.CommentE2M(comment);
+                throw new NotFoundException($"没找到id为：{id}的评论");
             }
-            catch
-            {
-                throw;
-            }
+            return ModelEntityHelper.CommentE2M(comment);
         }
 
         public async Task<IList<CommentModel>> GetCommentsAsync(string articleId, int start, int count)
         {
             if(articleId == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             IList<CommentModel> commentModels = new List<CommentModel>();
             var commentsByArticleId = await _dBContext.Comments.Where(c => c.ArticleId == int.Parse(articleId)).ToListAsync();
+            if(commentsByArticleId == null)
+            {
+                throw new NotFoundException($"没找到id为：{articleId} 的文章");
+            }
             commentsByArticleId = commentsByArticleId.OrderByDescending(c => c.Id).Skip(start).Take(count).ToList();
             foreach(CommentEntity ce in commentsByArticleId)
             {

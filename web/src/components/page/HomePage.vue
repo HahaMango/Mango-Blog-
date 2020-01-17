@@ -22,17 +22,25 @@
 //API：获取文章信息（分页）
 import articleItem from '../ArticleItem.vue'
 import ArticleItem from '../../ArticleItem.js'
+import Http from '../../Communication.js'
+
+let p = null;
 
 export default {
     data(){
         return{
             articles:[
-                new ArticleItem('文章','描述信息','#abd',1,10,34),
-                new ArticleItem('somearticle','somedec','#54',10,14,20),
-                new ArticleItem('somearticle','somedec','#54',10,14,20),
-                new ArticleItem('somearticle','somedec','#54',10,14,20)
             ]
         }
+    },
+    created : function() {
+
+        p = this;
+        Http.GetArticles(0,10,function(articles) {
+            for(var i =0;i<articles.length;i++){
+                p.articles.push(articles[i]);
+            }
+        })
     },
     components:{
         articleItem

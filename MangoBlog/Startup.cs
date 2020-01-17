@@ -26,10 +26,23 @@ namespace MangoBlog
             services.AddDbContext<MangoBlogDBContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("BloggingDatabase")));
 
-            services.AddScoped<IArticleService,ArticleService>();
-            services.AddScoped<IArticleDao,ArticleDao>();
+            services.AddCors(config =>
+            {
+                config.AddPolicy("all", p =>
+                {
+                    p.SetIsOriginAllowed(op => true)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleDao, ArticleDao>();
             services.AddScoped<ICommentService, CommentService>();
-            //services.AddScoped<ICommentDao, CommentDao>();
+            services.AddScoped<ICommentDao, CommentDao>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryDao, CategoryDao>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -46,6 +59,7 @@ namespace MangoBlog
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors("all");
 
             app.UseHttpsRedirection();
             app.UseMvc();

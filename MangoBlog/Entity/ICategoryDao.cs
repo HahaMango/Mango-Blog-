@@ -1,13 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangoBlog.Entity
 {
     public interface ICategoryDao
     {
-        Task<bool> AddCategoryAsync(string categoryName);
-        Task<bool> DeleteCategoryAsync(string categoryName);
-        Task<bool> DeleteCategoryAsync(int id);
+        Task AddCategoryAsync(string categoryName);
+        Task DeleteCategoryAsync(int id);
         Task<string> GetCategoryByIdAsync(int id);
-        Task<bool> IsExist(string categoryName);
+        Task<IList<string>> GetCategoryAsync();
+        Task<bool> IsExistAsync(string categoryName);
+        Task<string> GetCategoryByArticleId(string articleId);
     }
 }

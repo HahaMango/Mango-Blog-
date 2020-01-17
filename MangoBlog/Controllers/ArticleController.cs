@@ -1,11 +1,8 @@
 ﻿using MangoBlog.Model;
 using MangoBlog.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MangoBlog.Exception;
 
 namespace MangoBlog.Controllers
 {
@@ -25,14 +22,14 @@ namespace MangoBlog.Controllers
         {
             ArticleInfoModel articleInfo = article.ToArticleInfoModel();
             ArticleContentModel articleContent = article.ToArticleContentModel();
-            try
-            { 
-                await _articleService.AddArticleAsync(articleInfo,articleContent);
-            }
-            catch(System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _articleService.AddArticleAsync(articleInfo,articleContent);
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetArticle(string id)
+        {
+            ArticleInfoModel articleInfo = await _articleService.GetArticleByIdAsync(id);
             return Ok(articleInfo);
         }
 
@@ -40,14 +37,7 @@ namespace MangoBlog.Controllers
         public async Task<IActionResult> GetArticles(int start,int count)
         {
             var list = default(IList<ArticleInfoModel>);
-            try
-            {
-                list = await _articleService.GetArticleInfosAsync(start,count);
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            list = await _articleService.GetArticleInfosAsync(start, count);
             return Ok(list);
         }
 
@@ -55,14 +45,7 @@ namespace MangoBlog.Controllers
         public async Task<IActionResult> GetArticles()
         {
             var list = default(IList<ArticleInfoModel>);
-            try
-            {
-                list = await _articleService.GetArticleInfosAsync();
-            }
-            catch(System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            list = await _articleService.GetArticleInfosAsync();
             return Ok(list);
         }
 
@@ -70,48 +53,29 @@ namespace MangoBlog.Controllers
         public async Task<IActionResult> GetContent(string id)
         {
             ArticleContentModel articleContent = null;
-            try
-            {
-                articleContent = await _articleService.GetArticleContentByIdAsync(id);
-            }
-            catch(System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            articleContent = await _articleService.GetArticleContentByIdAsync(id);
             return Ok(articleContent);
         }
 
         [HttpPut("like/{id}")]
         public async Task<IActionResult> Like(string id)
         {
-            try
-            {
-                await _articleService.DecIncLikeActionAsync(id, true);
-                return Ok();
-            }
-            catch (NotFoundException e)
-            {
-                return NotFound(e.Message);
-            }catch(System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _articleService.DecIncLikeActionAsync(id, true);
+            return Ok();
         }
 
         [HttpPut("read/{id}")]
         public async Task<IActionResult> Read(string id)
         {
-            try
-            {
-                await _articleService.IncViewActionAsync(id);
-                return Ok();
-            }catch(NotFoundException e)
-            {
-                return NotFound(e.Message);
-            }catch(System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _articleService.IncViewActionAsync(id);
+            return Ok();
+        }
+
+        [HttpDelete("id")]
+        public async Task<IActionResult> DeleteArticle(string id)
+        {
+            await _articleService.DeleteArticleAsync(id);
+            return Ok();
         }
     }
 }

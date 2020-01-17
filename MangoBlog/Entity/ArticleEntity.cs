@@ -9,9 +9,9 @@ namespace MangoBlog.Entity
     {
         [Key]
         public int Id { get; set; }
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(100)")]
         public string Title { get; set; }
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(300)")]
         public string Describe { get; set; }
         public int Read { get; set; }
         public int Like { get; set; }

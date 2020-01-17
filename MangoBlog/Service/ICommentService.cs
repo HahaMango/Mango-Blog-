@@ -1,8 +1,6 @@
-﻿using System;
+﻿using MangoBlog.Model;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using MangoBlog.Model;
 
 namespace MangoBlog.Service
 {
@@ -10,7 +8,7 @@ namespace MangoBlog.Service
     {
         Task<IList<CommentModel>> GetCommentsAsync(string articleId,int startCount,int count);
         Task<IList<CommentModel>> GetCommentsAsync(string id);
-        Task<bool> ReplyActionAsync(string artcileId, CommentModel comment);
-        Task<bool> DeleteCommentAsync(string id);
+        Task ReplyActionAsync(string artcileId, CommentModel comment);
+        Task DeleteCommentAsync(string id);
     }
 }

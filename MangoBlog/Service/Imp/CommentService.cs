@@ -16,14 +16,22 @@ namespace MangoBlog.Service.Imp
             _commentDao = commentDao;
         }
 
-        public Task<bool> DeleteCommentAsync(string id)
+        public async Task DeleteCommentAsync(string id)
         {
-            throw new NotImplementedException();
+            if(id == null)
+            {
+                throw new ArgumentNullException();
+            }
+            await _commentDao.DeleteCommentAsync(id);
         }
 
-        public Task<IList<CommentModel>> GetCommentsAsync(string articleId, int startCount, int count)
+        public async Task<IList<CommentModel>> GetCommentsAsync(string articleId, int startCount, int count)
         {
-            throw new NotImplementedException();
+            if(articleId == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return await _commentDao.GetCommentsAsync(articleId, startCount, count);
         }
 
         public Task<IList<CommentModel>> GetCommentsAsync(string id)
@@ -31,9 +39,13 @@ namespace MangoBlog.Service.Imp
             throw new NotImplementedException();
         }
 
-        public Task<bool> ReplyActionAsync(string artcileId, CommentModel comment)
+        public async Task ReplyActionAsync(string artcileId, CommentModel comment)
         {
-            throw new NotImplementedException();
+            if(artcileId == null || comment == null)
+            {
+                throw new ArgumentNullException();
+            }
+            await _commentDao.AddCommentAsync(artcileId, comment);
         }
     }
 }

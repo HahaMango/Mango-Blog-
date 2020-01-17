@@ -71,7 +71,8 @@ namespace MangoBlog.Helper
             {
                 Id = articleContentEnttiy.Id.ToString(),
                 Content = articleContentEnttiy.Content,
-                ContentType = articleContentEnttiy.ContentType
+                ContentType = articleContentEnttiy.ContentType,
+                ArticleId = articleContentEnttiy.ArticleId.ToString()
             };
         }
 
@@ -85,7 +86,6 @@ namespace MangoBlog.Helper
             {
                 UserName = commentModel.UserName,
                 Comment = commentModel.Comment,
-                Date = commentModel.Date
             };
         }
 

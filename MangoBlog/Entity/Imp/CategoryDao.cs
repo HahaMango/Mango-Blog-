@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MangoBlog.Exception;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,96 +16,69 @@ namespace MangoBlog.Entity.Imp
             _dBContext = dBContext;
         }
 
-        public async Task<bool> AddCategoryAsync(string categoryName)
+        public async Task AddCategoryAsync(string categoryName)
         {
             if(categoryName == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            int changRow = 0;
-            CategoryEntity categoryEntity = new CategoryEntity
+            var category = new CategoryEntity
             {
                 CategoryName = categoryName
             };
-            try
-            {
-                await _dBContext.Categories.AddAsync(categoryEntity);
-                changRow = await _dBContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
-            return (changRow > 0) ? true : false;
+            await _dBContext.Categories.AddAsync(category);
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteCategoryAsync(string categoryName)
+        public async Task DeleteCategoryAsync(int id)
         {
-            if(categoryName == null)
+            var category = await _dBContext.Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
+            if(category == null)
             {
-                throw new NullReferenceException();
+                throw new NotFoundException($"没找到id为：{id}的类别");
             }
-            try
-            {
-                var category = await _dBContext.Categories.Where(c => c.CategoryName == categoryName).SingleOrDefaultAsync();
-                _dBContext.Categories.Remove(category);
-                await _dBContext.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            _dBContext.Categories.Remove(category);
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteCategoryAsync(int id)
+        public async Task<IList<string>> GetCategoryAsync()
         {
-            try
-            {
-                var category = await _dBContext.Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
-                _dBContext.Categories.Remove(category);
-                await _dBContext.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var c = await _dBContext.Categories.ToListAsync();
+            return c.Select(ce => ce.CategoryName).ToList();
         }
 
-        public async Task<bool> IsExist(string categoryName)
+        public async Task<string> GetCategoryByArticleId(string articleId)
         {
-            if(categoryName == null)
+            if(articleId == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
-            try
+            var article = await _dBContext.Articles.Include(c=>c.Category).Where(a => a.Id == int.Parse(articleId)).SingleOrDefaultAsync();
+            if(article == null)
             {
-                var c = await _dBContext.Categories.Where(cn => cn.CategoryName == categoryName).SingleOrDefaultAsync();
-                if (c != null)
-                {
-                    return true;
-                }
+                throw new NotFoundException($"没找到id为：{articleId}的文章");
             }
-            catch
-            {
-                throw;
-            }
-            return false;
+            return article.Category.CategoryName;
         }
 
         public async Task<string> GetCategoryByIdAsync(int id)
         {
-            CategoryEntity cn = null;
-            try
+            var ce = await _dBContext.Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
+            if(ce == null)
             {
-                cn = await _dBContext.Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
+                throw new NotFoundException($"没找到id为：{id}的类别");
             }
-            catch
+            return ce.CategoryName;
+        }
+
+        public async Task<bool> IsExistAsync(string categoryName)
+        {
+            var ce = await _dBContext.Categories.Where(c => c.CategoryName == categoryName).ToListAsync();
+            if(ce == null || ce.Count == 0)
             {
-                throw;
+                return false;
             }
-            return cn.CategoryName;
+            return true;
         }
     }
 }

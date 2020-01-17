@@ -8,7 +8,7 @@
             <label class="col-sm-2 col-form-label" >用户名:</label>
             <input class="col-sm-2 form-control" type="text" v-model="username"/>
             <div class="col-sm-2">
-                <button class="btn btn-primary">评论</button>
+                <button class="btn btn-primary" v-on:click="commentClick">评论</button>
             </div>
         </div>
     </div>
@@ -19,10 +19,15 @@
 export default {
     data(){
         return {
-            username:null
+            username:"",
+            text:""
         }
     },
-    props:["text"]
+    methods:{
+        commentClick:function() {
+            this.$emit('CommentClick',this.username,this.text);
+        }
+    }
 }
 </script>
 

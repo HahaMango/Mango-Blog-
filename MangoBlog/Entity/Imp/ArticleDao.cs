@@ -27,12 +27,34 @@ namespace MangoBlog.Entity.Imp
             {
                 throw new ArgumentNullException();
             }
-            var entity = ModelEntityHelper.ArticleM2E(article);
-            var content = ModelEntityHelper.ContentM2E(articleContentModel);
-            entity.ArticleContent = content;
+            using (var trans = _dBContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    string category = article.Category;
+                    var categoryEntity = await _dBContext.Categories.Where(c => c.CategoryName == category).SingleOrDefaultAsync();
+                    if(categoryEntity == null)
+                    {
+                        categoryEntity = new CategoryEntity
+                        {
+                            CategoryName = category
+                        };
+                    }
+                    var entity = ModelEntityHelper.ArticleM2E(article);
+                    var content = ModelEntityHelper.ContentM2E(articleContentModel);
+                    entity.ArticleContent = content;
+                    entity.Category = categoryEntity;
 
-            await _dBContext.Articles.AddAsync(entity);
-            await _dBContext.SaveChangesAsync();
+                    await _dBContext.Articles.AddAsync(entity);
+                    await _dBContext.SaveChangesAsync();
+
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                }
+            }
         }
 
         public async Task<int> ArticleCountAsync()
@@ -66,7 +88,15 @@ namespace MangoBlog.Entity.Imp
             {
                 throw new ArgumentNullException();
             }
-            var article = await _dBContext.Articles.Where(a => a.Id == int.Parse(id)).SingleOrDefaultAsync();
+            var article = await _dBContext.Articles
+                .Include(a=>a.ArticleContent)
+                .Include(a=>a.Comments)
+                .Where(a => a.Id == int.Parse(id))
+                .SingleOrDefaultAsync();
+            if(article == null)
+            {
+                throw new NotFoundException($"没找到id为：{id} 的文章");
+            }
             _dBContext.Articles.Remove(article);
             await _dBContext.SaveChangesAsync();
         }
@@ -75,11 +105,15 @@ namespace MangoBlog.Entity.Imp
         {
             if (id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             try
             {
                 var content = await _dBContext.ArticleContents.Where(c => c.ArticleId == int.Parse(id)).SingleOrDefaultAsync();
+                if(content == null)
+                {
+                    throw new NotFoundException($"没找到id为：{id} 的文章");
+                }
                 return ModelEntityHelper.ContentE2M(content);
             }
             catch
@@ -92,11 +126,15 @@ namespace MangoBlog.Entity.Imp
         {
             if (id == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             try
             {
                 var article = await _dBContext.Articles.Where(c => c.Id == int.Parse(id)).SingleOrDefaultAsync();
+                if(article == null)
+                {
+                    throw new NotFoundException($"没找到id为：{id} 的文章");
+                }
                 return ModelEntityHelper.ArticleE2M(article);
             }
             catch
@@ -154,7 +192,7 @@ namespace MangoBlog.Entity.Imp
 
         public async Task UpdateArticleAsync(ArticleInfoModel article,ArticleContentModel articleContentModel)
         {
-            if(article == null)
+            if(article == null || articleContentModel == null)
             {
                 throw new ArgumentNullException();
             }

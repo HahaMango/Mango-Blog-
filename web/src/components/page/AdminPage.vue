@@ -9,30 +9,39 @@
     <div id="editor-title">
       <div class="row">
         <span class="col-sm-2">文章标题：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章标题..." />
+        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章标题..." v-model="title"/>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章简述：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章简述内容..." />
+        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章简述内容..." v-model="describe"/>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章分类：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章分类..." />
+        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章分类..." v-model="category"/>
       </div>
     </div>
     <div id="editor"></div>
     <div id="editor-button-div">
-      <button type="button" class="btn btn-outline-secondary">发布</button>
+      <button type="button" class="btn btn-outline-secondary" v-on:click="publishClick">发布</button>
     </div>
     <div id="editor-bit"></div>
   </div>
 </template>
 
 <script>
+import ArticleModel from '../../ArticleModel.js'
+import Http from "../../Communication.js"
+
 export default {
   data() {
     return {
-      editorHeight : 500
+      editorHeight : 500,
+      editor:null,
+      title:null,
+      describe:null,
+      category:null,
+      content:null,
+      contentType:'md'
     };
   },
   mounted: function() {
@@ -46,6 +55,19 @@ export default {
       // markdown: "xxxx",     // dynamic set Markdown text
       path: "editor.md/lib/" // Autoload modules mode, codemirror, marked... dependents libs path
     });
+
+    this.editor = editor;
+  },
+  methods:{
+    publishClick:function() {
+      this.content = this.editor.getMarkdown();
+      
+      var articleModel = new ArticleModel(this.title,this.describe,this.category,this.content,this.contentType);
+      
+      Http.AddArticle(articleModel,function() {
+        
+      })
+    }
   }
 };
 </script>

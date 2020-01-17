@@ -1,8 +1,10 @@
 <template>
   <div class="blog-context">
     <div :class="[(hash!='#admin')?'context':'']">
-      <homePage v-if="hash=='#a'" />
-      <articlePage v-if="hash=='#s'"/>
+      <homePage v-show="hash == '#home'" />
+      <div v-if="hash.search('#article') >= 0">
+        <articlePage/>
+      </div>
       <adminPage v-if="hash=='#admin'"/>
     </div>
     <div>
