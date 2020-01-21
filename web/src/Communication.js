@@ -2,7 +2,7 @@ import ArticleItem from './ArticleItem.js'
 import ArticleContent from './ArticleContent.js';
 import Comment from './Comment.js'
 
-let url = "https://localhost:5001/api/";
+let url = "api/";
 
 export default{
     GetArticle:function(id,success){
@@ -13,7 +13,7 @@ export default{
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
                 var json = JSON.parse(xmlhttp.responseText);
-                var articleitem = new ArticleItem(json.title,json.describe,'#article'+json.id,json.read,json.like,json.comment,json.category,json.date);
+                var articleitem = new ArticleItem(json.title,json.describe,'#article'+json.id,json.read,json.like,json.comment,json.category,json.date.replace('T'," "));
                 success(articleitem);
             }
         }
@@ -30,7 +30,7 @@ export default{
                 var articleItems = new Array();
                 for(var i = 0;i<json.length;i++){
                     var article = json[i];
-                    var articleitem = new ArticleItem(article.title,article.describe,'#article'+article.id,article.read,article.like,article.comment,article.category,article.date);
+                    var articleitem = new ArticleItem(article.title,article.describe,'#article'+article.id,article.read,article.like,article.comment,article.category,article.date.replace('T'," "));
                     articleItems.push(articleitem);
                 }                
                 success(articleItems);
@@ -89,7 +89,7 @@ export default{
                 var comments = new Array();
                 for(var i =0;i<commentsJson.length;i++){
                     var commentJson = commentsJson[i];
-                    var comment = new Comment(commentJson.id,commentJson.userName,commentJson.comment,commentJson.date);
+                    var comment = new Comment(commentJson.id,commentJson.userName,commentJson.comment,commentJson.date.replace('T'," "));
                     comments.push(comment);
                 }
                 success(comments);
@@ -106,11 +106,11 @@ export default{
         var jsonsource = JSON.stringify(articleModel);
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                var articlejson = xmlhttp.responseText;
-                var response = JSON.parse(articlejson);
-                success(response);
+                success();
             }
-            
+            if(xmlhttp.readyState ==4 && xmlhttp.status >= 400){
+                alert("文章发布失败");
+            }            
         }
         xmlhttp.send(jsonsource);
     },
@@ -123,9 +123,7 @@ export default{
         var jsonsource = JSON.stringify(comment);
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                var commentjson = xmlhttp.responseText;
-                var response = JSON.parse(commentjson);
-                success(response);
+                success();
             }
             
         }

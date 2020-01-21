@@ -158,6 +158,7 @@ namespace MangoBlogTest.UnitTest
             await Assert.ThrowsAsync<NullReferenceException>(async () => { await articleService.GetArticleContentByIdAsync(null); });
         }
 
+        /**
         [Fact]
         public async void IncViewActionTest()
         {
@@ -194,5 +195,6 @@ namespace MangoBlogTest.UnitTest
             flag = await articleService.DecIncLikeActionAsync("333", false);
             Assert.True(flag);
         }
+    **/
     }
 }

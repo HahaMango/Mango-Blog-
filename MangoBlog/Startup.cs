@@ -4,6 +4,7 @@ using MangoBlog.Service;
 using MangoBlog.Service.Imp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,11 @@ namespace MangoBlog
         {
             services.AddDbContext<MangoBlogDBContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("BloggingDatabase")));
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                //options.KnownProxies.Add(IPAddress.Parse("192.168.99.100"));
+            });
 
             services.AddCors(config =>
             {
@@ -50,6 +56,11 @@ namespace MangoBlog
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseExceptionHandler("/error");
@@ -57,11 +68,11 @@ namespace MangoBlog
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
             app.UseCors("all");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

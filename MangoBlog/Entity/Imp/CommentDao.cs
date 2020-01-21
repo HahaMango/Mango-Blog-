@@ -25,10 +25,28 @@ namespace MangoBlog.Entity.Imp
             {
                 throw new ArgumentNullException();
             }
-            var commentEntity = ModelEntityHelper.CommentM2E(comment);
-            commentEntity.ArticleId = (articleId != null) ? int.Parse(articleId) : 0;
-            _dBContext.Comments.Add(commentEntity);
-            await _dBContext.SaveChangesAsync();
+            using (var trans = _dBContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    var commentEntity = ModelEntityHelper.CommentM2E(comment);
+                    var articleEntity = await _dBContext.Articles.Where(a => a.Id == int.Parse(articleId)).SingleOrDefaultAsync();
+                    if (articleEntity == null)
+                    {
+                        throw new NotFoundException($"没找到id为：{articleId}的文章");
+                    }
+                    articleEntity.Comment++;
+                    commentEntity.ArticleId = (articleId != null) ? int.Parse(articleId) : 0;
+                    _dBContext.Comments.Add(commentEntity);
+                    await _dBContext.SaveChangesAsync();
+
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                }
+            }
         }
 
         public async Task DeleteCommentAsync(string id)

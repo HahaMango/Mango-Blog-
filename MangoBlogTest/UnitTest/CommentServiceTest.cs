@@ -74,6 +74,7 @@ namespace MangoBlogTest.UnitTest
             _mock = new Mock<ICommentService>();
         }
 
+        /**
         [Fact]
         public async void GetCommentByArticleIdTest()
         {
@@ -107,6 +108,7 @@ namespace MangoBlogTest.UnitTest
                 },
                 result);
         }
+    **/
 
         [Fact]
         public async void GetCommentByIdTest()

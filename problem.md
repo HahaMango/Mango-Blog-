@@ -1,0 +1,3 @@
+1. 对于HTTPS安全连接，asp.net core中在生产环境当存在信任证书时才会开启HTTPS的监听，否则只有HTTP。
+2. 采用NLOG框架来提供输出到文件的日志提供程序，并且在application.json中的日志等级设置会覆盖程序中的`SetMinimumLevel`设置，所以`SetMinimumLevel`可以尽量设置最小的日志等级，以后调试就可以修改application.json文件就好了。
+3. mysql在windows和linux中的大小写敏感是不一样的，这造成了在windows中是大小写不敏感，而linux中是大小写敏感导致了找不到表名的问题。可以修改mysql的`lower_case_table_names`属性解决。

@@ -36,6 +36,10 @@
             </div>
             <comment id="comment-test" v-on:CommentClick="commentClick"/>
         </div>
+        <div id="like-div">
+            <button class="btn btn-light" id="to-top-button" v-on:click="ToTopButton"><ion-icon name="arrow-round-up"></ion-icon></button>            
+            <button class="btn btn-light" id="like-button" v-on:click="LikeButton"><ion-icon name="heart-empty"></ion-icon></button>
+        </div>
     </div>
 </template>
 
@@ -67,8 +71,7 @@ export default {
             replyText :""
         }
     },
-    created:function(){
-        
+    created:function(){  
         p = this;
         var id = window.location.hash;
         id = id.slice(8,id.length);
@@ -88,6 +91,9 @@ export default {
                 markdown:p.content,
                 padding:"0px"
             });
+            Http.Read(p.id,function(){
+
+            });
         });
         
         Http.GetComments(id,0,10,function(comments) {
@@ -98,14 +104,41 @@ export default {
 
         var i =1;
     },
+    mounted:function(){
+        var likediv = document.getElementById('like-div');
+        var width = document.body.clientWidth; 
+        var scrollheight = document.documentElement.scrollTop;
+        likediv.style.left = (width - 100) + 'px';
+        likediv.style.top = (scrollheight + 400) + 'px';
+        likediv.style.position = "absolute";
+        likediv.style.width = "50px";
+        likediv.style.height = "130px";
+        window.onscroll = function(){
+            scrollheight = document.documentElement.scrollTop;
+            likediv.style.top = (scrollheight + 400) + 'px';
+        }
+    },
     methods:{
         ClickEvent:function(event){
             window.alert(event);
         },
         commentClick:function(username,content) {
             var comment = new Comment("",username,content,new Date);
-            Http.AddComment(this.id,comment,function(commentjson) {
-                p.commentItems.push(comment);
+            Http.AddComment(this.id,comment,function() {
+                var length = p.commentItems.length;
+                Http.GetComments(p.id,0,1,function(comments) {
+                for(var i =0;i<comments.length;i++){
+                    p.commentItems.unshift(comments[i]);
+                }
+            });
+        });
+        },
+        ToTopButton:function(){
+            document.documentElement.scrollTop = 0;
+        },
+        LikeButton:function(){
+            Http.Like(this.id,function(){
+
             });
         }
     },
@@ -160,5 +193,15 @@ export default {
     width: 850px;
     margin: 10px auto 0px auto;
     color: gray;
+}
+
+#to-top-button{
+    margin: 2px 0px 2px 0px;
+    font-size: 24px;
+}
+
+#like-button{
+    margin: 2px 0px 2px 0px;
+    font-size: 24px;
 }
 </style>

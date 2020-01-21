@@ -45,7 +45,7 @@ namespace MangoBlog.Service.Imp
             {
                 throw new ArgumentNullException();
             }
-            await _commentDao.AddCommentAsync(artcileId, comment);
+            await _commentDao.AddCommentAsync(artcileId, comment);          
         }
     }
 }

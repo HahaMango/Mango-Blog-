@@ -26,6 +26,8 @@ export default {
     methods:{
         commentClick:function() {
             this.$emit('CommentClick',this.username,this.text);
+            this.username = "";
+            this.text = "";
         }
     }
 }

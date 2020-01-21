@@ -48,17 +48,17 @@ namespace MangoBlog.Migrations
                     b.Property<int>("Comment");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("TimeStamp");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Describe")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(300)");
 
                     b.Property<int>("Like");
 
                     b.Property<int>("Read");
 
                     b.Property<string>("Title")
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -88,10 +88,10 @@ namespace MangoBlog.Migrations
                     b.Property<int>("ArticleId");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("varchar(300)");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("TimeStamp");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("UserName")
                         .HasColumnType("varchar(10)");

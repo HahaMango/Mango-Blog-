@@ -44,7 +44,7 @@ export default {
     },
     components:{
         articleItem
-    }
+    },
 }
 </script>
 

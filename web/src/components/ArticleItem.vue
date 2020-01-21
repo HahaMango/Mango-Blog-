@@ -1,10 +1,10 @@
 <template>
-  <div class="article-item">
-    <div class="item-border" onmouseover="this.className='item-border-hold'" onmouseout="this.className='item-border'">
+  <div class="article-item" onmouseover="this.className='article-item-hold'" onmouseout="this.className='article-item'">
+    <div class="item-border">
       <a :href="href">
         <div>
           <h2>{{pagetitle}}</h2>
-          <span>{{describe}}</span>
+          <span style="display:block;margin-bottom:10px;">{{describe}}</span>
           <articleInfo class="article-item-info" :read="read" :like="like" :comment="comment"/>
         </div>
       </a>
@@ -19,6 +19,8 @@ export default {
     props:["pagetitle","describe","href","read","like","comment"],
     components:{
         articleInfo
+    },
+    methods:{
     }
 }
 </script>
@@ -26,7 +28,15 @@ export default {
 <style>
 
 .article-item{
-    padding: 15px 0px 15px 0px
+    margin: 5px 0px 5px 0px;
+    padding: 23px 15px 23px 15px;
+}
+
+.article-item-hold{
+    margin: 5px 0px 5px 0px;
+    padding: 23px 15px 23px 15px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
 }
 
 .article-item-info {
@@ -38,8 +48,14 @@ export default {
   color: rgb(182, 182, 182);
 }
 
-.item-border-hold a:hover{
+.article-item-hold a {
+  text-decoration:none;
+  color: rgb(182, 182, 182);
+}
+
+.article-item-hold a:hover{
     color: black;
     text-decoration:none;
 }
+
 </style>

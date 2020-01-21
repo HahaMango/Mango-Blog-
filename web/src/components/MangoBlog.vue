@@ -9,7 +9,6 @@
     </div>
     <div>
       <div class="blog-footer">
-        <span>粤ICP备18149049号</span>
         <span style="margin-left:40px;"><a href="https://github.com/HahaMango/Mango-Blog-" target="_blank"><ion-icon name="logo-github"></ion-icon></a><i>Power By .Net Core</i></span>
       </div>
     </div>
@@ -49,7 +48,7 @@ export default {
 }
 
 .blog-footer{
-  width: 340px;
+  width: 240px;
   margin: 0px auto 0px auto;
   color: gray;
   padding-top: 10px;

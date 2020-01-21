@@ -65,7 +65,7 @@ export default {
       var articleModel = new ArticleModel(this.title,this.describe,this.category,this.content,this.contentType);
       
       Http.AddArticle(articleModel,function() {
-        
+        alert("文章发布成功")
       })
     }
   }

@@ -27,12 +27,13 @@ namespace MangoBlog.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(type: "varchar(20)", nullable: true),
-                    Describe = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Title = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Describe = table.Column<string>(type: "varchar(300)", nullable: true),
                     Read = table.Column<int>(nullable: false),
                     Like = table.Column<int>(nullable: false),
                     Comment = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(type: "TimeStamp", nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -75,8 +76,9 @@ namespace MangoBlog.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ArticleId = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(type: "varchar(10)", nullable: true),
-                    Comment = table.Column<string>(type: "varchar(200)", nullable: true),
-                    Date = table.Column<DateTime>(type: "TimeStamp", nullable: false)
+                    Comment = table.Column<string>(type: "varchar(300)", nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
