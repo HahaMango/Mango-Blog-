@@ -1,7 +1,15 @@
 <template>
     <div id="home-background">
-        <div id="home-title">
-            <span>Chiva</span>
+        <div id="home-title" class="row">
+            <span class="col-sm-3">Chiva</span>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <button id="profile-button" class="btn btn-light" v-on:click="ProfileClick">
+                    <ion-icon name="bookmark"></ion-icon>Profile
+                </button>
+            </div>
         </div>
         <div id="home-context">
             <articleItem 
@@ -45,6 +53,11 @@ export default {
     components:{
         articleItem
     },
+    methods:{
+        ProfileClick:function(){
+            window.location.hash = "#profile";
+        }
+    }
 }
 </script>
 
@@ -65,4 +78,7 @@ export default {
 
 }
 
+#profile-button{
+    margin-top: 40px;
+}
 </style>

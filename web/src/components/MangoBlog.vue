@@ -6,6 +6,7 @@
         <articlePage/>
       </div>
       <adminPage v-if="hash=='#admin'"/>
+      <profilePage v-if="hash == '#profile'"/>
     </div>
     <div>
       <div class="blog-footer">
@@ -25,13 +26,15 @@
 import homePage from "./page/HomePage.vue";
 import articlePage from "./page/ArticlePage.vue";
 import adminPage from './page/AdminPage.vue';
+import profilePage from './page/ProfilePage.vue'
 
 export default {
   props: ["hash"],
   components: {
     homePage,
     articlePage,
-    adminPage
+    adminPage,
+    profilePage
   }
 };
 </script>

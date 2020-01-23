@@ -1,7 +1,7 @@
 <template>
     <div id="comment-background">
         <div>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
+            <textarea class="form-control" maxlength="300" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
         </div>
         <div class="row" id="comment-userinfo">
             <div class="col-sm-6"></div>

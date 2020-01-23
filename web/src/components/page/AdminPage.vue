@@ -9,15 +9,17 @@
     <div id="editor-title">
       <div class="row">
         <span class="col-sm-2">文章标题：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章标题..." v-model="title"/>
+        <input class="col-sm-8 mango-text-input" type="text" maxlength="100" placeholder="请填写文章标题..." v-model="title" v-on:keyup="TitleChange($event)"/>
+        <div class="col-sm-2"><span id="title-count">0</span>/100</div>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章简述：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章简述内容..." v-model="describe"/>
+        <input class="col-sm-8 mango-text-input" type="text" maxlength="300" placeholder="请填写文章简述内容..." v-model="describe" v-on:keyup="DescChange($event)"/>
+        <div class="col-sm-2"><span id="describe-count">0</span>/300</div>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章分类：</span>
-        <input class="col-sm-10 mango-text-input" type="text" placeholder="请填写文章分类..." v-model="category"/>
+        <input class="col-sm-8 mango-text-input" type="text" placeholder="请填写文章分类..." v-model="category"/>
       </div>
     </div>
     <div id="editor"></div>
@@ -67,6 +69,16 @@ export default {
       Http.AddArticle(articleModel,function() {
         alert("文章发布成功")
       })
+    },
+    TitleChange:function(input){
+      var titleCount = document.getElementById('title-count');
+      var input = input.target.value;
+      titleCount.innerText = input.length;
+    },
+    DescChange:function(input){
+      var titleCount = document.getElementById('describe-count');
+      var input = input.target.value;
+      titleCount.innerText = input.length;
     }
   }
 };

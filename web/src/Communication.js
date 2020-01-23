@@ -59,8 +59,7 @@ export default{
         xmlhttp.setRequestHeader("Accept","application/json");
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                var ok = JSON.parse(xmlhttp.responseText);
-                success(ok);
+                success();
             }
         }
         xmlhttp.send();

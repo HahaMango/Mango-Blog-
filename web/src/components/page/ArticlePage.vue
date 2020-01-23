@@ -137,8 +137,9 @@ export default {
             document.documentElement.scrollTop = 0;
         },
         LikeButton:function(){
-            Http.Like(this.id,function(){
-
+            Http.Like(this.id,function(){                
+                p.like = p.like + 1;
+                alert("点赞成功");
             });
         }
     },
