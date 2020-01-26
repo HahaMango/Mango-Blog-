@@ -2,7 +2,7 @@ import ArticleItem from './ArticleItem.js'
 import ArticleContent from './ArticleContent.js';
 import Comment from './Comment.js'
 
-let url = "api/";
+let url = "http://localhost:5000/api/";
 
 export default{
     GetArticle:function(id,success){

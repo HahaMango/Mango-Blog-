@@ -1,5 +1,5 @@
 <template>
-  <div id="editor-div">
+  <div id="editor-div" v-if="isAuthentication">
     <div id="editor-head">
       <span>Chiva</span>
       <span>
@@ -9,17 +9,40 @@
     <div id="editor-title">
       <div class="row">
         <span class="col-sm-2">文章标题：</span>
-        <input class="col-sm-8 mango-text-input" type="text" maxlength="100" placeholder="请填写文章标题..." v-model="title" v-on:keyup="TitleChange($event)"/>
-        <div class="col-sm-2"><span id="title-count">0</span>/100</div>
+        <input
+          class="col-sm-8 mango-text-input"
+          type="text"
+          maxlength="100"
+          placeholder="请填写文章标题..."
+          v-model="title"
+          v-on:keyup="TitleChange($event)"
+        />
+        <div class="col-sm-2">
+          <span id="title-count">0</span>/100
+        </div>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章简述：</span>
-        <input class="col-sm-8 mango-text-input" type="text" maxlength="300" placeholder="请填写文章简述内容..." v-model="describe" v-on:keyup="DescChange($event)"/>
-        <div class="col-sm-2"><span id="describe-count">0</span>/300</div>
+        <input
+          class="col-sm-8 mango-text-input"
+          type="text"
+          maxlength="300"
+          placeholder="请填写文章简述内容..."
+          v-model="describe"
+          v-on:keyup="DescChange($event)"
+        />
+        <div class="col-sm-2">
+          <span id="describe-count">0</span>/300
+        </div>
       </div>
       <div class="row" style="margin-top:10px;">
         <span class="col-sm-2">文章分类：</span>
-        <input class="col-sm-8 mango-text-input" type="text" placeholder="请填写文章分类..." v-model="category"/>
+        <input
+          class="col-sm-8 mango-text-input"
+          type="text"
+          placeholder="请填写文章分类..."
+          v-model="category"
+        />
       </div>
     </div>
     <div id="editor"></div>
@@ -31,20 +54,36 @@
 </template>
 
 <script>
-import ArticleModel from '../../ArticleModel.js'
-import Http from "../../Communication.js"
+import ArticleModel from "../../ArticleModel.js";
+import Http from "../../Communication.js";
+import Oidc from "oidc-client";
+import ls from '../../LoginServer.js'
+
+let currentUser = null;
 
 export default {
   data() {
     return {
-      editorHeight : 500,
-      editor:null,
-      title:null,
-      describe:null,
-      category:null,
-      content:null,
-      contentType:'md'
+      editorHeight: 500,
+      editor: null,
+      title: null,
+      describe: null,
+      category: null,
+      content: null,
+      contentType: "md",
+      isAuthentication:false
     };
+  },
+  created: function() {
+    var loginServer = ls.GetLoginServer();
+    loginServer.getUser().then(function(user) {
+      if (user) {
+        currentUser = user;
+        isAuthentication = true;
+      } else {
+        loginServer.signinRedirect();
+      }
+    });
   },
   mounted: function() {
     var sHeight = document.documentElement.clientHeight;
@@ -53,15 +92,16 @@ export default {
 
     var editor = editormd("editor", {
       width: "100%",
-      height: this.editorHeight + 'px',
+      height: this.editorHeight + "px",
       // markdown: "xxxx",     // dynamic set Markdown text
       path: "editor.md/lib/" // Autoload modules mode, codemirror, marked... dependents libs path
     });
 
     this.editor = editor;
   },
-  methods:{
-    publishClick:function() {
+  methods: {
+    publishClick: function() {
+      
       this.content = this.editor.getMarkdown();
       
       var articleModel = new ArticleModel(this.title,this.describe,this.category,this.content,this.contentType);
@@ -70,13 +110,13 @@ export default {
         alert("文章发布成功")
       })
     },
-    TitleChange:function(input){
-      var titleCount = document.getElementById('title-count');
+    TitleChange: function(input) {
+      var titleCount = document.getElementById("title-count");
       var input = input.target.value;
       titleCount.innerText = input.length;
     },
-    DescChange:function(input){
-      var titleCount = document.getElementById('describe-count');
+    DescChange: function(input) {
+      var titleCount = document.getElementById("describe-count");
       var input = input.target.value;
       titleCount.innerText = input.length;
     }
@@ -110,7 +150,7 @@ export default {
   margin-bottom: 10px;
 }
 
-#editor-bit{
+#editor-bit {
   height: 38px;
 }
 

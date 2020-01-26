@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-  //devtool: 'source-map',
+  devtool: 'source-map',
   entry: {
     mangoblog : './src/mangoblog.js'
   },
@@ -13,7 +13,8 @@ module.exports = {
   },
   externals:{
     'vue':'Vue',
-    jquery:'jQuery'
+    jquery:'jQuery',
+    'oidc-client':'Oidc'
   },
   devServer:{
     contentBase: './dist'

@@ -43,6 +43,15 @@ namespace MangoBlog
                 });
             });
 
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", config =>
+                 {
+                     config.Authority = Configuration["AuthorityServer"];
+                     config.RequireHttpsMetadata = false;
+
+                     config.Audience = "mangoblogApi";
+                 });
+
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleDao, ArticleDao>();
             services.AddScoped<ICommentService, CommentService>();
@@ -50,7 +59,10 @@ namespace MangoBlog
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryDao, CategoryDao>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvcCore()
+                .AddAuthorization()
+                .AddJsonFormatters()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +83,7 @@ namespace MangoBlog
                 //app.UseHsts();
             }
             app.UseCors("all");
-
+            app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseMvc();
         }
