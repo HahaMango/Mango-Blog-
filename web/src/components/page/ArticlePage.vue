@@ -26,13 +26,16 @@
             <div v-if="commentItems.length != 0">
                 <h3>评论</h3>
                 <commentItem 
-                    v-for="c in commentItems" 
+                    v-for="c in commentItems"
                     class="commentitem-test" 
                     :key="c.Id"
                     v-on:reply="ClickEvent" 
                     :username="c.UserName"
                     :comment="c.Comment"
-                    :date="c.Date"/>                
+                    :date="c.Date"/>
+                <div class="text-center" style="margin-top:20px;">
+                    <button id="more-comment" v-on:click="GetMoreComment">更多 <ion-icon name="arrow-dropdown"></ion-icon></button>
+                </div>
             </div>
             <comment id="comment-test" v-on:CommentClick="commentClick"/>
         </div>
@@ -54,6 +57,7 @@ import comment from '../Comment.vue'
 import commentItem from '../CommentItem.vue'
 import Http from '../../Communication.js'
 import Comment from '../../Comment.js'
+import Helper from '../../Helper.js'
 
 let p = null;
 
@@ -68,7 +72,8 @@ export default {
             like:0,
             comment:0,
             commentItems:[],
-            replyText :""
+            replyText :"",
+            currentDate:new Date()
         }
     },
     created:function(){  
@@ -92,11 +97,14 @@ export default {
                 padding:"0px"
             });
             Http.Read(p.id,function(){
-
+                p.read = p.read + 1;
             });
         });
-        
-        Http.GetComments(id,0,10,function(comments) {
+
+        var s = Helper.LocalToPlues8String(new Date());
+        p.currentDate = s;
+
+        Http.GetComments(id,s,10,function(comments) {
             for(var i =0;i<comments.length;i++){
                 p.commentItems.push(comments[i]);
             }
@@ -123,23 +131,27 @@ export default {
             window.alert(event);
         },
         commentClick:function(username,content) {
-            var comment = new Comment("",username,content,new Date);
+            var comment = new Comment("",username,content,Helper.LocalToPlues8String(new Date()));
             Http.AddComment(this.id,comment,function() {
-                var length = p.commentItems.length;
-                Http.GetComments(p.id,0,1,function(comments) {
-                for(var i =0;i<comments.length;i++){
-                    p.commentItems.unshift(comments[i]);
-                }
+                p.commentItems.unshift(comment);
             });
-        });
         },
         ToTopButton:function(){
             document.documentElement.scrollTop = 0;
         },
         LikeButton:function(){
-            Http.Like(this.id,function(){                
+            Http.Like(this.id,function(){
                 p.like = p.like + 1;
                 alert("点赞成功");
+            });
+        },
+        GetMoreComment:function(){
+            var cl = p.commentItems.length-1;
+            p.currentDate = p.commentItems[cl].Date;
+            Http.GetComments(p.id,p.currentDate,10,function(comments) {
+                for(var i =0;i<comments.length;i++){
+                    p.commentItems.push(comments[i]);
+                }
             });
         }
     },
@@ -152,6 +164,13 @@ export default {
 </script>
 
 <style>
+
+#more-comment{
+    background-color: rgb(243, 243, 243);
+    border-color: transparent;
+    border-radius: 10px;
+    width: 300px;
+}
 
 #article-background{
     width: 100%;

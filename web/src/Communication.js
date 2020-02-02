@@ -13,7 +13,8 @@ export default{
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
                 var json = JSON.parse(xmlhttp.responseText);
-                var articleitem = new ArticleItem(json.title,json.describe,'#article'+json.id,json.read,json.like,json.comment,json.category,json.date.replace('T'," "));
+                var datestring = json.date.replace('T'," ").split('.')[0];
+                var articleitem = new ArticleItem(json.title,json.describe,'#article'+json.id,json.read,json.like,json.comment,json.category,datestring);
                 success(articleitem);
             }
         }
@@ -30,7 +31,8 @@ export default{
                 var articleItems = new Array();
                 for(var i = 0;i<json.length;i++){
                     var article = json[i];
-                    var articleitem = new ArticleItem(article.title,article.describe,'#article'+article.id,article.read,article.like,article.comment,article.category,article.date.replace('T'," "));
+                    var datestring = article.date.replace('T'," ").split('.')[0];
+                    var articleitem = new ArticleItem(article.title,article.describe,'#article'+article.id,article.read,article.like,article.comment,article.category,datestring);
                     articleItems.push(articleitem);
                 }                
                 success(articleItems);
@@ -71,15 +73,14 @@ export default{
         xmlhttp.setRequestHeader("Accept","application/json");
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                var ok = JSON.parse(xmlhttp.responseText);
-                success(ok);
+                success();
             }
         }
         xmlhttp.send();
     },
-    GetComments:function(id,startIndex,count,success){
+    GetComments:function(id,date,count,success){
         let xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET",url + "comments/article/"+id+"/"+startIndex+"/"+count,true);
+        xmlhttp.open("GET",url + "comments/article/"+id+"/"+date+"/"+count,true);
         xmlhttp.setRequestHeader("Access-Control-Allow-Origin","*");
         xmlhttp.setRequestHeader("Accept","application/json");
         xmlhttp.onreadystatechange = function(){
@@ -88,7 +89,8 @@ export default{
                 var comments = new Array();
                 for(var i =0;i<commentsJson.length;i++){
                     var commentJson = commentsJson[i];
-                    var comment = new Comment(commentJson.id,commentJson.userName,commentJson.comment,commentJson.date.replace('T'," "));
+                    var datestring = commentJson.date.replace('T'," ").split('.')[0];
+                    var comment = new Comment(commentJson.id,commentJson.userName,commentJson.comment,datestring);
                     comments.push(comment);
                 }
                 success(comments);
@@ -96,12 +98,13 @@ export default{
         }
         xmlhttp.send();
     },
-    AddArticle:function(articleModel,success){
+    AddArticle:function(articleModel,token,success){
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST",url + "articles",true);
         xmlhttp.setRequestHeader("Access-Control-Allow-Origin","*");
         xmlhttp.setRequestHeader("Accept","application/json");
-        xmlhttp.setRequestHeader("Content-Type","application/json")
+        xmlhttp.setRequestHeader("Content-Type","application/json");
+        xmlhttp.setRequestHeader("Authorization", "Bearer " + token);
         var jsonsource = JSON.stringify(articleModel);
         xmlhttp.onreadystatechange = function(){
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){

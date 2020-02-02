@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
 
 namespace MangoBlog
 {
@@ -50,6 +51,12 @@ namespace MangoBlog
                      config.RequireHttpsMetadata = false;
 
                      config.Audience = "mangoblogApi";
+
+                     config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                     {
+                         NameClaimType = "name",
+                         RoleClaimType = ClaimTypes.Role
+                     };
                  });
 
             services.AddScoped<IArticleService, ArticleService>();

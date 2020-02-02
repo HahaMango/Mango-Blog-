@@ -98,5 +98,26 @@ namespace MangoBlog.Entity.Imp
             }
             return commentModels;
         }
+
+        public async Task<IList<CommentModel>> LessThanSomeDate(string articleId, DateTime date, int count)
+        {
+            if (articleId == null)
+            {
+                throw new ArgumentNullException();
+            }
+            IList<CommentModel> commentModels = new List<CommentModel>();
+            var commentsByArticleId = await _dBContext.Comments.Where(c => c.ArticleId == int.Parse(articleId) && c.Date < date).ToListAsync();
+            if (commentsByArticleId == null)
+            {
+                throw new NotFoundException($"没找到id为：{articleId} 的文章");
+            }
+            commentsByArticleId = commentsByArticleId.OrderByDescending(c => c.Id).Take(count).ToList();
+            foreach (CommentEntity ce in commentsByArticleId)
+            {
+                var cm = ModelEntityHelper.CommentE2M(ce);
+                commentModels.Add(cm);
+            }
+            return commentModels;
+        }
     }
 }

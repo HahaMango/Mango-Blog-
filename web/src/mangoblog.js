@@ -8,7 +8,12 @@ var v = new Vue({
         herfhash: '#home'
     },
     render(h) {
-        window.location.hash = this.herfhash;
+        var urlh = window.location.href;
+        if(urlh.search('#article')>0||urlh.search("admin")>0){
+            this.herfhash = urlh;
+        }else{
+            window.location.hash = this.herfhash;
+        }
         return h(blogapp, {
             props: {
                 hash: this.herfhash

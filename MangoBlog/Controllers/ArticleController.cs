@@ -19,8 +19,9 @@ namespace MangoBlog.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> AddArticle(ArticleModel article)
-        {
+        {            
             ArticleInfoModel articleInfo = article.ToArticleInfoModel();
             ArticleContentModel articleContent = article.ToArticleContentModel();
             await _articleService.AddArticleAsync(articleInfo,articleContent);
@@ -73,7 +74,7 @@ namespace MangoBlog.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> DeleteArticle(string id)
         {
             await _articleService.DeleteArticleAsync(id);

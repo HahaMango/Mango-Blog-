@@ -1,5 +1,5 @@
 <template>
-  <div id="editor-div" v-if="isAuthentication">
+  <div id="editor-div" v-show="isAuthentication">
     <div id="editor-head">
       <span>Chiva</span>
       <span>
@@ -75,11 +75,16 @@ export default {
     };
   },
   created: function() {
+    let p = this;
     var loginServer = ls.GetLoginServer();
     loginServer.getUser().then(function(user) {
       if (user) {
         currentUser = user;
-        isAuthentication = true;
+        if(currentUser.profile.role != undefined && currentUser.profile.role == "ADMIN"){
+          p.isAuthentication = true;
+        }else{
+          window.location.href = "/";
+        }        
       } else {
         loginServer.signinRedirect();
       }
@@ -106,7 +111,7 @@ export default {
       
       var articleModel = new ArticleModel(this.title,this.describe,this.category,this.content,this.contentType);
       
-      Http.AddArticle(articleModel,function() {
+      Http.AddArticle(articleModel,currentUser.access_token,function() {
         alert("文章发布成功")
       })
     },
