@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using NLog.Web;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace MangoBlog
 {
@@ -29,6 +30,13 @@ namespace MangoBlog
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((host,config)=>
+                {
+                    if (host.HostingEnvironment.IsProduction())
+                    {
+                        config.AddJsonFile("key.json", false, true);
+                    }
+                })
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
