@@ -1,5 +1,6 @@
 ﻿using MangoBlog.Model;
 using MangoBlog.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,15 +19,16 @@ namespace MangoBlog.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> AddArticle(ArticleModel article)
-        {
+        {            
             ArticleInfoModel articleInfo = article.ToArticleInfoModel();
             ArticleContentModel articleContent = article.ToArticleContentModel();
             await _articleService.AddArticleAsync(articleInfo,articleContent);
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]        
         public async Task<IActionResult> GetArticle(string id)
         {
             ArticleInfoModel articleInfo = await _articleService.GetArticleByIdAsync(id);
@@ -71,7 +73,8 @@ namespace MangoBlog.Controllers
             return Ok();
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> DeleteArticle(string id)
         {
             await _articleService.DeleteArticleAsync(id);

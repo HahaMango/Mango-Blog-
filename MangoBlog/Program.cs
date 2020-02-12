@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using NLog.Web;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace MangoBlog
 {
@@ -10,16 +11,39 @@ namespace MangoBlog
         public static void Main(string[] args)
         {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-            CreateWebHostBuilder(args).Build().Run();
+            try
+            {
+                logger.Debug("init main");
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            catch (System.Exception ex)
+            {
+                logger.Error(ex, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((host,config)=>
+                {
+                    if (host.HostingEnvironment.IsProduction())
+                    {
+                        config.AddJsonFile("key.json", false, true);
+                    }
+                })
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Trace);
+#if DEBUG
+                    logging.AddConsole();
+#endif
                 })
                 .UseNLog();
     }

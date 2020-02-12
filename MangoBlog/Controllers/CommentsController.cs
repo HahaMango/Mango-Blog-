@@ -16,10 +16,10 @@ namespace MangoBlog.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet("article/{id}/{start}/{count}")]
-        public async Task<IActionResult> GetComments(string id,int start,int count)
+        [HttpGet("article/{id}/{date}/{count}")]
+        public async Task<IActionResult> GetComments(string id,string date,int count)
         {
-            var comments = await _commentService.GetCommentsAsync(id, start, count);
+            var comments = await _commentService.GetCommentsAsync(id, date, count);
             return Ok(comments);
         }
 

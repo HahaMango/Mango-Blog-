@@ -39,6 +39,25 @@ namespace MangoBlog.Service.Imp
             throw new NotImplementedException();
         }
 
+        public async Task<IList<CommentModel>> GetCommentsAsync(string articleId, string date, int count)
+        {
+            string[] dateTime = date.Split(' ');
+            string dates = dateTime[0];
+            string times = dateTime[1];
+            string[] datesplit = dates.Split('-');
+            string[] timesplit = times.Split(':');
+            int year = int.Parse(datesplit[0]);
+            int month = int.Parse(datesplit[1]);
+            int day = int.Parse(datesplit[2]);
+            int hour = int.Parse(timesplit[0]);
+            int min = int.Parse(timesplit[1]);
+            int sec = int.Parse(timesplit[2]);
+
+            DateTime inputDate = new DateTime(year, month, day, hour, min, sec);
+
+            return await _commentDao.LessThanSomeDate(articleId, inputDate, count);
+        }
+
         public async Task ReplyActionAsync(string artcileId, CommentModel comment)
         {
             if(artcileId == null || comment == null)

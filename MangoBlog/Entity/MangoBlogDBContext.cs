@@ -6,7 +6,7 @@ namespace MangoBlog.Entity
     {    
         public MangoBlogDBContext(DbContextOptions<MangoBlogDBContext> options):base(options)
         {
-
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -14,7 +14,7 @@ namespace MangoBlog.Entity
             modelBuilder.Entity<ArticleEntity>()
                 .HasMany(ae => ae.Comments)
                 .WithOne()
-                .HasForeignKey(ce => ce.ArticleId);
+                .HasForeignKey(ce => ce.ArticleId);           
         }
 
         public DbSet<ArticleEntity> Articles { get; set; }

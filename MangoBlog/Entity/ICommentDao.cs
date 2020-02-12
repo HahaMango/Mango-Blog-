@@ -12,5 +12,6 @@ namespace MangoBlog.Entity
         Task DeleteCommentAsync(string id);
         Task<IList<CommentModel>> GetCommentsAsync(string articleId,int start,int count);
         Task<CommentModel> GetCommentAsync(string id);
+        Task<IList<CommentModel>> LessThanSomeDate(string articleId, DateTime date, int count);
     }
 }

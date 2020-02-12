@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace MangoBlog
 {
@@ -24,8 +26,7 @@ namespace MangoBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MangoBlogDBContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("BloggingDatabase")));
+            services.AddDbContext<MangoBlogDBContext>(options => options.UseMySql(Configuration.GetConnectionString("BloggingDatabase")));
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -43,6 +44,21 @@ namespace MangoBlog
                 });
             });
 
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", config =>
+                 {
+                     config.Authority = Configuration["AuthorityServer"];
+                     config.RequireHttpsMetadata = false;
+
+                     config.Audience = "mangoblogApi";
+
+                     config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                     {
+                         NameClaimType = "name",
+                         RoleClaimType = ClaimTypes.Role
+                     };
+                 });
+
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleDao, ArticleDao>();
             services.AddScoped<ICommentService, CommentService>();
@@ -50,7 +66,10 @@ namespace MangoBlog
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryDao, CategoryDao>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvcCore()
+                .AddAuthorization()
+                .AddJsonFormatters()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +90,7 @@ namespace MangoBlog
                 //app.UseHsts();
             }
             app.UseCors("all");
-
+            app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseMvc();
         }
