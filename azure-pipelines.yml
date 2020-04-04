@@ -29,21 +29,21 @@ stages:
 
     - task: DotNetCoreCLI@2
       inputs:
-      command: 'test'
-      projects: 'MangoBlogTest/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
+        command: 'test'
+        projects: 'MangoBlogTest/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
       inputs:
-      command: 'publish'
-      publishWebProjects: true
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
       inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'BlogRelease'
-      publishLocation: 'Container'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'BlogRelease'
+        publishLocation: 'Container'
 
   - job: Build_Docker_Image
     displayName: Build Docker Image
