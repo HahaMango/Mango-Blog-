@@ -14,7 +14,7 @@ namespace MangoBlog
             try
             {
                 logger.Debug("init main");
-                CreateWebHostBuilder(args).Build().Run();
+                CreateWebHostBuilder(args).UseUrls("http://localhost:5000", "https://localhost:5001").Build().Run();
             }
             catch (System.Exception ex)
             {
