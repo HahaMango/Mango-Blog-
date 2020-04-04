@@ -6,30 +6,71 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+resources:
+- repo: self
 
 variables:
-  buildConfiguration: 'Release'
+  tag: '$(Build.BuildId)'
 
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: Build_dotnet2_2
+    pool:
+      vmImage: 'ubuntu-latest'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: 'MangoBlogTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    variables:
+      buildConfiguration: 'Release'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    steps:
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'BlogRelease'
-    publishLocation: 'Container'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: 'MangoBlogTest/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'BlogRelease'
+        publishLocation: 'Container'
+
+  - job: Build_Docker_Image
+    displayName: Build Docker Image
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: 'key.json'
+
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Agent.TempDirectory)'
+        Contents: '**'
+        TargetFolder: '$(Build.SourcesDirectory)/MangoBlog'
+
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/MangoBlog/Dockerfile'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
+      displayName: Docker Push
+      inputs:
+        containerRegistry: 'aliyunDockerHub'
+        repository: 'chiva_mg_namespace/mangoblogserver'

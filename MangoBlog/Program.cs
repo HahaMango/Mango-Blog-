@@ -41,9 +41,6 @@ namespace MangoBlog
                 {
                     logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Trace);
-#if DEBUG
-                    logging.AddConsole();
-#endif
                 })
                 .UseNLog();
     }
